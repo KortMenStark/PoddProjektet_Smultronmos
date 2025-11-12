@@ -45,7 +45,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Smultronmos.Models\Smultronmos.Models.csproj">
+    <ProjectReference Include="..\Smultronmos.Models\Models.csproj">
       <Project>{a6829983-844a-4e96-add7-8dd04e2c9512}</Project>
       <Name>Smultronmos.Models</Name>
     </ProjectReference>

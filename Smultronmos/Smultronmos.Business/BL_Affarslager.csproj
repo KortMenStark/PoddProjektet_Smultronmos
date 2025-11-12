@@ -45,11 +45,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Smultronmos.Data\Smultronmos.Data.csproj">
+    <ProjectReference Include="..\Smultronmos.Data\DAL_Dataatkomstlager.csproj">
       <Project>{79c1463d-8ec2-459b-9352-0495dc761469}</Project>
       <Name>Smultronmos.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Smultronmos.Models\Smultronmos.Models.csproj">
+    <ProjectReference Include="..\Smultronmos.Models\Models.csproj">
       <Project>{a6829983-844a-4e96-add7-8dd04e2c9512}</Project>
       <Name>Smultronmos.Models</Name>
     </ProjectReference>
