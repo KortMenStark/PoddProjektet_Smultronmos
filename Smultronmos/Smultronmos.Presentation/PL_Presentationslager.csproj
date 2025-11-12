@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Smultronmos.Business\Smultronmos.Business.csproj" />
+    <ProjectReference Include="..\Smultronmos.Business\BL_Affarslager.csproj" />
   </ItemGroup>
 
 </Project>

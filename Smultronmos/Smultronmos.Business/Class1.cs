@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Smultronmos.Business
+namespace BL_Affarslager
 {
     public class Class1
     {
