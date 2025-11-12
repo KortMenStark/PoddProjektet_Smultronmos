@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Smultronmos.Business")]
+[assembly: AssemblyTitle("BL_Affarslager")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Smultronmos.Business")]
+[assembly: AssemblyProduct("BL_Affarslager")]
 [assembly: AssemblyCopyright("Copyright ©  2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f37b9b48-98b4-4821-94c8-8de5771553be")]
+[assembly: Guid("c7ebf78a-c6c8-44a0-afe2-cc3696b56df6")]
 
 // Version information for an assembly consists of the following four values:
 //

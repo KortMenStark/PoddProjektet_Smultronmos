@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>ff99a1f1-cb28-43d4-82f3-5adca4c752eb</ProjectGuid>
+    <ProjectGuid>d76204c6-c12a-436b-9f36-a9cb3c1694a6</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SL_Servicelager</RootNamespace>
