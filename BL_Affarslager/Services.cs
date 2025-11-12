@@ -8,7 +8,7 @@ using DAL_Dataatkomstlager;
 
 namespace BL_Affarslager
 {
-    public class Class1
+    public class Services
     {
     }
 }
