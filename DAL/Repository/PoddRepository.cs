@@ -1,6 +1,5 @@
 ﻿using DAL.Interfaces;
-using DAL_Dataatkomstlager.Interfaces;
-using Models;
+using Models_new;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -51,3 +50,5 @@ namespace DAL.Repository
             var filter = Builders<Podd>.Filter.Eq(p => p.Id, uppdateradPodd.Id);
             await poddKollektion.ReplaceOneAsync(filter, uppdateradPodd);
         }
+    }
+}
