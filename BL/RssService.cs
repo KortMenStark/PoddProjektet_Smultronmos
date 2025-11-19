@@ -13,20 +13,21 @@ namespace BL
     {
         public async Task<SyndicationFeed> HamtaFlodeAsync(string rssUrl)
         {
-            var settings = new XmlReaderSettings
+            return await Task.Run(() =>
             {
-                DtdProcessing = DtdProcessing.Parse,
-                IgnoreProcessingInstructions = true,
-                IgnoreComments = true,
-                IgnoreWhitespace = true
-            };
+                var settings = new XmlReaderSettings
+                {
+                    DtdProcessing = DtdProcessing.Parse,
+                    IgnoreProcessingInstructions = true,
+                    IgnoreComments = true,
+                    IgnoreWhitespace = true
+                };
 
-            using (XmlReader lasare = XmlReader.Create(rssUrl, settings))
-
-            {
-                SyndicationFeed feed = SyndicationFeed.Load(lasare);
-                return feed;
-            }
+                using (XmlReader lasare = XmlReader.Create(rssUrl, settings))
+                {
+                    return SyndicationFeed.Load(lasare);
+                }
+            });
         }
     }
 }
