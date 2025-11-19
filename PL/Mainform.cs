@@ -14,7 +14,7 @@ namespace PL
         private readonly IRssService enRssService;
 
         //Håller reda på det hämtade RSS-flödet och lagrar det i hamtatfeed = feed;
-        private SyndicationFeed hamtatfeed;
+        private SyndicationFeed? hamtatfeed;
 
         //Detta hanterar poddrelaterade operationer.
         private readonly PoddService enPoddService;
