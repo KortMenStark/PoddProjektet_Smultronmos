@@ -50,5 +50,11 @@ namespace DAL.Repository
             var filter = Builders<Podd>.Filter.Eq(p => p.Id, uppdateradPodd.Id);
             await poddKollektion.ReplaceOneAsync(filter, uppdateradPodd);
         }
+        public async Task TaBortPodd(string poddId)
+        {
+            var filter = Builders<Podd>.Filter.Eq(p => p.Id, poddId);
+            await poddKollektion.DeleteOneAsync(filter);
+        }
+
     }
 }
