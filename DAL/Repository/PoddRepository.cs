@@ -18,7 +18,7 @@ namespace DAL.Repository
         //Detta för att slippa behöva koppla ihop alla repositoryklasseerna till databasen varje gång.
         public PoddRepository(MongoDbContext context)
         {
-            poddKollektion = context.poddKollektion;
+            poddKollektion = context.PoddKollektion;
         }
 
         public async Task<bool> PoddFinnsAsync(string rssUrl)

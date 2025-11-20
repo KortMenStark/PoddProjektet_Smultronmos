@@ -1,5 +1,4 @@
 ﻿using DAL.Interfaces;
-using DAL.Interfaces;
 using Models_new;
 using MongoDB.Driver;
 using System;
@@ -19,7 +18,7 @@ namespace DAL.Repository
         //Detta för att slippa behöva koppla ihop alla repositoryklasseerna till databasen varje gång.
         public KategoriRepository(MongoDbContext context)
         {
-            kategoriKollektion = context.kategoriKollektion;
+            kategoriKollektion = context.KategoriKollektion;
         }
 
         public async Task<List<Kategori>> HamtaAlla()
