@@ -77,5 +77,19 @@ namespace BL
             };
             await poddRepository.LagraPodd(nyPodd);
         }
+
+        public async Task<bool> SparaPoddOmNyAsync(Poddflode ettFlode, string rssUrl, string kategoriId)
+        {
+            bool poddFinns = await poddRepository.HittaPoddMedUrlAsync(rssUrl);
+            if (poddFinns)
+            {
+                return false;
+            }
+            else
+            {
+                await SparaPodd(ettFlode, rssUrl, kategoriId);
+                return true;
+            }
+        }
     }
 }

@@ -14,6 +14,7 @@ namespace DAL.Interfaces
         Task LagraPodd(Podd nyPodd);
         Task UppdateraPodd(Podd uppdateradPodd);
         Task TaBortPodd(string poddId);
+        Task<bool> HittaPoddMedUrlAsync(string rssUrl);
 
     }
 }

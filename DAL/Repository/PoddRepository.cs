@@ -56,5 +56,11 @@ namespace DAL.Repository
             await poddKollektion.DeleteOneAsync(filter);
         }
 
+        public async Task<bool> HittaPoddMedUrlAsync(string rssUrl)
+        {
+            var filter = Builders<Podd>.Filter.Eq(p => p.RssUrl, rssUrl);
+            return await poddKollektion.Find(filter).AnyAsync();
+        }
+
     }
 }
