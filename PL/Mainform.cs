@@ -11,10 +11,10 @@ namespace PL
 {
     public partial class Mainform : Form
     {
-        //Detta implementerar gr�nssnittet f�r IRssService
+        //Detta implementerar gränssnittet f�r IRssService
         private readonly IRssService enRssService;
 
-        //H�ller reda p� det h�mtade RSS-fl�det och lagrar det i hamtatfeed = feed;
+        //H�ller reda p� det hämtade RSS-flödet och lagrar det i hamtatfeed = feed;
         private SyndicationFeed? hamtatfeed;
 
         //Detta hanterar poddrelaterade operationer.
@@ -23,10 +23,10 @@ namespace PL
         //Detta hanterar kategorirelaterade operationer
         private readonly KategoriService enKategoriService;
 
-        //Lokal lista f�r alla kategorier som laddas in i comboboxen (dropdownmenyn med kategorier)
+        //Lokal lista för alla kategorier som laddas in i comboboxen (dropdownmenyn med kategorier)
         private List<Kategori> allaKategorier = new();
 
-        //Lokal lista f�r alla poddar som laddas in i listboxen
+        //Lokal lista för alla poddar som laddas in i listboxen
         private List<Podd> allaPoddar = new List<Podd>();
 
         public Mainform()
@@ -38,7 +38,7 @@ namespace PL
             // Hanterar kategori-relaterade databasoperationer
             enKategoriService = new KategoriService(new KategoriRepository(new MongoDbContext()));
 
-            // Ladda alla kategorier direkt n�r formul�ret startar
+            // Ladda alla kategorier direkt n�r formuläret startar
             _ = LaddaKategorierAsync();
         }
 
@@ -77,7 +77,7 @@ namespace PL
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Fel vid h�mtning av RSS-fl�de: " + ex.Message);
+                MessageBox.Show("Fel vid h�mtning av RSS-flöde: " + ex.Message);
             }
         }
 
@@ -120,14 +120,14 @@ namespace PL
         {
             if (hamtatfeed == null)
             {
-                MessageBox.Show("Inget RSS-fl�de att spara. H�mta ett fl�de f�rst.");
+                MessageBox.Show("Inget RSS-flöde att spara. H�mta ett flöde först.");
                 return;
             }
 
-            // NYTT: tvinga anv�ndaren att v�lja kategori
+            // NYTT: tvinga användaren att välja kategori
             if (cmbKategori.SelectedItem is not Kategori valdKategori)
             {
-                MessageBox.Show("V�lj en kategori innan du sparar podden.");
+                MessageBox.Show("Välj en kategori innan du sparar podden.");
                 return;
             }
 
@@ -138,10 +138,10 @@ namespace PL
                 return;
             }
 
-            // Skapa poddfl�det som tidigare
+            // Skapa poddflödet som tidigare
             var poddFlode = enPoddService.SkapaPoddflode(hamtatfeed);
 
-            // NYTT: anv�nd Kategori.Id fr�n det valda objektet
+            // Använd Kategori.Id från det valda objektet
             string kategoriId = valdKategori.Id;
 
             await enPoddService.SparaPodd(poddFlode, rssUrl, kategoriId);
@@ -159,13 +159,13 @@ namespace PL
                 MessageBox.Show("Podden finns redan i databasen.");
             }
 
-            // Rensa formul�ret som tidigare
+            // Rensa formuläret som tidigare
             txtRssUrl.Clear();
             lstAvsnitt.Items.Clear();
             txtBeskrivning.Clear();
             hamtatfeed = null;
 
-            // (valfritt) ladda om podd-listan + filter direkt h�r
+            // (valfritt) ladda om podd-listan + filter direkt här
             // await LaddaPoddarAsync();  <-- om vi extraherar "Ladda poddar"-logik till en metod
         }
 
@@ -197,7 +197,7 @@ namespace PL
                 return;
 
             // vilka kategori-Id:n anv�nds av poddarna?
-            var anv�ndaKategoriIds = allaPoddar
+            var användaKategoriIds = allaPoddar
                 .Select(p => p.KategoriId)
                 .Where(id => !string.IsNullOrWhiteSpace(id))
                 .Distinct()
@@ -205,11 +205,11 @@ namespace PL
 
             // ta fram de Kategori-objekt som matchar
             var kategorierSomHarPoddar = allaKategorier
-                .Where(k => anv�ndaKategoriIds.Contains(k.Id))
+                .Where(k => användaKategoriIds.Contains(k.Id))
                 .OrderBy(k => k.Namn)
                 .ToList();
 
-            // koppla bort event tillf�lligt s� vi inte triggar filtrering mitt i uppdateringen
+            // koppla bort event tillfälligt så vi inte triggar filtrering mitt i uppdateringen
             cbmFilterKategori.SelectedIndexChanged -= cbmFilterKategori_SelectedIndexChanged;
 
             cbmFilterKategori.Items.Clear();
@@ -224,7 +224,7 @@ namespace PL
             cbmFilterKategori.ValueMember = "Id";
             cbmFilterKategori.SelectedIndex = 0;
 
-            // koppla p� event igen
+            // koppla på event igen
             cbmFilterKategori.SelectedIndexChanged += cbmFilterKategori_SelectedIndexChanged;
         }
 
@@ -256,7 +256,7 @@ namespace PL
                 return;
             var result = MessageBox.Show(
                $"Vill du verkligen radera kategorin '{kat.Namn}'?",
-               "Bekr�fta radering",
+               "Bekräfta radering",
                MessageBoxButtons.YesNo,
                MessageBoxIcon.Warning);
             if (result != DialogResult.Yes)
@@ -290,19 +290,19 @@ namespace PL
         {
             if (lstPoddar.SelectedItem is not Podd valdPodd)
             {
-                MessageBox.Show("V�lj en podd f�rst.");
+                MessageBox.Show("Välj en podd först.");
                 return;
             }
             if (cmbKategori.SelectedItem is not Kategori valdKategori)
             {
-                MessageBox.Show("V�lj en kategori.");
+                MessageBox.Show("Välj en kategori.");
                 return;
             }
 
             valdPodd.KategoriId = valdKategori.Id;
 
             await enPoddService.UppdateraPodd(valdPodd);
-            MessageBox.Show("Kategorin �ndrades.");
+            MessageBox.Show("Kategorin ändrades.");
         }
 
         private void Mainform_Load(object sender, EventArgs e)
@@ -340,13 +340,13 @@ namespace PL
             {
                 var valdPodd = lstPoddar.SelectedItem as Podd;
 
-                // Om ingen podd �r vald, g�r ingenting
+                // Om ingen podd är vald, gör ingenting
                 if (valdPodd == null)
                     return;
 
                 var result = MessageBox.Show(
                     $"Vill du ta bort '{valdPodd.Titel}'?",
-                    "Bekr�fta",
+                    "Bekräfta",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning
                 );
