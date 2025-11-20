@@ -19,11 +19,34 @@ namespace PL
         //Detta hanterar poddrelaterade operationer.
         private readonly PoddService enPoddService;
 
+        //Detta hanterar kategorirelaterade operationer
+        private readonly KategoriService enKategoriService;
+
+        //Lokal lista för alla kategorier som laddas in i comboboxen (dropdownmenyn med kategorier)
+        private List<Kategori> allaKategorier = new();
+
         public Mainform()
         {
             InitializeComponent();
             enRssService = new RssService();
             enPoddService = new PoddService(new PoddRepository(new MongoDbContext()));
+
+            // Hanterar kategori-relaterade databasoperationer
+            enKategoriService = new KategoriService(new KategoriRepository(new MongoDbContext()));
+
+            // Ladda alla kategorier direkt när formuläret startar
+            _ = LaddaKategorierAsync();
+        }
+
+        //Synkroniserar UI med databasen varje gång kategorier ändras.
+        private async Task LaddaKategorierAsync()
+        {
+            allaKategorier = await enKategoriService.HamtaAllaKategorier();
+
+            cmbKategori.DataSource = null;
+            cmbKategori.DisplayMember = "Namn";
+            cmbKategori.ValueMember = "Id";
+            cmbKategori.DataSource = allaKategorier;
         }
 
         private async void btnHamtaRss_ClickAsync(object sender, EventArgs e)
@@ -93,7 +116,9 @@ namespace PL
             string rssUrl = txtRssUrl.Text;
             var poddFlode = enPoddService.SkapaPoddflode(hamtatfeed);
 
-            await enPoddService.SparaPodd(poddFlode, rssUrl, "");
+            string kategoriId = cmbKategori.SelectedValue?.ToString() ?? "";
+
+            await enPoddService.SparaPodd(poddFlode, rssUrl, kategoriId);
             MessageBox.Show("Podden har sparats.");
 
             txtRssUrl.Clear();
@@ -129,6 +154,66 @@ namespace PL
             {
                 lstAvsnitt.Items.Add(item.Title.Text);
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void btnTaBortKategori_Click(object sender, EventArgs e)
+        {
+            if (cmbKategori.SelectedItem is not Kategori kat)
+                return;
+            var result = MessageBox.Show(
+               $"Vill du verkligen radera kategorin '{kat.Namn}'?",
+               "Bekräfta radering",
+               MessageBoxButtons.YesNo,
+               MessageBoxIcon.Warning);
+            if (result != DialogResult.Yes)
+                return;
+            await enKategoriService.TaBortKategori(kat.Id);
+            await LaddaKategorierAsync();
+        }
+
+        private void txtNyKategori_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void btnLaggTillKategori_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtNyKategori.Text))
+            {
+                MessageBox.Show("Ange ett kategorinamn.");
+                return;
+            }
+
+            var nyKategori = new Kategori { Namn = txtNyKategori.Text };
+
+            await enKategoriService.LagraNyKategori(nyKategori);
+            await LaddaKategorierAsync();
+
+            txtNyKategori.Clear();
+        }
+
+        private async void btnAndraKategori_Click(object sender, EventArgs e)
+        {
+            if (lstPoddar.SelectedItem is not Podd valdPodd)
+            {
+                MessageBox.Show("Välj en podd först.");
+                return;
+            }
+            string nyKategoriId = cmbKategori.SelectedValue?.ToString() ?? "";
+            valdPodd.KategoriId = nyKategoriId;
+
+            await enPoddService.UppdateraPodd(valdPodd);
+            MessageBox.Show("Kategorin ändrades.");
+        }
+
+        private void Mainform_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

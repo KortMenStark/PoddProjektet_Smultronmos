@@ -19,7 +19,7 @@ namespace DAL.Repository
         //Detta för att slippa behöva koppla ihop alla repositoryklasseerna till databasen varje gång.
         public AvsnittRepository(MongoDbContext context)
         {
-            avsnittKollektion = context.avsnittKollektion;
+            avsnittKollektion = context.AvsnittKollektion;
         }
         public async Task<List<Avsnitt>> HamtaAlla()
         {
