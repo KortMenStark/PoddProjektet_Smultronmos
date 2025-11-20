@@ -212,9 +212,9 @@
             labelKategori.AutoSize = true;
             labelKategori.Location = new Point(625, 48);
             labelKategori.Name = "labelKategori";
-            labelKategori.Size = new Size(51, 15);
+            labelKategori.Size = new Size(80, 15);
             labelKategori.TabIndex = 17;
-            labelKategori.Text = "Kategori";
+            labelKategori.Text = "Mina kategori";
             // 
             // lblTitel
             // 
