@@ -44,14 +44,15 @@
             txtTitel = new TextBox();
             txtBeskrivning = new TextBox();
             txtPubliceringsdatum = new TextBox();
+            btnAvprenumerera = new Button();
             SuspendLayout();
             // 
             // btnHamtaRss
             // 
-            btnHamtaRss.Location = new Point(424, 15);
-            btnHamtaRss.Margin = new Padding(2);
+            btnHamtaRss.Location = new Point(485, 20);
+            btnHamtaRss.Margin = new Padding(2, 3, 2, 3);
             btnHamtaRss.Name = "btnHamtaRss";
-            btnHamtaRss.Size = new Size(78, 20);
+            btnHamtaRss.Size = new Size(89, 27);
             btnHamtaRss.TabIndex = 0;
             btnHamtaRss.Text = "HÃ¤mta RSS";
             btnHamtaRss.UseVisualStyleBackColor = true;
@@ -60,38 +61,38 @@
             // lstAvsnitt
             // 
             lstAvsnitt.FormattingEnabled = true;
-            lstAvsnitt.Location = new Point(15, 34);
-            lstAvsnitt.Margin = new Padding(2);
+            lstAvsnitt.Location = new Point(17, 45);
+            lstAvsnitt.Margin = new Padding(2, 3, 2, 3);
             lstAvsnitt.Name = "lstAvsnitt";
-            lstAvsnitt.Size = new Size(246, 199);
+            lstAvsnitt.Size = new Size(281, 264);
             lstAvsnitt.TabIndex = 1;
             lstAvsnitt.SelectedIndexChanged += lstAvsnitt_SelectedIndexChanged;
             // 
             // txtDetaljer
             // 
-            txtDetaljer.Location = new Point(258, 45);
-            txtDetaljer.Margin = new Padding(2);
+            txtDetaljer.Location = new Point(295, 60);
+            txtDetaljer.Margin = new Padding(2, 3, 2, 3);
             txtDetaljer.Multiline = true;
             txtDetaljer.Name = "txtDetaljer";
             txtDetaljer.ReadOnly = true;
             txtDetaljer.ScrollBars = ScrollBars.Both;
-            txtDetaljer.Size = new Size(246, 199);
+            txtDetaljer.Size = new Size(281, 264);
             txtDetaljer.TabIndex = 2;
             // 
             // txtRssUrl
             // 
-            txtRssUrl.Location = new Point(8, 17);
-            txtRssUrl.Margin = new Padding(2);
+            txtRssUrl.Location = new Point(9, 23);
+            txtRssUrl.Margin = new Padding(2, 3, 2, 3);
             txtRssUrl.Name = "txtRssUrl";
-            txtRssUrl.Size = new Size(413, 23);
+            txtRssUrl.Size = new Size(471, 27);
             txtRssUrl.TabIndex = 3;
             // 
             // btnSparaPodd
             // 
-            btnSparaPodd.Location = new Point(8, 255);
-            btnSparaPodd.Margin = new Padding(2);
+            btnSparaPodd.Location = new Point(9, 340);
+            btnSparaPodd.Margin = new Padding(2, 3, 2, 3);
             btnSparaPodd.Name = "btnSparaPodd";
-            btnSparaPodd.Size = new Size(78, 20);
+            btnSparaPodd.Size = new Size(89, 27);
             btnSparaPodd.TabIndex = 4;
             btnSparaPodd.Text = "Spara";
             btnSparaPodd.UseVisualStyleBackColor = true;
@@ -100,19 +101,19 @@
             // lstPoddar
             // 
             lstPoddar.FormattingEnabled = true;
-            lstPoddar.Location = new Point(626, 45);
-            lstPoddar.Margin = new Padding(2);
+            lstPoddar.Location = new Point(715, 60);
+            lstPoddar.Margin = new Padding(2, 3, 2, 3);
             lstPoddar.Name = "lstPoddar";
-            lstPoddar.Size = new Size(246, 199);
+            lstPoddar.Size = new Size(281, 264);
             lstPoddar.TabIndex = 5;
             lstPoddar.SelectedIndexChanged += lstPoddar_SelectedIndexChangedAsync;
             // 
             // btnLaddaPoddar
             // 
-            btnLaddaPoddar.Location = new Point(626, 15);
-            btnLaddaPoddar.Margin = new Padding(2);
+            btnLaddaPoddar.Location = new Point(715, 20);
+            btnLaddaPoddar.Margin = new Padding(2, 3, 2, 3);
             btnLaddaPoddar.Name = "btnLaddaPoddar";
-            btnLaddaPoddar.Size = new Size(245, 20);
+            btnLaddaPoddar.Size = new Size(280, 27);
             btnLaddaPoddar.TabIndex = 6;
             btnLaddaPoddar.Text = "Visa sparade poddar";
             btnLaddaPoddar.UseVisualStyleBackColor = true;
@@ -121,9 +122,9 @@
             // lblKategori
             // 
             lblKategori.AutoSize = true;
-            lblKategori.Location = new Point(773, 499);
+            lblKategori.Location = new Point(883, 665);
             lblKategori.Name = "lblKategori";
-            lblKategori.Size = new Size(51, 15);
+            lblKategori.Size = new Size(66, 20);
             lblKategori.TabIndex = 7;
             lblKategori.Text = "Kategori";
             lblKategori.Click += label1_Click;
@@ -132,16 +133,18 @@
             // 
             cmbKategori.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbKategori.FormattingEnabled = true;
-            cmbKategori.Location = new Point(773, 517);
+            cmbKategori.Location = new Point(883, 689);
+            cmbKategori.Margin = new Padding(3, 4, 3, 4);
             cmbKategori.Name = "cmbKategori";
-            cmbKategori.Size = new Size(121, 23);
+            cmbKategori.Size = new Size(138, 28);
             cmbKategori.TabIndex = 8;
             // 
             // btnAndraKategori
             // 
-            btnAndraKategori.Location = new Point(789, 397);
+            btnAndraKategori.Location = new Point(902, 529);
+            btnAndraKategori.Margin = new Padding(3, 4, 3, 4);
             btnAndraKategori.Name = "btnAndraKategori";
-            btnAndraKategori.Size = new Size(105, 23);
+            btnAndraKategori.Size = new Size(120, 31);
             btnAndraKategori.TabIndex = 9;
             btnAndraKategori.Text = "Ändra kategori";
             btnAndraKategori.UseVisualStyleBackColor = true;
@@ -149,9 +152,10 @@
             // 
             // btnTaBortKategori
             // 
-            btnTaBortKategori.Location = new Point(789, 426);
+            btnTaBortKategori.Location = new Point(902, 568);
+            btnTaBortKategori.Margin = new Padding(3, 4, 3, 4);
             btnTaBortKategori.Name = "btnTaBortKategori";
-            btnTaBortKategori.Size = new Size(105, 23);
+            btnTaBortKategori.Size = new Size(120, 31);
             btnTaBortKategori.TabIndex = 10;
             btnTaBortKategori.Text = "Ta bort kategori";
             btnTaBortKategori.UseVisualStyleBackColor = true;
@@ -159,9 +163,10 @@
             // 
             // btnLaggTillKategori
             // 
-            btnLaggTillKategori.Location = new Point(789, 455);
+            btnLaggTillKategori.Location = new Point(902, 607);
+            btnLaggTillKategori.Margin = new Padding(3, 4, 3, 4);
             btnLaggTillKategori.Name = "btnLaggTillKategori";
-            btnLaggTillKategori.Size = new Size(105, 23);
+            btnLaggTillKategori.Size = new Size(120, 31);
             btnLaggTillKategori.TabIndex = 11;
             btnLaggTillKategori.Text = "Lägg till kategori";
             btnLaggTillKategori.UseVisualStyleBackColor = true;
@@ -169,44 +174,59 @@
             // 
             // txtNyKategori
             // 
-            txtNyKategori.Location = new Point(900, 456);
+            txtNyKategori.Location = new Point(1029, 608);
+            txtNyKategori.Margin = new Padding(3, 4, 3, 4);
             txtNyKategori.Name = "txtNyKategori";
-            txtNyKategori.Size = new Size(100, 23);
+            txtNyKategori.Size = new Size(114, 27);
             txtNyKategori.TabIndex = 12;
             txtNyKategori.Text = "Ny kategori";
             txtNyKategori.TextChanged += txtNyKategori_TextChanged;
             // 
             // txtTitel
             // 
-            txtTitel.Location = new Point(263, 254);
+            txtTitel.Location = new Point(301, 339);
+            txtTitel.Margin = new Padding(3, 4, 3, 4);
             txtTitel.Name = "txtTitel";
             txtTitel.ReadOnly = true;
-            txtTitel.Size = new Size(239, 23);
+            txtTitel.Size = new Size(273, 27);
             txtTitel.TabIndex = 13;
             // 
             // txtBeskrivning
             // 
-            txtBeskrivning.Location = new Point(263, 295);
+            txtBeskrivning.Location = new Point(301, 393);
+            txtBeskrivning.Margin = new Padding(3, 4, 3, 4);
             txtBeskrivning.Multiline = true;
             txtBeskrivning.Name = "txtBeskrivning";
             txtBeskrivning.ReadOnly = true;
             txtBeskrivning.ScrollBars = ScrollBars.Vertical;
-            txtBeskrivning.Size = new Size(239, 93);
+            txtBeskrivning.Size = new Size(273, 123);
             txtBeskrivning.TabIndex = 14;
             // 
             // txtPubliceringsdatum
             // 
-            txtPubliceringsdatum.Location = new Point(263, 398);
+            txtPubliceringsdatum.Location = new Point(301, 531);
+            txtPubliceringsdatum.Margin = new Padding(3, 4, 3, 4);
             txtPubliceringsdatum.Name = "txtPubliceringsdatum";
             txtPubliceringsdatum.ReadOnly = true;
-            txtPubliceringsdatum.Size = new Size(239, 23);
+            txtPubliceringsdatum.Size = new Size(273, 27);
             txtPubliceringsdatum.TabIndex = 15;
+            // 
+            // btnAvprenumerera
+            // 
+            btnAvprenumerera.Location = new Point(579, 20);
+            btnAvprenumerera.Name = "btnAvprenumerera";
+            btnAvprenumerera.Size = new Size(122, 29);
+            btnAvprenumerera.TabIndex = 16;
+            btnAvprenumerera.Text = "Avprenumerera";
+            btnAvprenumerera.UseVisualStyleBackColor = true;
+            btnAvprenumerera.Click += btnAvprenumerera_Click;
             // 
             // Mainform
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1284, 611);
+            ClientSize = new Size(1467, 815);
+            Controls.Add(btnAvprenumerera);
             Controls.Add(txtPubliceringsdatum);
             Controls.Add(txtBeskrivning);
             Controls.Add(txtTitel);
@@ -223,7 +243,7 @@
             Controls.Add(txtDetaljer);
             Controls.Add(lstAvsnitt);
             Controls.Add(btnHamtaRss);
-            Margin = new Padding(2);
+            Margin = new Padding(2, 3, 2, 3);
             Name = "Mainform";
             Text = "Form1";
             Load += Mainform_Load;
@@ -249,5 +269,6 @@
         private TextBox txtTitel;
         private TextBox txtBeskrivning;
         private TextBox txtPubliceringsdatum;
+        private Button btnAvprenumerera;
     }
 }

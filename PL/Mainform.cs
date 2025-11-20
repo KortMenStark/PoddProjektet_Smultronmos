@@ -49,6 +49,18 @@ namespace PL
             cmbKategori.DataSource = allaKategorier;
         }
 
+        private async Task LaddaPoddarAsync()
+        {
+            lstPoddar.Items.Clear();
+
+            var allaPoddar = await enPoddService.HamtaAllaPoddar();
+
+            foreach (var podd in allaPoddar)
+            {
+                lstPoddar.Items.Add(podd);
+            }
+        }
+
         private async void btnHamtaRss_ClickAsync(object sender, EventArgs e)
         {
             string url = txtRssUrl.Text;
@@ -136,14 +148,8 @@ namespace PL
 
         private async void btnLaddaPoddar_ClickAsync(object sender, EventArgs e)
         {
-            lstPoddar.Items.Clear();
+            await LaddaPoddarAsync();
 
-            var allaPoddar = await enPoddService.HamtaAllaPoddar();
-
-            foreach (var podd in allaPoddar)
-            {
-                lstPoddar.Items.Add(podd);
-            }
         }
 
         private async void lstPoddar_SelectedIndexChangedAsync(object sender, EventArgs e)
@@ -222,5 +228,33 @@ namespace PL
         {
 
         }
+
+        private async void btnAvprenumerera_Click(object sender, EventArgs e)
+        {
+            {
+                var valdPodd = lstPoddar.SelectedItem as Podd;
+
+                // Om ingen podd är vald, gör ingenting
+                if (valdPodd == null)
+                    return;
+
+                var result = MessageBox.Show(
+                    $"Vill du ta bort '{valdPodd.Titel}'?",
+                    "Bekräfta",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    await enPoddService.TaBortPodd(valdPodd.Id);
+                    await LaddaPoddarAsync();
+                }
+
+            }
+               
+        }
+
+
     }
 }
