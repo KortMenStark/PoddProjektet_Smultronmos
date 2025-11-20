@@ -144,11 +144,11 @@ namespace PL
             // Använd Kategori.Id från det valda objektet
             string kategoriId = valdKategori.Id;
 
-            await enPoddService.SparaPodd(poddFlode, rssUrl, kategoriId);
+            //await enPoddService.SparaPodd(poddFlode, rssUrl, kategoriId);
 
             //MessageBox.Show("Podden har sparats.");
 
-            bool sparad = await enPoddService.SparaPoddOmNyAsync(poddFlode, rssUrl, "");
+            bool sparad = await enPoddService.SparaPoddOmNyAsync(poddFlode, rssUrl, kategoriId);
 
             if (sparad)
             {
@@ -165,8 +165,11 @@ namespace PL
             txtBeskrivning.Clear();
             hamtatfeed = null;
 
+            btnLaddaPoddar.PerformClick();
+
+
             // (valfritt) ladda om podd-listan + filter direkt här
-            // await LaddaPoddarAsync();  <-- om vi extraherar "Ladda poddar"-logik till en metod
+            //await LaddaPoddarAsync();  //<-- om vi extraherar "Ladda poddar"-logik till en metod
         }
 
         private async void btnLaddaPoddar_ClickAsync(object sender, EventArgs e)
