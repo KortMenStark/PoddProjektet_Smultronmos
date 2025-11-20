@@ -79,15 +79,22 @@ namespace PL
 
         private void lstAvsnitt_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Skydd om inget är valt
+            if (lstAvsnitt.SelectedIndex < 0)
+                return;
+
             var valtAvsnitt = hamtatfeed.Items.ElementAt(lstAvsnitt.SelectedIndex);
 
-            string utanHtmlSammanfattning = TaBortHtml(valtAvsnitt.Summary.Text);
+            // Ta bort HTML bara från sammanfattningen
+            string renSammanfattning = TaBortHtml(valtAvsnitt.Summary.Text);
 
-            string info = "Titel: " + valtAvsnitt.Title.Text + "\r\n" +
-                          "Publiceringsdatum: " + valtAvsnitt.PublishDate.DateTime + "\r\n" +
-                          "Sammanfattning: " + valtAvsnitt.Summary.Text;
+            // Skriv ut i TRE olika textboxes
+            txtTitel.Text = valtAvsnitt.Title.Text;
 
-            txtDetaljer.Text = TaBortHtml(info);
+            // Välj själv hur datumet ska formateras
+            txtPubliceringsdatum.Text = valtAvsnitt.PublishDate.DateTime.ToString("yyyy-MM-dd HH:mm");
+
+            txtBeskrivning.Text = renSammanfattning;
         }
 
         private string TaBortHtml(string htmlText)
