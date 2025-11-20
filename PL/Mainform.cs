@@ -93,8 +93,16 @@ namespace PL
             string rssUrl = txtRssUrl.Text;
             var poddFlode = enPoddService.SkapaPoddflode(hamtatfeed);
 
-            await enPoddService.SparaPodd(poddFlode, rssUrl, "");
-            MessageBox.Show("Podden har sparats.");
+            bool sparad = await enPoddService.SparaPoddOmNyAsync(poddFlode, rssUrl, "");
+
+            if (sparad)
+            {
+                MessageBox.Show("Podden har sparats i databasen.");
+            }
+            else
+            {
+                MessageBox.Show("Podden finns redan i databasen.");
+            }
 
             txtRssUrl.Clear();
             lstAvsnitt.Items.Clear();
