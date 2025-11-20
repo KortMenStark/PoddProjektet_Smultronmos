@@ -323,5 +323,31 @@ namespace PL
                 VisaPoddar(filtrerade);
             }
         }
+
+        private async void btnAvprenumerera_ClickAsync(object sender, EventArgs e)
+        {
+            {
+                var valdPodd = lstPoddar.SelectedItem as Podd;
+
+                // Om ingen podd är vald, gör ingenting
+                if (valdPodd == null)
+                    return;
+
+                var result = MessageBox.Show(
+                    $"Vill du ta bort '{valdPodd.Titel}'?",
+                    "Bekräfta",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    await enPoddService.TaBortPodd(valdPodd.Id);
+                    btnLaddaPoddar.PerformClick();
+
+                }
+
+            }
+        }
     }
 }
