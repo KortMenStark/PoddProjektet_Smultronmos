@@ -53,12 +53,12 @@
             // 
             // btnHamtaRss
             // 
-            btnHamtaRss.Location = new Point(424, 15);
+            btnHamtaRss.Location = new Point(427, 17);
             btnHamtaRss.Margin = new Padding(2);
             btnHamtaRss.Name = "btnHamtaRss";
-            btnHamtaRss.Size = new Size(78, 20);
+            btnHamtaRss.Size = new Size(101, 23);
             btnHamtaRss.TabIndex = 0;
-            btnHamtaRss.Text = "HÃ¤mta RSS";
+            btnHamtaRss.Text = "Hämta RSS";
             btnHamtaRss.UseVisualStyleBackColor = true;
             btnHamtaRss.Click += btnHamtaRss_ClickAsync;
             // 
@@ -85,7 +85,7 @@
             btnSparaPodd.Location = new Point(8, 511);
             btnSparaPodd.Margin = new Padding(2);
             btnSparaPodd.Name = "btnSparaPodd";
-            btnSparaPodd.Size = new Size(78, 20);
+            btnSparaPodd.Size = new Size(246, 31);
             btnSparaPodd.TabIndex = 4;
             btnSparaPodd.Text = "Spara";
             btnSparaPodd.UseVisualStyleBackColor = true;
@@ -171,7 +171,7 @@
             // 
             // txtTitel
             // 
-            txtTitel.Location = new Point(266, 61);
+            txtTitel.Location = new Point(266, 70);
             txtTitel.Name = "txtTitel";
             txtTitel.ReadOnly = true;
             txtTitel.Size = new Size(344, 23);
@@ -179,20 +179,20 @@
             // 
             // txtBeskrivning
             // 
-            txtBeskrivning.Location = new Point(263, 114);
+            txtBeskrivning.Location = new Point(266, 114);
             txtBeskrivning.Multiline = true;
             txtBeskrivning.Name = "txtBeskrivning";
             txtBeskrivning.ReadOnly = true;
             txtBeskrivning.ScrollBars = ScrollBars.Vertical;
-            txtBeskrivning.Size = new Size(239, 93);
+            txtBeskrivning.Size = new Size(344, 348);
             txtBeskrivning.TabIndex = 14;
             // 
             // txtPubliceringsdatum
             // 
-            txtPubliceringsdatum.Location = new Point(266, 252);
+            txtPubliceringsdatum.Location = new Point(266, 483);
             txtPubliceringsdatum.Name = "txtPubliceringsdatum";
             txtPubliceringsdatum.ReadOnly = true;
-            txtPubliceringsdatum.Size = new Size(239, 23);
+            txtPubliceringsdatum.Size = new Size(344, 23);
             txtPubliceringsdatum.TabIndex = 15;
             // 
             // cbmFilterKategori
@@ -216,7 +216,7 @@
             // lblTitel
             // 
             lblTitel.AutoSize = true;
-            lblTitel.Location = new Point(266, 42);
+            lblTitel.Location = new Point(266, 48);
             lblTitel.Name = "lblTitel";
             lblTitel.Size = new Size(29, 15);
             lblTitel.TabIndex = 18;
@@ -234,7 +234,7 @@
             // lblUtgivningsdatum
             // 
             lblUtgivningsdatum.AutoSize = true;
-            lblUtgivningsdatum.Location = new Point(266, 229);
+            lblUtgivningsdatum.Location = new Point(266, 465);
             lblUtgivningsdatum.Name = "lblUtgivningsdatum";
             lblUtgivningsdatum.Size = new Size(99, 15);
             lblUtgivningsdatum.TabIndex = 20;
