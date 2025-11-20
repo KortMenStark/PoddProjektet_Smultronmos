@@ -3,6 +3,7 @@ using DAL;
 using DAL.Repository;
 using Models_new;
 using System.ServiceModel.Syndication;
+using System.Linq;
 using static System.Net.WebRequestMethods;
 
 namespace PL
@@ -24,6 +25,9 @@ namespace PL
 
         //Lokal lista för alla kategorier som laddas in i comboboxen (dropdownmenyn med kategorier)
         private List<Kategori> allaKategorier = new();
+
+        //Lokal lista för alla poddar som laddas in i listboxen
+        private List<Podd> allaPoddar = new List<Podd>();
 
         public Mainform()
         {
@@ -120,30 +124,97 @@ namespace PL
                 return;
             }
 
+            // NYTT: tvinga användaren att välja kategori
+            if (cmbKategori.SelectedItem is not Kategori valdKategori)
+            {
+                MessageBox.Show("Välj en kategori innan du sparar podden.");
+                return;
+            }
+
             string rssUrl = txtRssUrl.Text;
+            if (string.IsNullOrWhiteSpace(rssUrl))
+            {
+                MessageBox.Show("RSS-URL saknas.");
+                return;
+            }
+
+            // Skapa poddflödet som tidigare
             var poddFlode = enPoddService.SkapaPoddflode(hamtatfeed);
 
-            string kategoriId = cmbKategori.SelectedValue?.ToString() ?? "";
+            // NYTT: använd Kategori.Id från det valda objektet
+            string kategoriId = valdKategori.Id;
 
             await enPoddService.SparaPodd(poddFlode, rssUrl, kategoriId);
+
             MessageBox.Show("Podden har sparats.");
 
+            // Rensa formuläret som tidigare
             txtRssUrl.Clear();
             lstAvsnitt.Items.Clear();
-            txtDetaljer.Clear();
+            txtBeskrivning.Clear();
             hamtatfeed = null;
+
+            // (valfritt) ladda om podd-listan + filter direkt här
+            // await LaddaPoddarAsync();  <-- om vi extraherar "Ladda poddar"-logik till en metod
         }
 
         private async void btnLaddaPoddar_ClickAsync(object sender, EventArgs e)
         {
+            // 1. Hämta alla poddar och lagra i fältet
+            allaPoddar = await enPoddService.HamtaAllaPoddar();
+
+            // 2. Visa dem i listboxen
+            VisaPoddar(allaPoddar);
+
+            // 3. Fyll filter-comboboxen med kategorier
+            FyllFilterKategorier();
+        }
+
+        private void VisaPoddar(IEnumerable<Podd> poddar)
+        {
             lstPoddar.Items.Clear();
 
-            var allaPoddar = await enPoddService.HamtaAllaPoddar();
-
-            foreach (var podd in allaPoddar)
+            foreach (var podd in poddar)
             {
                 lstPoddar.Items.Add(podd);
             }
+        }
+
+        private void FyllFilterKategorier()
+        {
+            if (allaPoddar == null || allaPoddar.Count == 0)
+                return;
+
+            // vilka kategori-Id:n används av poddarna?
+            var användaKategoriIds = allaPoddar
+                .Select(p => p.KategoriId)
+                .Where(id => !string.IsNullOrWhiteSpace(id))
+                .Distinct()
+                .ToList();
+
+            // ta fram de Kategori-objekt som matchar
+            var kategorierSomHarPoddar = allaKategorier
+                .Where(k => användaKategoriIds.Contains(k.Id))
+                .OrderBy(k => k.Namn)
+                .ToList();
+
+            // koppla bort event tillfälligt så vi inte triggar filtrering mitt i uppdateringen
+            cbmFilterKategori.SelectedIndexChanged -= cbmFilterKategori_SelectedIndexChanged;
+
+            cbmFilterKategori.Items.Clear();
+            cbmFilterKategori.Items.Add("Alla kategorier"); // special-värde
+
+            foreach (var kat in kategorierSomHarPoddar)
+            {
+                cbmFilterKategori.Items.Add(kat);
+            }
+
+            cbmFilterKategori.DisplayMember = "Namn";
+            cbmFilterKategori.ValueMember = "Id";
+            cbmFilterKategori.SelectedIndex = 0;
+
+            // koppla på event igen
+            cbmFilterKategori.SelectedIndexChanged += cbmFilterKategori_SelectedIndexChanged;
         }
 
         private async void lstPoddar_SelectedIndexChangedAsync(object sender, EventArgs e)
@@ -211,8 +282,13 @@ namespace PL
                 MessageBox.Show("Välj en podd först.");
                 return;
             }
-            string nyKategoriId = cmbKategori.SelectedValue?.ToString() ?? "";
-            valdPodd.KategoriId = nyKategoriId;
+            if (cmbKategori.SelectedItem is not Kategori valdKategori)
+            {
+                MessageBox.Show("Välj en kategori.");
+                return;
+            }
+
+            valdPodd.KategoriId = valdKategori.Id;
 
             await enPoddService.UppdateraPodd(valdPodd);
             MessageBox.Show("Kategorin ändrades.");
@@ -221,6 +297,31 @@ namespace PL
         private void Mainform_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void cbmFilterKategori_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (allaPoddar == null || allaPoddar.Count == 0)
+                return;
+
+            var valt = cbmFilterKategori.SelectedItem;
+
+            // "Alla kategorier" -> visa allt
+            if (valt is string s && s == "Alla kategorier")
+            {
+                VisaPoddar(allaPoddar);
+                return;
+            }
+
+            // Kategori-objekt -> filtrera på dess Id
+            if (valt is Kategori kat)
+            {
+                var filtrerade = allaPoddar
+                    .Where(p => p.KategoriId == kat.Id)
+                    .ToList();
+
+                VisaPoddar(filtrerade);
+            }
         }
     }
 }

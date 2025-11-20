@@ -30,7 +30,6 @@
         {
             btnHamtaRss = new Button();
             lstAvsnitt = new ListBox();
-            txtDetaljer = new TextBox();
             txtRssUrl = new TextBox();
             btnSparaPodd = new Button();
             lstPoddar = new ListBox();
@@ -44,6 +43,11 @@
             txtTitel = new TextBox();
             txtBeskrivning = new TextBox();
             txtPubliceringsdatum = new TextBox();
+            cbmFilterKategori = new ComboBox();
+            labelKategori = new Label();
+            lblTitel = new Label();
+            lblBeskrivning = new Label();
+            lblUtgivningsdatum = new Label();
             SuspendLayout();
             // 
             // btnHamtaRss
@@ -63,20 +67,9 @@
             lstAvsnitt.Location = new Point(15, 34);
             lstAvsnitt.Margin = new Padding(2);
             lstAvsnitt.Name = "lstAvsnitt";
-            lstAvsnitt.Size = new Size(246, 199);
+            lstAvsnitt.Size = new Size(246, 454);
             lstAvsnitt.TabIndex = 1;
             lstAvsnitt.SelectedIndexChanged += lstAvsnitt_SelectedIndexChanged;
-            // 
-            // txtDetaljer
-            // 
-            txtDetaljer.Location = new Point(258, 45);
-            txtDetaljer.Margin = new Padding(2);
-            txtDetaljer.Multiline = true;
-            txtDetaljer.Name = "txtDetaljer";
-            txtDetaljer.ReadOnly = true;
-            txtDetaljer.ScrollBars = ScrollBars.Both;
-            txtDetaljer.Size = new Size(246, 199);
-            txtDetaljer.TabIndex = 2;
             // 
             // txtRssUrl
             // 
@@ -88,7 +81,7 @@
             // 
             // btnSparaPodd
             // 
-            btnSparaPodd.Location = new Point(8, 255);
+            btnSparaPodd.Location = new Point(8, 511);
             btnSparaPodd.Margin = new Padding(2);
             btnSparaPodd.Name = "btnSparaPodd";
             btnSparaPodd.Size = new Size(78, 20);
@@ -100,7 +93,7 @@
             // lstPoddar
             // 
             lstPoddar.FormattingEnabled = true;
-            lstPoddar.Location = new Point(626, 45);
+            lstPoddar.Location = new Point(625, 76);
             lstPoddar.Margin = new Padding(2);
             lstPoddar.Name = "lstPoddar";
             lstPoddar.Size = new Size(246, 199);
@@ -109,19 +102,19 @@
             // 
             // btnLaddaPoddar
             // 
-            btnLaddaPoddar.Location = new Point(626, 15);
+            btnLaddaPoddar.Location = new Point(625, 279);
             btnLaddaPoddar.Margin = new Padding(2);
             btnLaddaPoddar.Name = "btnLaddaPoddar";
-            btnLaddaPoddar.Size = new Size(245, 20);
+            btnLaddaPoddar.Size = new Size(245, 32);
             btnLaddaPoddar.TabIndex = 6;
-            btnLaddaPoddar.Text = "Visa sparade poddar";
+            btnLaddaPoddar.Text = "\"Ladda\" sparade poddar";
             btnLaddaPoddar.UseVisualStyleBackColor = true;
             btnLaddaPoddar.Click += btnLaddaPoddar_ClickAsync;
             // 
             // lblKategori
             // 
             lblKategori.AutoSize = true;
-            lblKategori.Location = new Point(773, 499);
+            lblKategori.Location = new Point(1151, 34);
             lblKategori.Name = "lblKategori";
             lblKategori.Size = new Size(51, 15);
             lblKategori.TabIndex = 7;
@@ -132,14 +125,14 @@
             // 
             cmbKategori.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbKategori.FormattingEnabled = true;
-            cmbKategori.Location = new Point(773, 517);
+            cmbKategori.Location = new Point(1151, 52);
             cmbKategori.Name = "cmbKategori";
             cmbKategori.Size = new Size(121, 23);
             cmbKategori.TabIndex = 8;
             // 
             // btnAndraKategori
             // 
-            btnAndraKategori.Location = new Point(789, 397);
+            btnAndraKategori.Location = new Point(1151, 148);
             btnAndraKategori.Name = "btnAndraKategori";
             btnAndraKategori.Size = new Size(105, 23);
             btnAndraKategori.TabIndex = 9;
@@ -149,7 +142,7 @@
             // 
             // btnTaBortKategori
             // 
-            btnTaBortKategori.Location = new Point(789, 426);
+            btnTaBortKategori.Location = new Point(1151, 99);
             btnTaBortKategori.Name = "btnTaBortKategori";
             btnTaBortKategori.Size = new Size(105, 23);
             btnTaBortKategori.TabIndex = 10;
@@ -159,7 +152,7 @@
             // 
             // btnLaggTillKategori
             // 
-            btnLaggTillKategori.Location = new Point(789, 455);
+            btnLaggTillKategori.Location = new Point(1045, 221);
             btnLaggTillKategori.Name = "btnLaggTillKategori";
             btnLaggTillKategori.Size = new Size(105, 23);
             btnLaggTillKategori.TabIndex = 11;
@@ -169,24 +162,23 @@
             // 
             // txtNyKategori
             // 
-            txtNyKategori.Location = new Point(900, 456);
+            txtNyKategori.Location = new Point(1156, 221);
             txtNyKategori.Name = "txtNyKategori";
             txtNyKategori.Size = new Size(100, 23);
             txtNyKategori.TabIndex = 12;
-            txtNyKategori.Text = "Ny kategori";
             txtNyKategori.TextChanged += txtNyKategori_TextChanged;
             // 
             // txtTitel
             // 
-            txtTitel.Location = new Point(263, 254);
+            txtTitel.Location = new Point(266, 61);
             txtTitel.Name = "txtTitel";
             txtTitel.ReadOnly = true;
-            txtTitel.Size = new Size(239, 23);
+            txtTitel.Size = new Size(344, 23);
             txtTitel.TabIndex = 13;
             // 
             // txtBeskrivning
             // 
-            txtBeskrivning.Location = new Point(263, 295);
+            txtBeskrivning.Location = new Point(263, 114);
             txtBeskrivning.Multiline = true;
             txtBeskrivning.Name = "txtBeskrivning";
             txtBeskrivning.ReadOnly = true;
@@ -196,17 +188,67 @@
             // 
             // txtPubliceringsdatum
             // 
-            txtPubliceringsdatum.Location = new Point(263, 398);
+            txtPubliceringsdatum.Location = new Point(266, 252);
             txtPubliceringsdatum.Name = "txtPubliceringsdatum";
             txtPubliceringsdatum.ReadOnly = true;
             txtPubliceringsdatum.Size = new Size(239, 23);
             txtPubliceringsdatum.TabIndex = 15;
+            // 
+            // cbmFilterKategori
+            // 
+            cbmFilterKategori.FormattingEnabled = true;
+            cbmFilterKategori.Location = new Point(625, 45);
+            cbmFilterKategori.Name = "cbmFilterKategori";
+            cbmFilterKategori.Size = new Size(245, 23);
+            cbmFilterKategori.TabIndex = 16;
+            cbmFilterKategori.SelectedIndexChanged += cbmFilterKategori_SelectedIndexChanged;
+            // 
+            // labelKategori
+            // 
+            labelKategori.AutoSize = true;
+            labelKategori.Location = new Point(625, 25);
+            labelKategori.Name = "labelKategori";
+            labelKategori.Size = new Size(51, 15);
+            labelKategori.TabIndex = 17;
+            labelKategori.Text = "Kategori";
+            // 
+            // lblTitel
+            // 
+            lblTitel.AutoSize = true;
+            lblTitel.Location = new Point(266, 42);
+            lblTitel.Name = "lblTitel";
+            lblTitel.Size = new Size(29, 15);
+            lblTitel.TabIndex = 18;
+            lblTitel.Text = "Titel";
+            // 
+            // lblBeskrivning
+            // 
+            lblBeskrivning.AutoSize = true;
+            lblBeskrivning.Location = new Point(266, 96);
+            lblBeskrivning.Name = "lblBeskrivning";
+            lblBeskrivning.Size = new Size(68, 15);
+            lblBeskrivning.TabIndex = 19;
+            lblBeskrivning.Text = "Beskrivning";
+            // 
+            // lblUtgivningsdatum
+            // 
+            lblUtgivningsdatum.AutoSize = true;
+            lblUtgivningsdatum.Location = new Point(266, 229);
+            lblUtgivningsdatum.Name = "lblUtgivningsdatum";
+            lblUtgivningsdatum.Size = new Size(99, 15);
+            lblUtgivningsdatum.TabIndex = 20;
+            lblUtgivningsdatum.Text = "Utgivningsdatum";
             // 
             // Mainform
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1284, 611);
+            Controls.Add(lblUtgivningsdatum);
+            Controls.Add(lblBeskrivning);
+            Controls.Add(lblTitel);
+            Controls.Add(labelKategori);
+            Controls.Add(cbmFilterKategori);
             Controls.Add(txtPubliceringsdatum);
             Controls.Add(txtBeskrivning);
             Controls.Add(txtTitel);
@@ -220,7 +262,6 @@
             Controls.Add(btnLaddaPoddar);
             Controls.Add(btnSparaPodd);
             Controls.Add(txtRssUrl);
-            Controls.Add(txtDetaljer);
             Controls.Add(lstAvsnitt);
             Controls.Add(btnHamtaRss);
             Margin = new Padding(2);
@@ -235,7 +276,6 @@
 
         private Button btnHamtaRss;
         private ListBox lstAvsnitt;
-        private TextBox txtDetaljer;
         private TextBox txtRssUrl;
         private Button btnSparaPodd;
         private ListBox lstPoddar;
@@ -249,5 +289,10 @@
         private TextBox txtTitel;
         private TextBox txtBeskrivning;
         private TextBox txtPubliceringsdatum;
+        private ComboBox cbmFilterKategori;
+        private Label labelKategori;
+        private Label lblTitel;
+        private Label lblBeskrivning;
+        private Label lblUtgivningsdatum;
     }
 }
