@@ -15,10 +15,13 @@ namespace DAL.Repository
         //Skapar en referens till avsnittkollektionen i MongoDB-databasen.
         private readonly IMongoCollection<Avsnitt> avsnittKollektion;
 
+        private readonly MongoDbContext context;
+
         //Detta kallas Dependency Injection. Vi skickar in en instans av MongoDbContext för att få tillgång till avsnittkollektionen.
         //Detta för att slippa behöva koppla ihop alla repositoryklasseerna till databasen varje gång.
         public AvsnittRepository(MongoDbContext context)
         {
+            this.context = context;
             avsnittKollektion = context.AvsnittKollektion;
         }
         public async Task<List<Avsnitt>> HamtaAlla()
@@ -34,17 +37,55 @@ namespace DAL.Repository
         }
         public async Task LagraAvsnitt(Avsnitt nyttAvsnitt)
         {
-            await avsnittKollektion.InsertOneAsync(nyttAvsnitt);
+            using var session = await context.MongoKlient.StartSessionAsync();
+            session.StartTransaction();
+
+            try
+            {
+                await avsnittKollektion.InsertOneAsync(session, nyttAvsnitt);
+                await session.CommitTransactionAsync();
+            }
+            catch
+            {
+                await session.AbortTransactionAsync();
+                throw;
+            }
         }
         public async Task UppdateraAvsnitt(Avsnitt uppdateratAvsnitt)
         {
             var filter = Builders<Avsnitt>.Filter.Eq(a => a.Id, uppdateratAvsnitt.Id);
-            await avsnittKollektion.ReplaceOneAsync(filter, uppdateratAvsnitt);
+
+            using var session = await context.MongoKlient.StartSessionAsync();
+            session.StartTransaction();
+
+            try
+            {
+                await avsnittKollektion.ReplaceOneAsync(session, filter, uppdateratAvsnitt);
+                await session.CommitTransactionAsync();
+            }
+            catch
+            {
+                await session.AbortTransactionAsync();
+                throw;
+            }
         }
         public async Task TaBortAvsnitt(string avsnittId)
         {
             var filter = Builders<Avsnitt>.Filter.Eq(a => a.Id, avsnittId);
-            await avsnittKollektion.DeleteOneAsync(filter);
+
+            using var session = await context.MongoKlient.StartSessionAsync();
+            session.StartTransaction();
+
+            try
+            {
+                await avsnittKollektion.DeleteOneAsync(session, filter);
+                await session.CommitTransactionAsync();
+            }
+            catch
+            {
+                await session.AbortTransactionAsync();
+                throw;
+            }
         }
     }
 }

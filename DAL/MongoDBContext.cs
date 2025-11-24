@@ -15,12 +15,14 @@ namespace DAL
         public IMongoCollection<Kategori> KategoriKollektion { get; }
         public IMongoCollection<Avsnitt> AvsnittKollektion { get; }
 
+        public MongoClient MongoKlient { get; }
+
 
         //Anslutning till MongoDB-databasen.
         public MongoDbContext()
         {
-            var klient = new MongoClient("mongodb+srv://OruMongoDBAdmin:1995@orumongodb.ktcd6cz.mongodb.net/?appName=OruMongoDB");
-            var database = klient.GetDatabase("OruMongoDB");
+            MongoKlient = new MongoClient("mongodb+srv://OruMongoDBAdmin:1995@orumongodb.ktcd6cz.mongodb.net/?appName=OruMongoDB");
+            var database = MongoKlient.GetDatabase("OruMongoDB");
 
             PoddKollektion = database.GetCollection<Podd>("Poddar");
             KategoriKollektion = database.GetCollection<Kategori>("Kategorier");
