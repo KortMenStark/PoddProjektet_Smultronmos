@@ -38,11 +38,11 @@ namespace PL
             // Hanterar kategori-relaterade databasoperationer
             enKategoriService = new KategoriService(new KategoriRepository(new MongoDbContext()));
 
-            // Ladda alla kategorier direkt n�r formuläret startar
+            // Ladda alla kategorier direkt när formuläret startar
             _ = LaddaKategorierAsync();
         }
 
-        //Synkroniserar UI med databasen varje g�ng kategorier �ndras.
+        //Synkroniserar UI med databasen varje gång kategorier ändras.
         private async Task LaddaKategorierAsync()
         {
             allaKategorier = await enKategoriService.HamtaAllaKategorier();
@@ -75,27 +75,27 @@ namespace PL
                     lstAvsnitt.Items.Add(item.Title.Text);
                 }
             }
-            catch (Exception ex)
+            catch (Exception ettFel)
             {
-                MessageBox.Show("Fel vid h�mtning av RSS-flöde: " + ex.Message);
+                MessageBox.Show("Fel vid hämtning av RSS-flöde, (OBS: Kontrollera stavningen): " + ettFel.Message);
             }
         }
 
         private void lstAvsnitt_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Skydd om inget �r valt
+            // Skydd om inget är valt
             if (lstAvsnitt.SelectedIndex < 0)
                 return;
 
             var valtAvsnitt = hamtatfeed.Items.ElementAt(lstAvsnitt.SelectedIndex);
 
-            // Ta bort HTML bara fr�n sammanfattningen
+            // Ta bort HTML bara från sammanfattningen
             string renSammanfattning = TaBortHtml(valtAvsnitt.Summary.Text);
 
             // Skriv ut i TRE olika textboxes
             txtTitel.Text = valtAvsnitt.Title.Text;
 
-            // V�lj sj�lv hur datumet ska formateras
+            // Välj själv hur datumet ska formateras
             txtPubliceringsdatum.Text = valtAvsnitt.PublishDate.DateTime.ToString("yyyy-MM-dd HH:mm");
 
             txtBeskrivning.Text = renSammanfattning;

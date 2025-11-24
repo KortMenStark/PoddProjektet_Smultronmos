@@ -30,11 +30,6 @@ namespace BL
             return await poddRepository.HamtaEnPodd(poddId);
         }
 
-        public async Task LagraNyPodd(Podd nyPodd)
-        {
-            await poddRepository.LagraPodd(nyPodd);
-        }
-
         public async Task UppdateraPodd(Podd uppdateradPodd)
         {
             await poddRepository.UppdateraPodd(uppdateradPodd);
