@@ -273,6 +273,7 @@
             lblAvsnittTitel.Size = new Size(69, 15);
             lblAvsnittTitel.TabIndex = 23;
             lblAvsnittTitel.Text = "Avsnittstitel";
+            // 
             // btnHanteraKategorier
             // 
             btnHanteraKategorier.Location = new Point(8, 547);
@@ -281,6 +282,7 @@
             btnHanteraKategorier.TabIndex = 22;
             btnHanteraKategorier.Text = "Hantera kategorier";
             btnHanteraKategorier.UseVisualStyleBackColor = true;
+            btnHanteraKategorier.Click += btnHanteraKategorier_Click;
             // 
             // Mainform
             // 
