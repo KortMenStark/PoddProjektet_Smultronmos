@@ -202,6 +202,30 @@ namespace PL
                 return;
 
             var valdPodd = (Podd)lstPoddar.SelectedItem;
+
+            // Sätt poddtitel
+            txtTitel.Text = valdPodd.Titel;
+
+            // ------ Sätter kategorinamnet i textfältet ----------
+            if (string.IsNullOrWhiteSpace(valdPodd.KategoriId))
+            {
+                // Podden har ingen kategori kopplad
+                txtKategori.Text = "Ingen kategori";
+            }
+            else
+            {
+                // Försök hitta kategorin baserat på ID
+                var kategori = allaKategorier
+                    .FirstOrDefault(k => k.Id == valdPodd.KategoriId);
+
+                if (kategori != null)
+                    txtKategori.Text = kategori.Namn;      // Visa kategorinamn
+                else
+                    txtKategori.Text = "Okänd kategori";   // ID finns men matchar ingen kategori  (TA BORT NÄR VI LÖST??)
+            }
+           
+
+            // Hämta RSS-flödet
             var feed = await enRssService.HamtaFlodeAsync(valdPodd.RssUrl);
             hamtatfeed = feed;
 
@@ -292,7 +316,7 @@ namespace PL
                 return;
             }
 
-            // Kategori-objekt -> filtrera p� dess Id
+            // Kategori-objekt -> filtrera på dess Id
             if (valt is Kategori kat)
             {
                 var filtrerade = allaPoddar
