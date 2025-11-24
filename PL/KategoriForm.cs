@@ -14,6 +14,7 @@ namespace PL
 {
     public partial class KategoriForm : Form
     {
+        public event Action KategorierAndrades;
         private readonly KategoriService _kategoriService;
         private List<Kategori> _allaKategorier = new();
         public KategoriForm()
@@ -50,6 +51,7 @@ namespace PL
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 await LaddaKategorierAsync();
+                KategorierAndrades?.Invoke();
             }
         }
 
@@ -70,6 +72,7 @@ namespace PL
             {
                 await _kategoriService.TaBortKategori(vald.Id!);
                 await LaddaKategorierAsync();
+                KategorierAndrades?.Invoke();
             }
 
         }

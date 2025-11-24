@@ -34,12 +34,6 @@
             btnSparaPodd = new Button();
             lstPoddar = new ListBox();
             btnLaddaPoddar = new Button();
-            lblKategori = new Label();
-            cmbKategori = new ComboBox();
-            btnAndraKategori = new Button();
-            btnTaBortKategori = new Button();
-            btnLaggTillKategori = new Button();
-            txtNyKategori = new TextBox();
             txtTitel = new TextBox();
             txtBeskrivning = new TextBox();
             txtPubliceringsdatum = new TextBox();
@@ -54,6 +48,9 @@
             btnHanteraKategorier = new Button();
             txtKategori = new TextBox();
             lblAktuellkategori = new Label();
+            cmbKategori = new ComboBox();
+            btnAndraKategori = new Button();
+            lblNyKategori = new Label();
             SuspendLayout();
             // 
             // btnHamtaRss
@@ -117,63 +114,6 @@
             btnLaddaPoddar.UseVisualStyleBackColor = true;
             btnLaddaPoddar.Click += btnLaddaPoddar_ClickAsync;
             // 
-            // lblKategori
-            // 
-            lblKategori.AutoSize = true;
-            lblKategori.Location = new Point(1007, 219);
-            lblKategori.Name = "lblKategori";
-            lblKategori.Size = new Size(51, 15);
-            lblKategori.TabIndex = 7;
-            lblKategori.Text = "Kategori";
-            lblKategori.Click += label1_Click;
-            // 
-            // cmbKategori
-            // 
-            cmbKategori.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbKategori.FormattingEnabled = true;
-            cmbKategori.Location = new Point(1007, 237);
-            cmbKategori.Name = "cmbKategori";
-            cmbKategori.Size = new Size(121, 23);
-            cmbKategori.TabIndex = 8;
-            // 
-            // btnAndraKategori
-            // 
-            btnAndraKategori.Location = new Point(1007, 324);
-            btnAndraKategori.Name = "btnAndraKategori";
-            btnAndraKategori.Size = new Size(105, 23);
-            btnAndraKategori.TabIndex = 9;
-            btnAndraKategori.Text = "Ändra kategori";
-            btnAndraKategori.UseVisualStyleBackColor = true;
-            btnAndraKategori.Click += btnAndraKategori_Click;
-            // 
-            // btnTaBortKategori
-            // 
-            btnTaBortKategori.Location = new Point(1007, 278);
-            btnTaBortKategori.Name = "btnTaBortKategori";
-            btnTaBortKategori.Size = new Size(105, 23);
-            btnTaBortKategori.TabIndex = 10;
-            btnTaBortKategori.Text = "Ta bort kategori";
-            btnTaBortKategori.UseVisualStyleBackColor = true;
-            btnTaBortKategori.Click += btnTaBortKategori_Click;
-            // 
-            // btnLaggTillKategori
-            // 
-            btnLaggTillKategori.Location = new Point(1007, 366);
-            btnLaggTillKategori.Name = "btnLaggTillKategori";
-            btnLaggTillKategori.Size = new Size(105, 23);
-            btnLaggTillKategori.TabIndex = 11;
-            btnLaggTillKategori.Text = "Lägg till kategori";
-            btnLaggTillKategori.UseVisualStyleBackColor = true;
-            btnLaggTillKategori.Click += btnLaggTillKategori_Click;
-            // 
-            // txtNyKategori
-            // 
-            txtNyKategori.Location = new Point(1118, 366);
-            txtNyKategori.Name = "txtNyKategori";
-            txtNyKategori.Size = new Size(154, 23);
-            txtNyKategori.TabIndex = 12;
-            txtNyKategori.TextChanged += txtNyKategori_TextChanged;
-            // 
             // txtTitel
             // 
             txtTitel.BackColor = SystemColors.Window;
@@ -226,7 +166,7 @@
             lblTitel.AutoSize = true;
             lblTitel.Location = new Point(8, 66);
             lblTitel.Name = "lblTitel";
-            lblTitel.Size = new Size(29, 15);
+            lblTitel.Size = new Size(30, 15);
             lblTitel.TabIndex = 18;
             lblTitel.Text = "Titel";
             // 
@@ -304,11 +244,42 @@
             lblAktuellkategori.TabIndex = 25;
             lblAktuellkategori.Text = "Kategori";
             // 
+            // cmbKategori
+            // 
+            cmbKategori.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbKategori.FormattingEnabled = true;
+            cmbKategori.Location = new Point(637, 507);
+            cmbKategori.Name = "cmbKategori";
+            cmbKategori.Size = new Size(121, 23);
+            cmbKategori.TabIndex = 26;
+            // 
+            // btnAndraKategori
+            // 
+            btnAndraKategori.Location = new Point(793, 507);
+            btnAndraKategori.Name = "btnAndraKategori";
+            btnAndraKategori.Size = new Size(102, 23);
+            btnAndraKategori.TabIndex = 27;
+            btnAndraKategori.Text = "Ändra Kategori";
+            btnAndraKategori.UseVisualStyleBackColor = true;
+            btnAndraKategori.Click += btnAndraKategori_Click;
+            // 
+            // lblNyKategori
+            // 
+            lblNyKategori.AutoSize = true;
+            lblNyKategori.Location = new Point(637, 489);
+            lblNyKategori.Name = "lblNyKategori";
+            lblNyKategori.Size = new Size(71, 15);
+            lblNyKategori.TabIndex = 28;
+            lblNyKategori.Text = "Ny kategori:";
+            // 
             // Mainform
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1361, 655);
+            Controls.Add(lblNyKategori);
+            Controls.Add(btnAndraKategori);
+            Controls.Add(cmbKategori);
             Controls.Add(lblAktuellkategori);
             Controls.Add(txtKategori);
             Controls.Add(lblAvsnittTitel);
@@ -324,12 +295,6 @@
             Controls.Add(txtBeskrivning);
             Controls.Add(txtTitel);
             Controls.Add(lstPoddar);
-            Controls.Add(txtNyKategori);
-            Controls.Add(btnLaggTillKategori);
-            Controls.Add(btnTaBortKategori);
-            Controls.Add(btnAndraKategori);
-            Controls.Add(cmbKategori);
-            Controls.Add(lblKategori);
             Controls.Add(btnLaddaPoddar);
             Controls.Add(btnSparaPodd);
             Controls.Add(txtRssUrl);
@@ -351,12 +316,6 @@
         private Button btnSparaPodd;
         private ListBox lstPoddar;
         private Button btnLaddaPoddar;
-        private Label lblKategori;
-        private ComboBox cmbKategori;
-        private Button btnAndraKategori;
-        private Button btnTaBortKategori;
-        private Button btnLaggTillKategori;
-        private TextBox txtNyKategori;
         private TextBox txtTitel;
         private TextBox txtBeskrivning;
         private TextBox txtPubliceringsdatum;
@@ -371,5 +330,8 @@
         private Button btnHanteraKategorier;
         private TextBox txtKategori;
         private Label lblAktuellkategori;
+        private ComboBox cmbKategori;
+        private Button btnAndraKategori;
+        private Label lblNyKategori;
     }
 }

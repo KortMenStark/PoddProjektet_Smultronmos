@@ -44,6 +44,26 @@ namespace PL
             _ = LaddaKategorierAsync();
         }
 
+        private void GaTillRSSLage()
+        {
+            btnSparaPodd.Visible = true;
+            btnAvprenumerera.Visible = false;
+            btnAndraKategori.Visible = false;
+            cmbKategori.Visible = false;
+            lblNyKategori.Visible = false;
+
+            txtKategori.Text = ""; // visa ej gammal kategori
+        }
+
+        private void GaTillSparadPoddLage()
+        {
+            btnSparaPodd.Visible = false;
+            btnAvprenumerera.Visible = true;
+            btnAndraKategori.Visible = true;
+            cmbKategori.Visible = true;
+            lblNyKategori.Visible = true;
+        }
+
         //Synkroniserar UI med databasen varje gång kategorier ändras.
         private async Task LaddaKategorierAsync()
         {
@@ -53,6 +73,13 @@ namespace PL
             cmbKategori.DisplayMember = "Namn";
             cmbKategori.ValueMember = "Id";
             cmbKategori.DataSource = allaKategorier;
+        }
+
+        private async Task LaddaPoddarAsync()
+        {
+            allaPoddar = await enPoddService.HamtaAllaPoddar();
+            VisaPoddar(allaPoddar);
+            FyllFilterKategorier();
         }
 
         private async void btnHamtaRss_ClickAsync(object sender, EventArgs e)
@@ -68,6 +95,7 @@ namespace PL
             try
             {
                 var feed = await enRssService.HamtaFlodeAsync(url);
+                GaTillRSSLage();
                 hamtatfeed = feed;
 
                 txtTitel.Text = feed.Title.Text;
@@ -142,14 +170,7 @@ namespace PL
 
         private async void btnLaddaPoddar_ClickAsync(object sender, EventArgs e)
         {
-            // 1. H�mta alla poddar och lagra i fältet
-            allaPoddar = await enPoddService.HamtaAllaPoddar();
-
-            // 2. Visa dem i listboxen
-            VisaPoddar(allaPoddar);
-
-            // 3. Fyll filter-comboboxen med kategorier
-            FyllFilterKategorier();
+            await LaddaPoddarAsync();
         }
 
         private void VisaPoddar(IEnumerable<Podd> poddar)
@@ -204,6 +225,8 @@ namespace PL
             if (lstPoddar.SelectedItem == null)
                 return;
 
+            GaTillSparadPoddLage();
+
             var valdPodd = (Podd)lstPoddar.SelectedItem;
 
             // Sätt poddtitel
@@ -226,7 +249,7 @@ namespace PL
                 else
                     txtKategori.Text = "Okänd kategori";   // ID finns men matchar ingen kategori  (TA BORT NÄR VI LÖST??)
             }
-           
+
 
             // Hämta RSS-flödet
             var feed = await enRssService.HamtaFlodeAsync(valdPodd.RssUrl);
@@ -245,87 +268,22 @@ namespace PL
 
         }
 
-        private async void btnTaBortKategori_Click(object sender, EventArgs e)
-        {
-            if (cmbKategori.SelectedItem is not Kategori kat)
-                return;
-            var result = MessageBox.Show(
-               $"Vill du verkligen radera kategorin '{kat.Namn}'?",
-               "Bekräfta radering",
-               MessageBoxButtons.YesNo,
-               MessageBoxIcon.Warning);
-            if (result != DialogResult.Yes)
-                return;
-            await enKategoriService.TaBortKategori(kat.Id);
-            await LaddaKategorierAsync();
-        }
-
         private void txtNyKategori_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private async void btnLaggTillKategori_Click(object sender, EventArgs e)
-        {
-
-            var nyttNamn = txtNyKategori.Text.Trim();
-
-            if (string.IsNullOrWhiteSpace(nyttNamn))
-            {
-                MessageBox.Show("Ange ett kategorinamn.");
-                return;
-            }
-
-            // Hämta alla befintliga kategorier
-            var befintligaKategorier = await enKategoriService.HamtaAllaKategorier();
-
-            // Kolla om namnet redan finns (ignorerar versaler/gemener och extra mellanslag)
-            bool finnsRedan = befintligaKategorier
-                .Any(k => string.Equals(k.Namn.Trim(), nyttNamn, StringComparison.OrdinalIgnoreCase));
-
-            if (finnsRedan)
-            {
-                MessageBox.Show("Det finns redan en kategori med det namnet.");
-                return;
-            }
-
-            var nyKategori = new Kategori { Namn = nyttNamn };
-
-            await enKategoriService.LagraNyKategori(nyKategori);
-            await LaddaKategorierAsync();
-
-            txtNyKategori.Clear();
-
-
-        }
-
-        private async void btnAndraKategori_Click(object sender, EventArgs e)
-        {
-            if (lstPoddar.SelectedItem is not Podd valdPodd)
-            {
-                MessageBox.Show("Välj en podd först.");
-                return;
-            }
-            if (cmbKategori.SelectedItem is not Kategori valdKategori)
-            {
-                MessageBox.Show("Välj en kategori.");
-                return;
-            }
-
-            valdPodd.KategoriId = valdKategori.Id;
-
-            await enPoddService.UppdateraPodd(valdPodd);
-            MessageBox.Show("Kategorin ändrades.");
-        }
-
         private void Mainform_Load(object sender, EventArgs e)
         {
-
+            btnSparaPodd.Visible = false;
+            btnAvprenumerera.Visible = false;
+            btnAndraKategori.Visible = false;
+            cmbKategori.Visible = false;
         }
 
         private void cbmFilterKategori_SelectedIndexChanged(object sender, EventArgs e)
         {
-        
+
             // Om vi inte har några poddar laddade: gör inget
             if (allaPoddar == null || allaPoddar.Count == 0)
                 return;
@@ -362,7 +320,7 @@ namespace PL
             }
         }
 
-        
+
 
         private async void btnAvprenumerera_ClickAsync(object sender, EventArgs e)
         {
@@ -393,7 +351,42 @@ namespace PL
         private void btnHanteraKategorier_Click(object sender, EventArgs e)
         {
             var dlg = new KategoriForm(enKategoriService);
+
+            dlg.KategorierAndrades += async () =>
+            {
+                await LaddaKategorierAsync();
+                await LaddaPoddarAsync();   // <— FIXEN
+            };
+
             dlg.ShowDialog();
         }
+
+        private async void btnAndraKategori_Click(object sender, EventArgs e)
+        {
+            if (lstPoddar.SelectedItem is not Podd valdPodd)
+            {
+                MessageBox.Show("Välj en podd först.");
+                return;
+            }
+
+            if (cmbKategori.SelectedItem is not Kategori valdKategori)
+            {
+                MessageBox.Show("Välj en kategori.");
+                return;
+            }
+
+            // Sätt ny kategori
+            valdPodd.KategoriId = valdKategori.Id;
+
+            // Spara i databasen
+            await enPoddService.UppdateraPodd(valdPodd);
+
+            // Uppdatera UI
+            txtKategori.Text = valdKategori.Namn;
+
+            MessageBox.Show("Kategorin ändrades.");
+        }
+
+
     }
 }

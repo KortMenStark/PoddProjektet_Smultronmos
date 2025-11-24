@@ -38,7 +38,6 @@
             lstKategorier.FormattingEnabled = true;
             lstKategorier.Location = new Point(20, 20);
             lstKategorier.Name = "lstKategorier";
-            lstKategorier.SelectionMode = SelectionMode.None;
             lstKategorier.Size = new Size(200, 244);
             lstKategorier.TabIndex = 0;
             // 
