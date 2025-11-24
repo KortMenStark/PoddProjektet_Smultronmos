@@ -37,7 +37,7 @@ namespace DAL.Repository
             return await kategoriKollektion.Find(filter).FirstOrDefaultAsync();
         }
 
-        public async Task LagraKategori(Kategori nyKategori)
+        public async Task LagraNyKategori(Kategori nyKategori)
         {
             using var session = await context.MongoKlient.StartSessionAsync();
             session.StartTransaction();
@@ -54,7 +54,7 @@ namespace DAL.Repository
             }
         }
 
-        public async Task Uppdaterakategori(Kategori uppdateradKategori)
+        public async Task UppdateraKategori(Kategori uppdateradKategori)
         {
             var filter = Builders<Kategori>.Filter.Eq(k => k.Id, uppdateradKategori.Id);
             using var session = await context.MongoKlient.StartSessionAsync();
@@ -72,7 +72,7 @@ namespace DAL.Repository
             }
         }
 
-        public async Task TaBortkategori(string kategoriId)
+        public async Task TaBortKategori(string kategoriId)
         {
             var filter = Builders<Kategori>.Filter.Eq(k => k.Id, kategoriId);
             using var session = await context.MongoKlient.StartSessionAsync();
@@ -88,6 +88,12 @@ namespace DAL.Repository
                 await session.AbortTransactionAsync();
                 throw;
             }
+        }
+
+        public async Task<List<Kategori>> HamtaAllaKategorier()
+        {
+            var alla = await kategoriKollektion.Find(_ => true).ToListAsync();
+            return alla;
         }
     }
 }

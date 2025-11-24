@@ -36,7 +36,9 @@ namespace PL
             enPoddService = new PoddService(new PoddRepository(new MongoDbContext()));
 
             // Hanterar kategori-relaterade databasoperationer
-            enKategoriService = new KategoriService(new KategoriRepository(new MongoDbContext()));
+            enKategoriService = new KategoriService(
+            new KategoriRepository(new MongoDbContext()),
+              new PoddRepository(new MongoDbContext()));
 
             // Ladda alla kategorier direkt när formuläret startar
             _ = LaddaKategorierAsync();
@@ -129,7 +131,8 @@ namespace PL
                 hamtatfeed,
                 allaKategorier,
                 txtRssUrl.Text,
-                enPoddService);
+                enPoddService,
+                enKategoriService);
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
@@ -387,9 +390,10 @@ namespace PL
             }
         }
 
-        private void cmbKategori_SelectedIndexChanged(object sender, EventArgs e)
+        private void btnHanteraKategorier_Click(object sender, EventArgs e)
         {
-
+            var dlg = new KategoriForm(enKategoriService);
+            dlg.ShowDialog();
         }
     }
 }
