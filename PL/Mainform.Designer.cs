@@ -135,7 +135,6 @@
             cmbKategori.Name = "cmbKategori";
             cmbKategori.Size = new Size(121, 23);
             cmbKategori.TabIndex = 8;
-            cmbKategori.SelectedIndexChanged += cmbKategori_SelectedIndexChanged;
             // 
             // btnAndraKategori
             // 
