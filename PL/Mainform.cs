@@ -239,18 +239,36 @@ namespace PL
 
         private async void btnLaggTillKategori_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtNyKategori.Text))
+
+            var nyttNamn = txtNyKategori.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(nyttNamn))
             {
                 MessageBox.Show("Ange ett kategorinamn.");
                 return;
             }
 
-            var nyKategori = new Kategori { Namn = txtNyKategori.Text };
+            // Hämta alla befintliga kategorier
+            var befintligaKategorier = await enKategoriService.HamtaAllaKategorier();
+
+            // Kolla om namnet redan finns (ignorerar versaler/gemener och extra mellanslag)
+            bool finnsRedan = befintligaKategorier
+                .Any(k => string.Equals(k.Namn.Trim(), nyttNamn, StringComparison.OrdinalIgnoreCase));
+
+            if (finnsRedan)
+            {
+                MessageBox.Show("Det finns redan en kategori med det namnet.");
+                return;
+            }
+
+            var nyKategori = new Kategori { Namn = nyttNamn };
 
             await enKategoriService.LagraNyKategori(nyKategori);
             await LaddaKategorierAsync();
 
             txtNyKategori.Clear();
+
+
         }
 
         private async void btnAndraKategori_Click(object sender, EventArgs e)
@@ -279,28 +297,43 @@ namespace PL
 
         private void cbmFilterKategori_SelectedIndexChanged(object sender, EventArgs e)
         {
+        
+            // Om vi inte har några poddar laddade: gör inget
             if (allaPoddar == null || allaPoddar.Count == 0)
                 return;
 
             var valt = cbmFilterKategori.SelectedItem;
 
-            // "Alla kategorier" -> visa allt
-            if (valt is string s && s == "Alla kategorier")
+            // Om inget valt -> visa alla
+            if (valt == null)
             {
                 VisaPoddar(allaPoddar);
                 return;
             }
 
-            // Kategori-objekt -> filtrera p� dess Id
+            // Om det är "Alla kategorier" (string-post i comboboxen)
+            if (valt is string s)
+            {
+                if (string.Equals(s.Trim(), "Alla kategorier", StringComparison.OrdinalIgnoreCase))
+                {
+                    VisaPoddar(allaPoddar);
+                }
+
+                return;
+            }
+
+            // Om det är ett Kategori-objekt -> filtrera på dess Id
             if (valt is Kategori kat)
             {
                 var filtrerade = allaPoddar
-                    .Where(p => p.KategoriId == kat.Id)
+                    .Where(p => string.Equals(p.KategoriId, kat.Id, StringComparison.OrdinalIgnoreCase))
                     .ToList();
 
                 VisaPoddar(filtrerade);
             }
         }
+
+        
 
         private async void btnAvprenumerera_ClickAsync(object sender, EventArgs e)
         {
@@ -326,6 +359,11 @@ namespace PL
                 }
 
             }
+        }
+
+        private void cmbKategori_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
