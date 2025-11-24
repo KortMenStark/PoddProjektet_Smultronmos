@@ -34,6 +34,7 @@
             btnAvbryt = new Button();
             lblNamn = new Label();
             lblKategori = new Label();
+            btnNyKategori = new Button();
             SuspendLayout();
             // 
             // txtNamn
@@ -89,11 +90,22 @@
             lblKategori.TabIndex = 5;
             lblKategori.Text = "Kategori (valfritt):";
             // 
+            // btnNyKategori
+            // 
+            btnNyKategori.Location = new Point(230, 105);
+            btnNyKategori.Name = "btnNyKategori";
+            btnNyKategori.Size = new Size(100, 23);
+            btnNyKategori.TabIndex = 6;
+            btnNyKategori.Text = "Ny kategori";
+            btnNyKategori.UseVisualStyleBackColor = true;
+            btnNyKategori.Click += btnNyKategori_Click;
+            // 
             // SavePoddForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(384, 221);
+            Controls.Add(btnNyKategori);
             Controls.Add(lblKategori);
             Controls.Add(lblNamn);
             Controls.Add(btnAvbryt);
@@ -118,5 +130,6 @@
         private Button btnAvbryt;
         private Label lblNamn;
         private Label lblKategori;
+        private Button btnNyKategori;
     }
 }

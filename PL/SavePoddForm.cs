@@ -19,13 +19,14 @@ namespace PL
         private readonly List<Kategori> _kategorier;
         private readonly string _rssUrl;
         private readonly PoddService _poddService;
+        private readonly KategoriService kategoriService;
 
         public SavePoddForm()
         {
             InitializeComponent();
         }
 
-        public SavePoddForm(SyndicationFeed feed, List<Kategori> kategorier, string rssUrl, PoddService poddService)
+        public SavePoddForm(SyndicationFeed feed, List<Kategori> kategorier, string rssUrl, PoddService poddService, KategoriService kategoriService)
         {
             InitializeComponent();
 
@@ -47,6 +48,7 @@ namespace PL
             // Gör så listan visar kategori-namn
             cmbKategori.DisplayMember = "Namn";
             cmbKategori.SelectedIndex = 0; // Ingen kategori som default
+            this.kategoriService = kategoriService;
         }
 
         private async void btnSpara_Click(object sender, EventArgs e)
@@ -87,6 +89,21 @@ namespace PL
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private async void btnNyKategori_Click(object sender, EventArgs e)
+        {
+            var dlg = new EditKategoriForm(kategoriService);
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                // Uppdatera kategorilistan
+                cmbKategori.Items.Clear();
+                cmbKategori.Items.Add("Ingen kategori");
+                var alla = await kategoriService.HamtaAllaKategorier();
+                foreach (var kat in alla) cmbKategori.Items.Add(kat);
+                // Välj senaste skapade kategorin
+                cmbKategori.SelectedIndex = cmbKategori.Items.Count - 1;
+            }
         }
     }
 }

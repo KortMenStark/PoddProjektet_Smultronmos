@@ -11,8 +11,9 @@ namespace DAL.Interfaces
     {
         Task<List<Kategori>> HamtaAlla();
         Task<Kategori> HamtaEnKategori(string kategoriId);
-        Task LagraKategori(Kategori nyKategori);
-        Task Uppdaterakategori(Kategori uppdateradKategori);
-        Task TaBortkategori(string kategoriId);
+        Task LagraNyKategori(Kategori nyKategori);
+        Task UppdateraKategori(Kategori uppdateradKategori);
+        Task TaBortKategori(string kategoriId);
+        Task<List<Kategori>> HamtaAllaKategorier();
     }
 }

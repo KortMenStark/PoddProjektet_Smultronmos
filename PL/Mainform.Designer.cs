@@ -318,7 +318,8 @@
             btnHanteraKategorier.Size = new Size(146, 35);
             btnHanteraKategorier.TabIndex = 22;
             btnHanteraKategorier.Text = "Hantera kategorier";
-            btnHanteraKategorier.UseVisualStyleBackColor = false;
+            btnHanteraKategorier.UseVisualStyleBackColor = true;
+            btnHanteraKategorier.Click += btnHanteraKategorier_Click;
             // 
             // txtKategori
             // 
