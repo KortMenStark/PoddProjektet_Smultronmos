@@ -52,6 +52,8 @@
             txtAvsnittTitel = new TextBox();
             lblAvsnittTitel = new Label();
             btnHanteraKategorier = new Button();
+            txtKategori = new TextBox();
+            lblAktuellkategori = new Label();
             SuspendLayout();
             // 
             // btnHamtaRss
@@ -186,6 +188,7 @@
             txtTitel.Name = "txtTitel";
             txtTitel.ReadOnly = true;
             txtTitel.Size = new Size(393, 27);
+            txtTitel.Size = new Size(533, 23);
             txtTitel.TabIndex = 13;
             // 
             // txtBeskrivning
@@ -235,6 +238,7 @@
             lblTitel.Location = new Point(304, 64);
             lblTitel.Name = "lblTitel";
             lblTitel.Size = new Size(38, 20);
+            lblTitel.Size = new Size(29, 15);
             lblTitel.TabIndex = 18;
             lblTitel.Text = "Titel";
             // 
@@ -273,7 +277,7 @@
             txtAvsnittTitel.Location = new Point(77, 74);
             txtAvsnittTitel.Name = "txtAvsnittTitel";
             txtAvsnittTitel.ReadOnly = true;
-            txtAvsnittTitel.Size = new Size(344, 23);
+            txtAvsnittTitel.Size = new Size(533, 23);
             txtAvsnittTitel.TabIndex = 22;
             // 
             // lblAvsnittTitel
@@ -284,6 +288,7 @@
             lblAvsnittTitel.Size = new Size(69, 15);
             lblAvsnittTitel.TabIndex = 23;
             lblAvsnittTitel.Text = "Avsnittstitel";
+            // 
             // btnHanteraKategorier
             // 
             btnHanteraKategorier.Location = new Point(9, 729);
@@ -294,11 +299,32 @@
             btnHanteraKategorier.Text = "Hantera kategorier";
             btnHanteraKategorier.UseVisualStyleBackColor = true;
             // 
+            // txtKategori
+            // 
+            txtKategori.Location = new Point(266, 532);
+            txtKategori.Name = "txtKategori";
+            txtKategori.Size = new Size(344, 23);
+            txtKategori.TabIndex = 24;
+            // 
+            // lblAktuellkategori
+            // 
+            lblAktuellkategori.AutoSize = true;
+            lblAktuellkategori.Location = new Point(268, 511);
+            lblAktuellkategori.Name = "lblAktuellkategori";
+            lblAktuellkategori.Size = new Size(51, 15);
+            lblAktuellkategori.TabIndex = 25;
+            lblAktuellkategori.Text = "Kategori";
+            // 
             // Mainform
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1467, 815);
+            ClientSize = new Size(1284, 611);
+            Controls.Add(lblAktuellkategori);
+            Controls.Add(txtKategori);
+            Controls.Add(lblAvsnittTitel);
+            Controls.Add(txtAvsnittTitel);
             Controls.Add(btnHanteraKategorier);
             Controls.Add(btnAvprenumerera);
             Controls.Add(lblUtgivningsdatum);
@@ -355,5 +381,7 @@
         private TextBox txtAvsnittTitel;
         private Label lblAvsnittTitel;
         private Button btnHanteraKategorier;
+        private TextBox txtKategori;
+        private Label lblAktuellkategori;
     }
 }
