@@ -68,6 +68,8 @@ namespace PL
                 var feed = await enRssService.HamtaFlodeAsync(url);
                 hamtatfeed = feed;
 
+                txtTitel.Text = feed.Title.Text;
+
                 lstAvsnitt.Items.Clear();
 
                 foreach (var item in feed.Items)
@@ -92,8 +94,7 @@ namespace PL
             // Ta bort HTML bara från sammanfattningen
             string renSammanfattning = TaBortHtml(valtAvsnitt.Summary.Text);
 
-            // Skriv ut i TRE olika textboxes
-            txtTitel.Text = valtAvsnitt.Title.Text;
+            txtAvsnittTitel.Text = valtAvsnitt.Title.Text;
 
             // Välj själv hur datumet ska formateras
             txtPubliceringsdatum.Text = valtAvsnitt.PublishDate.DateTime.ToString("yyyy-MM-dd HH:mm");
@@ -138,7 +139,7 @@ namespace PL
 
         private async void btnLaddaPoddar_ClickAsync(object sender, EventArgs e)
         {
-            // 1. H�mta alla poddar och lagra i f�ltet
+            // 1. H�mta alla poddar och lagra i fältet
             allaPoddar = await enPoddService.HamtaAllaPoddar();
 
             // 2. Visa dem i listboxen
@@ -163,7 +164,7 @@ namespace PL
             if (allaPoddar == null || allaPoddar.Count == 0)
                 return;
 
-            // vilka kategori-Id:n anv�nds av poddarna?
+            // vilka kategori-Id:n används av poddarna?
             var användaKategoriIds = allaPoddar
                 .Select(p => p.KategoriId)
                 .Where(id => !string.IsNullOrWhiteSpace(id))
@@ -180,7 +181,7 @@ namespace PL
             cbmFilterKategori.SelectedIndexChanged -= cbmFilterKategori_SelectedIndexChanged;
 
             cbmFilterKategori.Items.Clear();
-            cbmFilterKategori.Items.Add("Alla kategorier"); // special-v�rde
+            cbmFilterKategori.Items.Add("Alla kategorier"); // special-värde
 
             foreach (var kat in kategorierSomHarPoddar)
             {
