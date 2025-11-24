@@ -51,6 +51,7 @@
             btnAvprenumerera = new Button();
             txtAvsnittTitel = new TextBox();
             lblAvsnittTitel = new Label();
+            btnHanteraKategorier = new Button();
             SuspendLayout();
             // 
             // btnHamtaRss
@@ -223,7 +224,7 @@
             lblTitel.AutoSize = true;
             lblTitel.Location = new Point(42, 48);
             lblTitel.Name = "lblTitel";
-            lblTitel.Size = new Size(29, 15);
+            lblTitel.Size = new Size(30, 15);
             lblTitel.TabIndex = 18;
             lblTitel.Text = "Titel";
             // 
@@ -272,6 +273,14 @@
             lblAvsnittTitel.Size = new Size(69, 15);
             lblAvsnittTitel.TabIndex = 23;
             lblAvsnittTitel.Text = "Avsnittstitel";
+            // btnHanteraKategorier
+            // 
+            btnHanteraKategorier.Location = new Point(8, 547);
+            btnHanteraKategorier.Name = "btnHanteraKategorier";
+            btnHanteraKategorier.Size = new Size(246, 31);
+            btnHanteraKategorier.TabIndex = 22;
+            btnHanteraKategorier.Text = "Hantera kategorier";
+            btnHanteraKategorier.UseVisualStyleBackColor = true;
             // 
             // Mainform
             // 
@@ -280,6 +289,7 @@
             ClientSize = new Size(1284, 611);
             Controls.Add(lblAvsnittTitel);
             Controls.Add(txtAvsnittTitel);
+            Controls.Add(btnHanteraKategorier);
             Controls.Add(btnAvprenumerera);
             Controls.Add(lblUtgivningsdatum);
             Controls.Add(lblBeskrivning);
@@ -334,5 +344,6 @@
         private Button btnAvprenumerera;
         private TextBox txtAvsnittTitel;
         private Label lblAvsnittTitel;
+        private Button btnHanteraKategorier;
     }
 }
