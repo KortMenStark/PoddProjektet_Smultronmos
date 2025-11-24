@@ -49,6 +49,7 @@
             lblBeskrivning = new Label();
             lblUtgivningsdatum = new Label();
             btnAvprenumerera = new Button();
+            btnHanteraKategorier = new Button();
             SuspendLayout();
             // 
             // btnHamtaRss
@@ -221,7 +222,7 @@
             lblTitel.AutoSize = true;
             lblTitel.Location = new Point(266, 48);
             lblTitel.Name = "lblTitel";
-            lblTitel.Size = new Size(29, 15);
+            lblTitel.Size = new Size(30, 15);
             lblTitel.TabIndex = 18;
             lblTitel.Text = "Titel";
             // 
@@ -253,11 +254,21 @@
             btnAvprenumerera.UseVisualStyleBackColor = true;
             btnAvprenumerera.Click += btnAvprenumerera_ClickAsync;
             // 
+            // btnHanteraKategorier
+            // 
+            btnHanteraKategorier.Location = new Point(8, 547);
+            btnHanteraKategorier.Name = "btnHanteraKategorier";
+            btnHanteraKategorier.Size = new Size(246, 31);
+            btnHanteraKategorier.TabIndex = 22;
+            btnHanteraKategorier.Text = "Hantera kategorier";
+            btnHanteraKategorier.UseVisualStyleBackColor = true;
+            // 
             // Mainform
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1284, 611);
+            Controls.Add(btnHanteraKategorier);
             Controls.Add(btnAvprenumerera);
             Controls.Add(lblUtgivningsdatum);
             Controls.Add(lblBeskrivning);
@@ -310,5 +321,6 @@
         private Label lblBeskrivning;
         private Label lblUtgivningsdatum;
         private Button btnAvprenumerera;
+        private Button btnHanteraKategorier;
     }
 }
