@@ -65,7 +65,7 @@
             // 
             // btnHamtaRss
             // 
-            btnHamtaRss.Location = new Point(427, 19);
+            btnHamtaRss.Location = new Point(577, 11);
             btnHamtaRss.Margin = new Padding(2);
             btnHamtaRss.Name = "btnHamtaRss";
             btnHamtaRss.Size = new Size(101, 26);
@@ -86,7 +86,7 @@
             // 
             // txtRssUrl
             // 
-            txtRssUrl.Location = new Point(8, 19);
+            txtRssUrl.Location = new Point(160, 12);
             txtRssUrl.Margin = new Padding(2);
             txtRssUrl.Name = "txtRssUrl";
             txtRssUrl.Size = new Size(413, 25);
@@ -153,7 +153,6 @@
             cmbKategori.Name = "cmbKategori";
             cmbKategori.Size = new Size(121, 25);
             cmbKategori.TabIndex = 8;
-            cmbKategori.SelectedIndexChanged += cmbKategori_SelectedIndexChanged;
             // 
             // btnAndraKategori
             // 
@@ -376,7 +375,6 @@
             // panel3
             // 
             panel3.BackColor = Color.FromArgb(40, 40, 40);
-            panel3.BorderStyle = BorderStyle.FixedSingle;
             panel3.Controls.Add(lstAvsnitt);
             panel3.Controls.Add(txtBeskrivning);
             panel3.Controls.Add(txtKategori);
@@ -397,6 +395,8 @@
             panel3.Controls.Add(txtPubliceringsdatum);
             panel3.Controls.Add(lblBeskrivning);
             panel3.Controls.Add(lblUtgivningsdatum);
+            panel3.Controls.Add(txtRssUrl);
+            panel3.Controls.Add(btnHamtaRss);
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(200, 60);
             panel3.Name = "panel3";
@@ -413,8 +413,6 @@
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
-            Controls.Add(txtRssUrl);
-            Controls.Add(btnHamtaRss);
             Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Margin = new Padding(2);
             Name = "Mainform";
@@ -426,7 +424,6 @@
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
