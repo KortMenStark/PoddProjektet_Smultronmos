@@ -3,6 +3,7 @@ using DAL;
 using DAL.Repository;
 using Models_new;
 using System.ServiceModel.Syndication;
+using FontAwesome.Sharp;
 using System.Linq;
 using static System.Net.WebRequestMethods;
 
@@ -223,7 +224,7 @@ namespace PL
                 else
                     txtKategori.Text = "Okänd kategori";   // ID finns men matchar ingen kategori  (TA BORT NÄR VI LÖST??)
             }
-           
+
 
             // Hämta RSS-flödet
             var feed = await enRssService.HamtaFlodeAsync(valdPodd.RssUrl);
@@ -322,7 +323,7 @@ namespace PL
 
         private void cbmFilterKategori_SelectedIndexChanged(object sender, EventArgs e)
         {
-        
+
             // Om vi inte har några poddar laddade: gör inget
             if (allaPoddar == null || allaPoddar.Count == 0)
                 return;
@@ -359,7 +360,7 @@ namespace PL
             }
         }
 
-        
+
 
         private async void btnAvprenumerera_ClickAsync(object sender, EventArgs e)
         {
