@@ -89,7 +89,7 @@
             btnSparaPodd.TabIndex = 4;
             btnSparaPodd.Text = "Spara";
             btnSparaPodd.UseVisualStyleBackColor = true;
-            btnSparaPodd.Click += btnSparaPodd_ClickAsync;
+            btnSparaPodd.Click += btnSparaPodd_Click;
             // 
             // lstPoddar
             // 

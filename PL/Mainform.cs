@@ -116,60 +116,24 @@ namespace PL
             return utanHtml.Trim();
         }
 
-        private async void btnSparaPodd_ClickAsync(object sender, EventArgs e)
+        private void btnSparaPodd_Click(object sender, EventArgs e)
         {
             if (hamtatfeed == null)
             {
-                MessageBox.Show("Inget RSS-flöde att spara. H�mta ett flöde först.");
+                MessageBox.Show("Inget RSS-flöde att spara. Hämta först.");
                 return;
             }
 
-            // NYTT: tvinga användaren att välja kategori
-            if (cmbKategori.SelectedItem is not Kategori valdKategori)
+            var dlg = new SavePoddForm(
+                hamtatfeed,
+                allaKategorier,
+                txtRssUrl.Text,
+                enPoddService);
+
+            if (dlg.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show("Välj en kategori innan du sparar podden.");
-                return;
+                btnLaddaPoddar.PerformClick(); // Uppdatera listan efter sparning
             }
-
-            string rssUrl = txtRssUrl.Text;
-            if (string.IsNullOrWhiteSpace(rssUrl))
-            {
-                MessageBox.Show("RSS-URL saknas.");
-                return;
-            }
-
-            // Skapa poddflödet som tidigare
-            var poddFlode = enPoddService.SkapaPoddflode(hamtatfeed);
-
-            // Använd Kategori.Id från det valda objektet
-            string kategoriId = valdKategori.Id;
-
-            //await enPoddService.SparaPodd(poddFlode, rssUrl, kategoriId);
-
-            //MessageBox.Show("Podden har sparats.");
-
-            bool sparad = await enPoddService.SparaPoddOmNyAsync(poddFlode, rssUrl, kategoriId);
-
-            if (sparad)
-            {
-                MessageBox.Show("Podden har sparats i databasen.");
-            }
-            else
-            {
-                MessageBox.Show("Podden finns redan i databasen.");
-            }
-
-            // Rensa formuläret som tidigare
-            txtRssUrl.Clear();
-            lstAvsnitt.Items.Clear();
-            txtBeskrivning.Clear();
-            hamtatfeed = null;
-
-            btnLaddaPoddar.PerformClick();
-
-
-            // (valfritt) ladda om podd-listan + filter direkt här
-            //await LaddaPoddarAsync();  //<-- om vi extraherar "Ladda poddar"-logik till en metod
         }
 
         private async void btnLaddaPoddar_ClickAsync(object sender, EventArgs e)
