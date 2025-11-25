@@ -115,19 +115,28 @@ namespace PL
 
         private void lstAvsnitt_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Skydd om inget är valt
             if (lstAvsnitt.SelectedIndex < 0)
                 return;
 
             var valtAvsnitt = hamtatfeed.Items.ElementAt(lstAvsnitt.SelectedIndex);
 
-            // Ta bort HTML bara från sammanfattningen
-            string renSammanfattning = TaBortHtml(valtAvsnitt.Summary.Text);
+            txtAvsnittTitel.Text = valtAvsnitt.Title?.Text ?? "Ingen titel";
 
-            txtAvsnittTitel.Text = valtAvsnitt.Title.Text;
+            txtPubliceringsdatum.Text = valtAvsnitt.PublishDate.DateTime
+                .ToString("yyyy-MM-dd HH:mm");
 
-            // Välj själv hur datumet ska formateras
-            txtPubliceringsdatum.Text = valtAvsnitt.PublishDate.DateTime.ToString("yyyy-MM-dd HH:mm");
+            string renSammanfattning;
+
+            // Om det INTE finns någon summary: använd din egen text
+            if (valtAvsnitt.Summary == null || string.IsNullOrWhiteSpace(valtAvsnitt.Summary.Text))
+            {
+                renSammanfattning = "Ingen sammanfattning tillgänglig för detta avsnitt.";
+            }
+            else
+            {
+                // Finns summary: ta bort HTML
+                renSammanfattning = TaBortHtml(valtAvsnitt.Summary.Text);
+            }
 
             txtBeskrivning.Text = renSammanfattning;
         }
