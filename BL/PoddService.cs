@@ -70,6 +70,7 @@ namespace BL
                 RssUrl = rssUrl,
                 KategoriId = kategoriId
             };
+
             await poddRepository.LagraPodd(nyPodd);
         }
 

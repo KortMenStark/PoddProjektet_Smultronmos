@@ -29,6 +29,9 @@ namespace PL
         //Lokal lista för alla poddar som laddas in i listboxen
         private List<Podd> allaPoddar = new List<Podd>();
 
+        // Håller reda på vilken RSS-URL som användes när flödet hämtades
+        private string? senastHamtdRssUrl;
+
         public Mainform()
         {
             InitializeComponent();
@@ -84,8 +87,9 @@ namespace PL
 
         private async void btnHamtaRss_ClickAsync(object sender, EventArgs e)
         {
-            string url = txtRssUrl.Text;
+            var url = txtRssUrl.Text.Trim();
 
+            // 1. Tom URL? Stoppa.
             if (string.IsNullOrWhiteSpace(url))
             {
                 MessageBox.Show("Ange en giltig RSS-URL.");
@@ -94,22 +98,35 @@ namespace PL
 
             try
             {
+                // 2. Hämta flödet
                 var feed = await enRssService.HamtaFlodeAsync(url);
-                GaTillRSSLage();
-                hamtatfeed = feed;
 
+                // 3. Spara RSS-flödet och URL:en som användes
+                hamtatfeed = feed;
+                senastHamtdRssUrl = url;
+
+                // 4. Uppdatera GUI (EXAKT som din gamla version)
+                GaTillRSSLage();
                 txtTitel.Text = feed.Title.Text;
 
                 lstAvsnitt.Items.Clear();
-
                 foreach (var item in feed.Items)
                 {
                     lstAvsnitt.Items.Add(item.Title.Text);
                 }
+
+                // 5. Tillåt sparning
+                btnSparaPodd.Enabled = true;
+
+                // MessageBox.Show("RSS-flödet hämtades utan problem."); //Ett pop-up för att bekräfta lyckad hämtning
             }
             catch (Exception ettFel)
             {
-                MessageBox.Show("Fel vid hämtning av RSS-flöde, (OBS: Kontrollera stavningen): " + ettFel.Message);
+                hamtatfeed = null;
+                senastHamtdRssUrl = null;
+                btnSparaPodd.Enabled = false;
+
+                MessageBox.Show(ettFel.Message);
             }
         }
 
@@ -158,16 +175,33 @@ namespace PL
 
         private void btnSparaPodd_Click(object sender, EventArgs e)
         {
+            var aktuellUrl = txtRssUrl.Text.Trim();
+
+            // 1: Kolla att URL inte är tom
+            if (string.IsNullOrWhiteSpace(aktuellUrl))
+            {
+                MessageBox.Show("RSS-länken får inte vara tom. Ange en länk och hämta flödet först.");
+                return;
+            }
+
+            // 2: Kolla att vi faktiskt har ett hämtat flöde
             if (hamtatfeed == null)
             {
                 MessageBox.Show("Inget RSS-flöde att spara. Hämta först.");
                 return;
             }
 
+            // 3: Kolla att URL:en inte ändrats efter hämtning
+            if (!string.Equals(aktuellUrl, senastHamtdRssUrl, StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show("RSS-länken har ändrats sedan flödet hämtades. Hämta flödet igen innan du sparar podden.");
+                return;
+            }
+
             var dlg = new SavePoddForm(
                 hamtatfeed,
                 allaKategorier,
-                txtRssUrl.Text,
+                aktuellUrl,          // använd den trimmade URL:en
                 enPoddService,
                 enKategoriService);
 
@@ -396,6 +430,11 @@ namespace PL
             MessageBox.Show("Kategorin ändrades.");
         }
 
-
+        private void txtRssUrl_TextChanged(object sender, EventArgs e)
+        {
+            //hamtatfeed = null;
+            //senastHamtdRssUrl = null;
+            btnSparaPodd.Enabled = false;
+        }
     }
 }

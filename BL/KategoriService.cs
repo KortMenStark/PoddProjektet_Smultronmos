@@ -7,6 +7,7 @@ using DAL.Interfaces;
 using DAL.Repository;
 using Models_new;
 
+
 namespace BL
 {
     public class KategoriService
@@ -34,7 +35,7 @@ namespace BL
         }
         // 5. Uppdatera kategori
         public Task UppdateraKategori(Kategori kategori)
-        {
+        { 
             return kategoriRepository.UppdateraKategori(kategori);
         }
         // 6. Ta bort kategori + nollställ kategori på poddar

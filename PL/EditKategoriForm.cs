@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using BL;
 using Models_new;
+using PL.Validering;
 
 namespace PL
 {
@@ -45,25 +46,43 @@ namespace PL
         private async void btnSpara_Click(object sender, EventArgs e)
         {
             string namn = txtNamn.Text.Trim();
+
+            // 1. Enkel UI-kontroll (helt OK enligt uppgiften)
             if (string.IsNullOrEmpty(namn))
             {
-                MessageBox.Show("Ange ett namn.");
+                MessageBox.Show("Ange ett kategorinamn.");
                 return;
             }
-            if (_kategori == null)
+
+            try
             {
-                // Ny kategori
-                var nyKat = new Kategori { Namn = namn };
-                await _kategoriService.LagraNyKategori(nyKat);
+                // 2. FORMELL VALIDERING – ska ske i PL (presentationslagret)
+                // Detta använder valideringsklass i PL.Validering
+                var kategori = new Kategori { Namn = namn };
+                KategoriValidering.Validera(kategori);
+
+                // 3. Försök spara – BL skickar vidare till DAL som använder transaktioner
+                if (_kategori == null)
+                {
+                    // Ny kategori
+                    await _kategoriService.LagraNyKategori(kategori);
+                }
+                else
+                {
+                    // Redigera befintlig
+                    _kategori.Namn = namn;
+                    await _kategoriService.UppdateraKategori(_kategori);
+                }
+
+                // 4. ALLT HAR LYCKATS 
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
-            else
+            catch (Exception ex)
             {
-                // Redigera befintlig
-                _kategori.Namn = namn;
-                await _kategoriService.UppdateraKategori(_kategori);
+                // UI rollback – visa fel, gör INGA ändringar
+                MessageBox.Show(ex.Message, "Fel vid sparande", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            this.DialogResult = DialogResult.OK;
-            this.Close();
         }
 
         private void btnAvbryt_Click(object sender, EventArgs e)

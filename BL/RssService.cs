@@ -15,17 +15,27 @@ namespace BL
         {
             return await Task.Run(() =>
             {
-                var settings = new XmlReaderSettings
+                try
                 {
-                    DtdProcessing = DtdProcessing.Parse,
-                    IgnoreProcessingInstructions = true,
-                    IgnoreComments = true,
-                    IgnoreWhitespace = true
-                };
+                    var settings = new XmlReaderSettings
+                    {
+                        DtdProcessing = DtdProcessing.Parse,
+                        IgnoreProcessingInstructions = true,
+                        IgnoreComments = true,
+                        IgnoreWhitespace = true
+                    };
 
-                using (XmlReader lasare = XmlReader.Create(rssUrl, settings))
+                    using (XmlReader lasare = XmlReader.Create(rssUrl, settings))
+                    {
+                        return SyndicationFeed.Load(lasare);
+                    }
+                }
+                catch (Exception ex)
                 {
-                    return SyndicationFeed.Load(lasare);
+                    // En catch som fångar fel — 404, ogiltig URL, XML-fel, nätfel exempelvis. 
+                    throw new ApplicationException(
+                        "Kunde inte hämta RSS-flödet. Kontrollera att adressen är korrekt och att det är ett giltigt RSS-flöde.",
+                        ex);
                 }
             });
         }
