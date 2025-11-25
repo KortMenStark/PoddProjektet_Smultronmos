@@ -57,6 +57,7 @@
             txtPubliceringsdatum = new TextBox();
             lblUtgivningsdatum = new Label();
             lstAvsnitt = new ListBox();
+            lblMinaPoddar = new Label();
             panelLeft.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -233,7 +234,7 @@
             txtAvsnittTitel.Margin = new Padding(3, 2, 3, 2);
             txtAvsnittTitel.Name = "txtAvsnittTitel";
             txtAvsnittTitel.ReadOnly = true;
-            txtAvsnittTitel.Size = new Size(209, 22);
+            txtAvsnittTitel.Size = new Size(342, 22);
             txtAvsnittTitel.TabIndex = 22;
             // 
             // lblAvsnittTitel
@@ -256,7 +257,7 @@
             txtKategori.Location = new Point(1049, 234);
             txtKategori.Margin = new Padding(3, 2, 3, 2);
             txtKategori.Name = "txtKategori";
-            txtKategori.Size = new Size(209, 22);
+            txtKategori.Size = new Size(342, 22);
             txtKategori.TabIndex = 24;
             // 
             // lblAktuellkategori
@@ -395,7 +396,7 @@
             txtPubliceringsdatum.Location = new Point(1049, 299);
             txtPubliceringsdatum.Name = "txtPubliceringsdatum";
             txtPubliceringsdatum.ReadOnly = true;
-            txtPubliceringsdatum.Size = new Size(209, 22);
+            txtPubliceringsdatum.Size = new Size(342, 22);
             txtPubliceringsdatum.TabIndex = 15;
             // 
             // lblUtgivningsdatum
@@ -423,12 +424,23 @@
             lstAvsnitt.TabIndex = 1;
             lstAvsnitt.SelectedIndexChanged += lstAvsnitt_SelectedIndexChanged;
             // 
+            // lblMinaPoddar
+            // 
+            lblMinaPoddar.AutoSize = true;
+            lblMinaPoddar.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblMinaPoddar.Location = new Point(240, 96);
+            lblMinaPoddar.Name = "lblMinaPoddar";
+            lblMinaPoddar.Size = new Size(127, 25);
+            lblMinaPoddar.TabIndex = 30;
+            lblMinaPoddar.Text = "Mina Poddar";
+            // 
             // Mainform
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
             ClientSize = new Size(1434, 811);
+            Controls.Add(lblMinaPoddar);
             Controls.Add(lstAvsnitt);
             Controls.Add(lblAktuellkategori);
             Controls.Add(txtKategori);
@@ -488,5 +500,6 @@
         private PictureBox pictureBox1;
         private ListBox lstAvsnitt;
         private Label lblRss;
+        private Label lblMinaPoddar;
     }
 }
