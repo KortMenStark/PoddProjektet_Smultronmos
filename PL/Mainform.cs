@@ -335,6 +335,12 @@ namespace PL
                 pbPoddBild.Image = null;
             }
 
+            //  Väljer första avsnittet automatiskt
+            if (lstAvsnitt.Items.Count > 0)
+            {
+                lstAvsnitt.SelectedIndex = 0;   // Triggar lstAvsnitt_SelectedIndexChanged
+            }
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -347,13 +353,22 @@ namespace PL
 
         }
 
-        private void Mainform_Load(object sender, EventArgs e)
+        private async void Mainform_Load(object sender, EventArgs e)
         {
             btnSparaPodd.Visible = false;
             btnAvprenumerera.Visible = false;
             btnAndraKategori.Visible = false;
             cmbKategori.Visible = false;
             lblNyKategori.Visible = false;
+
+            // 1. Ladda alla sparade poddar från databasen
+            await LaddaPoddarAsync();
+
+            // 2. Om det finns poddar – välj första
+            if (lstPoddar.Items.Count > 0)
+            {
+                lstPoddar.SelectedIndex = 0;   // Triggar lstPoddar_SelectedIndexChangedAsync
+            }
         }
 
         private void cbmFilterKategori_SelectedIndexChanged(object sender, EventArgs e)
@@ -531,7 +546,7 @@ namespace PL
             {
             
            // Användaren har gjort en verklig förändring → visa spara-knappen
- btnSparaPoddKategori.Visible = true;
+                btnSparaPoddKategori.Visible = true;
             }
         }
 
