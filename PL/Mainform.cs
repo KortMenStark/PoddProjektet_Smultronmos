@@ -326,9 +326,9 @@ namespace PL
         }
 
         private void label1_Click(object sender, EventArgs e)
-                {
+        {
 
-                }
+        }
 
         private void txtNyKategori_TextChanged(object sender, EventArgs e)
         {
@@ -478,6 +478,16 @@ namespace PL
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelPoddLista_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelAvsnittDetaljer_Paint(object sender, PaintEventArgs e)
         {
 
         }
