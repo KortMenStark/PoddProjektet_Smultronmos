@@ -50,7 +50,7 @@ namespace PL
             new KategoriRepository(new MongoDbContext()),
               new PoddRepository(new MongoDbContext()));
 
-            
+
 
         }
 
@@ -64,7 +64,7 @@ namespace PL
         {
             NollstallPoddBild();
 
-            if(feed == null)
+            if (feed == null)
                 return;
             var bildUrl = feed.ImageUrl?.ToString();
 
@@ -87,6 +87,11 @@ namespace PL
         {
             btnSparaPodd.Visible = true;
             btnAvprenumerera.Visible = false;
+            lblAktuellkategori.Visible = false;
+            cmbPoddKategori.Visible = false;
+            btnSparaPoddKategori.Visible = false;
+            btnLaggTillNyKategori.Visible = false;
+            lblAvsnittSeparator.Visible = false;
 
         }
 
@@ -94,6 +99,13 @@ namespace PL
         {
             btnSparaPodd.Visible = false;
             btnAvprenumerera.Visible = true;
+            lblAktuellkategori.Visible = true;
+            cmbPoddKategori.Visible = true;
+            btnLaggTillNyKategori.Visible = true;
+            lblAvsnittSeparator.Visible = true;
+
+            // Visa inte knappen förrän en ändring görs
+            btnSparaPoddKategori.Visible = false;
         }
 
         //Synkroniserar UI med databasen varje gång kategorier ändras.
@@ -207,9 +219,10 @@ namespace PL
             return utanHtml.Trim();
         }
 
-        private void btnSparaPodd_Click(object sender, EventArgs e)
+        private async void btnSparaPodd_Click(object sender, EventArgs e)
         {
             var aktuellUrl = txtRssUrl.Text.Trim();
+
 
             // 1: Kolla att URL inte är tom
             if (string.IsNullOrWhiteSpace(aktuellUrl))
@@ -218,12 +231,14 @@ namespace PL
                 return;
             }
 
+
             // 2: Kolla att vi faktiskt har ett hämtat flöde
             if (hamtatfeed == null)
             {
                 MessageBox.Show("Inget RSS-flöde att spara. Hämta först.");
                 return;
             }
+
 
             // 3: Kolla att URL:en inte ändrats efter hämtning
             if (!string.Equals(aktuellUrl, senastHamtdRssUrl, StringComparison.OrdinalIgnoreCase))
@@ -232,16 +247,42 @@ namespace PL
                 return;
             }
 
-            var dlg = new SavePoddForm(
-                hamtatfeed,
-                allaKategorier,
-                aktuellUrl,          // använd den trimmade URL:en
-                enPoddService,
-                enKategoriService);
 
+            // 4: Öppna dialogen för att sätta namn/kategori
+            var dlg = new SavePoddForm(
+            hamtatfeed,
+            allaKategorier,
+            aktuellUrl, // använd den trimmade URL:en
+            enPoddService,
+            enKategoriService);
+
+
+            // 5: Visa dialogen och vänta på resultatet
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                btnLaddaPoddar.PerformClick(); // Uppdatera listan efter sparning
+                // Här vet vi att podden har sparats (SavePoddForm sätter OK bara om sparad == true)
+
+
+                // 5.1 Ladda om alla poddar från databasen
+                await LaddaPoddarAsync();
+
+
+                // 5.2 Försök hitta den podd som har samma RSS-url som vi nyss sparade
+                var nyPodd = allaPoddar
+                .FirstOrDefault(p => string.Equals(p.RssUrl, aktuellUrl, StringComparison.OrdinalIgnoreCase));
+
+
+                if (nyPodd != null)
+                {
+                    // 5.3 Välj podden i listan (triggar lstPoddar_SelectedIndexChangedAsync)
+                    lstPoddar.SelectedItem = nyPodd;
+                }
+                else
+                {
+                    // (Valfritt) fallback: om vi inte hittar den, gör åtminstone en reload av listan
+                    // och låt användaren välja själv.
+                    MessageBox.Show("Podden sparades, men kunde inte hittas automatiskt i listan.");
+                }
             }
         }
 
@@ -565,8 +606,8 @@ namespace PL
             }
             else
             {
-            
-           // Användaren har gjort en verklig förändring → visa spara-knappen
+
+                // Användaren har gjort en verklig förändring → visa spara-knappen
                 btnSparaPoddKategori.Visible = true;
             }
         }
@@ -617,7 +658,7 @@ namespace PL
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 // 1. Vi ska uppdatera dropdownen programmässigt → ignorera events under tiden
-            _ignoreKategoriEvents = true;
+                _ignoreKategoriEvents = true;
                 try
                 {
                     // 2. Ladda om kategorier från databasen
@@ -646,5 +687,9 @@ namespace PL
             }
         }
 
+        private void lblAktuellkategori_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
