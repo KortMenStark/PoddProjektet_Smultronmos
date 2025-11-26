@@ -382,8 +382,9 @@ namespace PL
             lblNyKategori.Visible = false;
 
             // 1. Ladda alla sparade poddar & kategorier från databasen
-            await LaddaPoddarAsync();
             await LaddaKategorierAsync();
+            await LaddaPoddarAsync();
+            
 
             // 2. Om det finns poddar – välj första
             if (lstPoddar.Items.Count > 0)
