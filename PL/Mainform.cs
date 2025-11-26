@@ -94,7 +94,7 @@ namespace PL
             // 1. Tom URL? Stoppa.
             if (string.IsNullOrWhiteSpace(url))
             {
-                MessageBox.Show("Ange en giltig RSS-URL.");
+                MessageBox.Show("Vänligen ange en Rss länk");
                 return;
             }
 
