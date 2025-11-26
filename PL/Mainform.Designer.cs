@@ -61,8 +61,8 @@
             panelPoddLista = new Panel();
             lblPoddListaSeparator = new Label();
             panelAvsnittLista = new Panel();
-            lblAvsnittRubrik = new Label();
             lblAvsnittSeparator = new Label();
+            lblAvsnittRubrik = new Label();
             panelAvsnittDetaljer = new Panel();
             panelLeft.SuspendLayout();
             panel1.SuspendLayout();
@@ -329,7 +329,6 @@
             lblNyKategori.Size = new Size(84, 17);
             lblNyKategori.TabIndex = 28;
             lblNyKategori.Text = "Ny kategori:";
-            lblNyKategori.Click += lblNyKategori_Click;
             // 
             // panelLeft
             // 
@@ -503,6 +502,14 @@
             panelAvsnittLista.TabIndex = 32;
             panelAvsnittLista.Paint += panelAvsnittLista_Paint;
             // 
+            // lblAvsnittSeparator
+            // 
+            lblAvsnittSeparator.BackColor = Color.LightGray;
+            lblAvsnittSeparator.Location = new Point(10, 90);
+            lblAvsnittSeparator.Name = "lblAvsnittSeparator";
+            lblAvsnittSeparator.Size = new Size(360, 1);
+            lblAvsnittSeparator.TabIndex = 20;
+            // 
             // lblAvsnittRubrik
             // 
             lblAvsnittRubrik.AutoSize = true;
@@ -512,14 +519,6 @@
             lblAvsnittRubrik.Size = new Size(52, 17);
             lblAvsnittRubrik.TabIndex = 19;
             lblAvsnittRubrik.Text = "Avsnitt";
-            // 
-            // lblAvsnittSeparator
-            // 
-            lblAvsnittSeparator.BackColor = Color.LightGray;
-            lblAvsnittSeparator.Location = new Point(10, 90);
-            lblAvsnittSeparator.Name = "lblAvsnittSeparator";
-            lblAvsnittSeparator.Size = new Size(360, 1);
-            lblAvsnittSeparator.TabIndex = 20;
             // 
             // panelAvsnittDetaljer
             // 
