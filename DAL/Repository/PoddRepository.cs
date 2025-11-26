@@ -42,16 +42,21 @@ namespace DAL.Repository
         //antingen lyckas eller misslyckas tillsammans.
         public async Task LagraPodd(Podd nyPodd)
         {
+            //Startar en ny databas-session och "aktiverar" transaktionshantering.
             using var session = await context.MongoKlient.StartSessionAsync();
             session.StartTransaction();
 
             try
             {
+                //Försöker lägga till den nya podden i kollektionen i databasen inom transaktionen.
                 await poddKollektion.InsertOneAsync(session, nyPodd);
+
+                //Om allt gick bra, "commitar" vi transaktionen för att spara ändringarna permanent.
                 await session.CommitTransactionAsync();
             }
             catch
             {
+                //Om något gick fel, "abortar" vi transaktionen för att rulla tillbaka alla ändringar.
                 await session.AbortTransactionAsync();
                 throw;
             }
