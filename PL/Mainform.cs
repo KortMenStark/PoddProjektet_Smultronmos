@@ -322,6 +322,7 @@ namespace PL
             btnAvprenumerera.Visible = false;
             btnAndraKategori.Visible = false;
             cmbKategori.Visible = false;
+            lblNyKategori.Visible = false;
         }
 
         private void cbmFilterKategori_SelectedIndexChanged(object sender, EventArgs e)
