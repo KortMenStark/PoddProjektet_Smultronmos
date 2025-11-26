@@ -54,6 +54,35 @@ namespace PL
 
         }
 
+        private void NollstallPoddBild()
+        {
+            pbPoddBild.Visible = false;
+            pbPoddBild.Image = null;
+        }
+
+        private void VisaPoddBild(SyndicationFeed? feed)
+        {
+            NollstallPoddBild();
+
+            if(feed == null)
+                return;
+            var bildUrl = feed.ImageUrl?.ToString();
+
+            if (string.IsNullOrWhiteSpace(bildUrl))
+                return;
+            try
+            {
+                pbPoddBild.SizeMode = PictureBoxSizeMode.Zoom;
+                pbPoddBild.LoadAsync(bildUrl);
+                pbPoddBild.Visible = true;
+            }
+
+            catch
+            {
+                NollstallPoddBild();
+            }
+        }
+
         private void GaTillRSSLage()
         {
             btnSparaPodd.Visible = true;
@@ -120,6 +149,8 @@ namespace PL
                 // 5. Tillåt sparning
                 btnSparaPodd.Enabled = true;
 
+                VisaPoddBild(feed);
+
                 // MessageBox.Show("RSS-flödet hämtades utan problem."); //Ett pop-up för att bekräfta lyckad hämtning
             }
             catch (Exception ettFel)
@@ -127,6 +158,7 @@ namespace PL
                 hamtatfeed = null;
                 senastHamtdRssUrl = null;
                 btnSparaPodd.Enabled = false;
+                NollstallPoddBild();
 
                 MessageBox.Show(ettFel.Message);
             }
@@ -321,18 +353,7 @@ namespace PL
             foreach (var item in feed.Items)
                 lstAvsnitt.Items.Add(item.Title.Text);
 
-            var bildUrl = feed.ImageUrl?.ToString();
-            if (!string.IsNullOrWhiteSpace(bildUrl))
-            {
-                pbPoddBild.Visible = true;
-                pbPoddBild.SizeMode = PictureBoxSizeMode.Zoom;
-                pbPoddBild.LoadAsync(bildUrl);
-            }
-            else
-            {
-                pbPoddBild.Visible = false;
-                pbPoddBild.Image = null;
-            }
+            VisaPoddBild(feed);
 
             //  Väljer första avsnittet automatiskt
             if (lstAvsnitt.Items.Count > 0)
