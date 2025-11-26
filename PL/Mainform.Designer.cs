@@ -41,7 +41,6 @@
             lblBeskrivning = new Label();
             btnAvprenumerera = new Button();
             txtAvsnittTitel = new TextBox();
-            txtKategori = new TextBox();
             lblAktuellkategori = new Label();
             cmbKategori = new ComboBox();
             btnAndraKategori = new Button();
@@ -58,6 +57,9 @@
             lstAvsnitt = new ListBox();
             pbPoddBild = new PictureBox();
             panelAvsnittLista = new Panel();
+            btnLaggTillNyKategori = new Button();
+            btnSparaPoddKategori = new Button();
+            cmbPoddKategori = new ComboBox();
             lblAvsnittSeparator = new Label();
             lblAvsnittRubrik = new Label();
             panelAvsnittDetaljer = new Panel();
@@ -244,25 +246,12 @@
             txtAvsnittTitel.Size = new Size(467, 28);
             txtAvsnittTitel.TabIndex = 22;
             // 
-            // txtKategori
-            // 
-            txtKategori.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtKategori.BackColor = Color.White;
-            txtKategori.BorderStyle = BorderStyle.FixedSingle;
-            txtKategori.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtKategori.ForeColor = Color.Black;
-            txtKategori.Location = new Point(10, 323);
-            txtKategori.Margin = new Padding(3, 2, 3, 2);
-            txtKategori.Name = "txtKategori";
-            txtKategori.Size = new Size(417, 29);
-            txtKategori.TabIndex = 24;
-            // 
             // lblAktuellkategori
             // 
             lblAktuellkategori.AutoSize = true;
             lblAktuellkategori.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblAktuellkategori.ForeColor = Color.Black;
-            lblAktuellkategori.Location = new Point(10, 306);
+            lblAktuellkategori.Location = new Point(7, 311);
             lblAktuellkategori.Name = "lblAktuellkategori";
             lblAktuellkategori.Size = new Size(55, 15);
             lblAktuellkategori.TabIndex = 25;
@@ -277,6 +266,7 @@
             cmbKategori.Name = "cmbKategori";
             cmbKategori.Size = new Size(173, 23);
             cmbKategori.TabIndex = 26;
+            cmbKategori.Visible = false;
             // 
             // btnAndraKategori
             // 
@@ -293,6 +283,7 @@
             btnAndraKategori.Text = "Ändra Kategori";
             btnAndraKategori.TextImageRelation = TextImageRelation.ImageAboveText;
             btnAndraKategori.UseVisualStyleBackColor = false;
+            btnAndraKategori.Visible = false;
             btnAndraKategori.Click += btnAndraKategori_Click;
             // 
             // lblNyKategori
@@ -306,6 +297,7 @@
             lblNyKategori.Size = new Size(84, 17);
             lblNyKategori.TabIndex = 28;
             lblNyKategori.Text = "Ny kategori:";
+            lblNyKategori.Visible = false;
             // 
             // panelMinaPoddar
             // 
@@ -457,10 +449,12 @@
             panelAvsnittLista.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             panelAvsnittLista.BackColor = Color.White;
             panelAvsnittLista.BorderStyle = BorderStyle.FixedSingle;
+            panelAvsnittLista.Controls.Add(btnLaggTillNyKategori);
+            panelAvsnittLista.Controls.Add(btnSparaPoddKategori);
+            panelAvsnittLista.Controls.Add(cmbPoddKategori);
             panelAvsnittLista.Controls.Add(pbPoddBild);
             panelAvsnittLista.Controls.Add(lblAvsnittSeparator);
             panelAvsnittLista.Controls.Add(lblAktuellkategori);
-            panelAvsnittLista.Controls.Add(txtKategori);
             panelAvsnittLista.Controls.Add(lblAvsnittRubrik);
             panelAvsnittLista.Controls.Add(lstAvsnitt);
             panelAvsnittLista.Location = new Point(396, 74);
@@ -468,6 +462,36 @@
             panelAvsnittLista.Size = new Size(437, 700);
             panelAvsnittLista.TabIndex = 32;
             panelAvsnittLista.Paint += panelAvsnittLista_Paint;
+            // 
+            // btnLaggTillNyKategori
+            // 
+            btnLaggTillNyKategori.Location = new Point(295, 333);
+            btnLaggTillNyKategori.Name = "btnLaggTillNyKategori";
+            btnLaggTillNyKategori.Size = new Size(125, 23);
+            btnLaggTillNyKategori.TabIndex = 35;
+            btnLaggTillNyKategori.Text = "Skapa ny kategori";
+            btnLaggTillNyKategori.UseVisualStyleBackColor = true;
+            btnLaggTillNyKategori.Click += btnLaggTillNyKategori_Click;
+            // 
+            // btnSparaPoddKategori
+            // 
+            btnSparaPoddKategori.Location = new Point(174, 333);
+            btnSparaPoddKategori.Name = "btnSparaPoddKategori";
+            btnSparaPoddKategori.Size = new Size(115, 23);
+            btnSparaPoddKategori.TabIndex = 34;
+            btnSparaPoddKategori.Text = "Spara ny Kategori";
+            btnSparaPoddKategori.UseVisualStyleBackColor = true;
+            btnSparaPoddKategori.Click += btnSparaPoddKategori_Click;
+            // 
+            // cmbPoddKategori
+            // 
+            cmbPoddKategori.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbPoddKategori.FormattingEnabled = true;
+            cmbPoddKategori.Location = new Point(10, 334);
+            cmbPoddKategori.Name = "cmbPoddKategori";
+            cmbPoddKategori.Size = new Size(158, 23);
+            cmbPoddKategori.TabIndex = 33;
+            cmbPoddKategori.SelectedIndexChanged += cmbPoddKategori_SelectedIndexChanged;
             // 
             // lblAvsnittSeparator
             // 
@@ -557,7 +581,6 @@
         private Label lblBeskrivning;
         private Button btnAvprenumerera;
         private TextBox txtAvsnittTitel;
-        private TextBox txtKategori;
         private Label lblAktuellkategori;
         private ComboBox cmbKategori;
         private Button btnAndraKategori;
@@ -578,5 +601,8 @@
         private Panel panelAvsnittDetaljer;
         private PictureBox pbPoddBild;
         private Label label1;
+        private Button btnLaggTillNyKategori;
+        private Button btnSparaPoddKategori;
+        private ComboBox cmbPoddKategori;
     }
 }
