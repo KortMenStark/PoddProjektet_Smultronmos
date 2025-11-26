@@ -29,8 +29,14 @@ namespace PL
         //Lokal lista för alla poddar som laddas in i listboxen
         private List<Podd> allaPoddar = new List<Podd>();
 
+        // Håller reda på vilken kategori podden hade när den valdes
+        private string? _valdPoddUrsprungligKategoriId;
+
         // Håller reda på vilken RSS-URL som användes när flödet hämtades
         private string? senastHamtdRssUrl;
+
+        // Används för att ignorera SelectedIndexChanged-event tillfälligt
+        private bool _ignoreKategoriEvents = false;
 
         public Mainform()
         {
@@ -53,20 +59,13 @@ namespace PL
         {
             btnSparaPodd.Visible = true;
             btnAvprenumerera.Visible = false;
-            btnAndraKategori.Visible = false;
-            cmbKategori.Visible = false;
-            lblNyKategori.Visible = false;
 
-            txtKategori.Text = ""; // visa ej gammal kategori
         }
 
         private void GaTillSparadPoddLage()
         {
             btnSparaPodd.Visible = false;
             btnAvprenumerera.Visible = true;
-            btnAndraKategori.Visible = true;
-            cmbKategori.Visible = true;
-            lblNyKategori.Visible = true;
         }
 
         //Synkroniserar UI med databasen varje gång kategorier ändras.
@@ -78,6 +77,8 @@ namespace PL
             cmbKategori.DisplayMember = "Namn";
             cmbKategori.ValueMember = "Id";
             cmbKategori.DataSource = allaKategorier;
+
+
         }
 
         private async Task LaddaPoddarAsync()
@@ -265,6 +266,21 @@ namespace PL
             cbmFilterKategori.SelectedIndexChanged += cbmFilterKategori_SelectedIndexChanged;
         }
 
+        private void FyllPoddKategoriDropdown()
+        {
+            if (cmbPoddKategori == null)
+                return;
+            cmbPoddKategori.Items.Clear();
+
+            // Första posten representerar "ingen kategori"
+            cmbPoddKategori.Items.Add("Ingen kategori");
+            foreach (var kat in allaKategorier)
+            {
+                cmbPoddKategori.Items.Add(kat);
+            }
+            cmbPoddKategori.DisplayMember = "Namn";
+        }
+
         private async void lstPoddar_SelectedIndexChangedAsync(object sender, EventArgs e)
         {
             if (lstPoddar.SelectedItem == null)
@@ -274,51 +290,47 @@ namespace PL
 
             var valdPodd = (Podd)lstPoddar.SelectedItem;
 
-            // Sätt poddtitel
             txtTitel.Text = valdPodd.Titel;
 
-            // ------ Sätter kategorinamnet i textfältet ----------
-            if (string.IsNullOrWhiteSpace(valdPodd.KategoriId))
+            _valdPoddUrsprungligKategoriId = valdPodd.KategoriId;
+
+            FyllPoddKategoriDropdown();
+
+            object itemToSelect = "Ingen kategori";
+
+            if (!string.IsNullOrWhiteSpace(valdPodd.KategoriId))
             {
-                // Podden har ingen kategori kopplad
-                txtKategori.Text = "Ingen kategori";
+                foreach (var item in cmbPoddKategori.Items)
+                {
+                    if (item is Kategori k &&
+                        string.Equals(k.Id, valdPodd.KategoriId, StringComparison.OrdinalIgnoreCase))
+                    {
+                        itemToSelect = item;
+                        break;
+                    }
+                }
             }
-            else
-            {
-                // Försök hitta kategorin baserat på ID
-                var kategori = allaKategorier
-                    .FirstOrDefault(k => k.Id == valdPodd.KategoriId);
+            cmbPoddKategori.SelectedItem = itemToSelect;
 
-                if (kategori != null)
-                    txtKategori.Text = kategori.Namn;      // Visa kategorinamn
-                else
-                    txtKategori.Text = "Okänd kategori";   // ID finns men matchar ingen kategori  (TA BORT NÄR VI LÖST??)
-            }
+            btnSparaPoddKategori.Visible = false;
 
-
-            // Hämta RSS-flödet
             var feed = await enRssService.HamtaFlodeAsync(valdPodd.RssUrl);
             hamtatfeed = feed;
 
             lstAvsnitt.Items.Clear();
 
             foreach (var item in feed.Items)
-            {
                 lstAvsnitt.Items.Add(item.Title.Text);
-            }
 
             var bildUrl = feed.ImageUrl?.ToString();
-
             if (!string.IsNullOrWhiteSpace(bildUrl))
             {
-                // Det finns en bild-url → visa och ladda bilden
                 pbPoddBild.Visible = true;
                 pbPoddBild.SizeMode = PictureBoxSizeMode.Zoom;
                 pbPoddBild.LoadAsync(bildUrl);
             }
             else
             {
-                // Ingen bild → göm rutan
                 pbPoddBild.Visible = false;
                 pbPoddBild.Image = null;
             }
@@ -444,9 +456,6 @@ namespace PL
             // Spara i databasen
             await enPoddService.UppdateraPodd(valdPodd);
 
-            // Uppdatera UI
-            txtKategori.Text = valdKategori.Namn;
-
             MessageBox.Show("Kategorin ändrades.");
         }
 
@@ -491,5 +500,115 @@ namespace PL
         {
 
         }
+
+        private void cmbPoddKategori_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // 0. Ignorera event när vi uppdaterar dropdownen programmässigt
+            if (_ignoreKategoriEvents)
+                return;
+            // 1. Ingen podd vald → gör ingenting (men pilla inte på knappen)
+            if (lstPoddar.SelectedItem is not Podd valdPodd)
+                return;
+            // 2. Ta reda på vilken kategori-id som motsvarar valet i dropdownen
+            string? valdKategoriId = null;
+            if (cmbPoddKategori.SelectedItem is Kategori kat)
+            {
+                valdKategoriId = kat.Id;
+            }
+            else
+            {
+                // "Ingen kategori"-alternativet
+                valdKategoriId = null;
+            }
+            // 3. Jämför med ursprungliga kategori-id
+            if (string.Equals(valdKategoriId, _valdPoddUrsprungligKategoriId,
+            StringComparison.OrdinalIgnoreCase))
+            {
+                // Ingen skillnad → ingen anledning att visa spara-knappen
+                btnSparaPoddKategori.Visible = false;
+            }
+            else
+            {
+            
+           // Användaren har gjort en verklig förändring → visa spara-knappen
+ btnSparaPoddKategori.Visible = true;
+            }
+        }
+
+        private async void btnSparaPoddKategori_Click(object sender, EventArgs e)
+        {
+            if (lstPoddar.SelectedItem is not Podd valdPodd)
+            {
+                MessageBox.Show("Välj en podd först.");
+                return;
+            }
+            // Hämta vald kategori-id från dropdownen
+            string? nyKategoriId = null;
+            if (cmbPoddKategori.SelectedItem is Kategori kat)
+            {
+                nyKategoriId = kat.Id;
+            }
+            else
+            {
+                // "Ingen kategori" => null i databasen
+                nyKategoriId = null;
+            }
+            // Om inget faktiskt har ändrats: gör ingenting
+            if (string.Equals(nyKategoriId, _valdPoddUrsprungligKategoriId,
+            StringComparison.OrdinalIgnoreCase))
+            {
+                btnSparaPoddKategori.Visible = false;
+                return;
+            }
+            // Uppdatera poddens kategori och spara via tjänsten
+            valdPodd.KategoriId = nyKategoriId;
+            await enPoddService.UppdateraPodd(valdPodd);
+
+            // Uppdatera "ursprungligt" värde till det nya
+            _valdPoddUrsprungligKategoriId = nyKategoriId;
+
+            // Dölj spara-knappen igen när allt gått bra
+            btnSparaPoddKategori.Visible = false;
+            MessageBox.Show("Kategorin har uppdaterats.");
+
+            FyllFilterKategorier();
+
+        }
+        private async void btnLaggTillNyKategori_Click(object sender, EventArgs e)
+        {
+            // Öppna formuläret för att skapa en ny kategori
+            var dlg = new EditKategoriForm(enKategoriService);
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                // 1. Vi ska uppdatera dropdownen programmässigt → ignorera events under tiden
+            _ignoreKategoriEvents = true;
+                try
+                {
+                    // 2. Ladda om kategorier från databasen
+                    await LaddaKategorierAsync();
+                    // 3. Fyll dropdownen i poddvyn på nytt
+                    FyllPoddKategoriDropdown();
+                    // 4. Försök välja den senast skapade kategorin
+                    if (allaKategorier.Any())
+                    {
+                        var senaste = allaKategorier.Last();
+                        foreach (var item in cmbPoddKategori.Items)
+                        {
+                            if (item is Kategori k && k.Id == senaste.Id)
+                            {
+                                cmbPoddKategori.SelectedItem = item;
+                                break;
+                            }
+                        }
+                    }
+                }
+                finally
+                {
+                    // 5. Efter uppdateringen ska events fungera som vanligt igen
+                    _ignoreKategoriEvents = false;
+                }
+            }
+        }
+
     }
 }
