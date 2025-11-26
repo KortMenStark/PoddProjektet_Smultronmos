@@ -61,15 +61,17 @@
             panelPoddLista = new Panel();
             lblPoddListaSeparator = new Label();
             panelAvsnittLista = new Panel();
-            lblAvsnittRubrik = new Label();
             lblAvsnittSeparator = new Label();
+            lblAvsnittRubrik = new Label();
             panelAvsnittDetaljer = new Panel();
+            pbPoddBild = new PictureBox();
             panelLeft.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelPoddLista.SuspendLayout();
             panelAvsnittLista.SuspendLayout();
             panelAvsnittDetaljer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbPoddBild).BeginInit();
             SuspendLayout();
             // 
             // btnHamtaRss
@@ -99,7 +101,7 @@
             txtRssUrl.Location = new Point(3, 683);
             txtRssUrl.Margin = new Padding(2);
             txtRssUrl.Name = "txtRssUrl";
-            txtRssUrl.Size = new Size(173, 29);
+            txtRssUrl.Size = new Size(173, 34);
             txtRssUrl.TabIndex = 3;
             txtRssUrl.TextChanged += txtRssUrl_TextChanged;
             // 
@@ -132,7 +134,7 @@
             lstPoddar.Location = new Point(10, 40);
             lstPoddar.Margin = new Padding(2);
             lstPoddar.Name = "lstPoddar";
-            lstPoddar.Size = new Size(240, 611);
+            lstPoddar.Size = new Size(240, 338);
             lstPoddar.TabIndex = 5;
             lstPoddar.SelectedIndexChanged += lstPoddar_SelectedIndexChangedAsync;
             // 
@@ -164,7 +166,7 @@
             txtTitel.Location = new Point(10, 30);
             txtTitel.Name = "txtTitel";
             txtTitel.ReadOnly = true;
-            txtTitel.Size = new Size(360, 33);
+            txtTitel.Size = new Size(360, 39);
             txtTitel.TabIndex = 13;
             // 
             // txtBeskrivning
@@ -187,7 +189,7 @@
             cbmFilterKategori.FormattingEnabled = true;
             cbmFilterKategori.Location = new Point(3, 578);
             cbmFilterKategori.Name = "cbmFilterKategori";
-            cbmFilterKategori.Size = new Size(173, 23);
+            cbmFilterKategori.Size = new Size(173, 28);
             cbmFilterKategori.TabIndex = 16;
             cbmFilterKategori.SelectedIndexChanged += cbmFilterKategori_SelectedIndexChanged;
             // 
@@ -199,7 +201,7 @@
             lblKategori.ForeColor = Color.White;
             lblKategori.Location = new Point(3, 560);
             lblKategori.Name = "lblKategori";
-            lblKategori.Size = new Size(106, 17);
+            lblKategori.Size = new Size(139, 23);
             lblKategori.TabIndex = 17;
             lblKategori.Text = "Mina kategorier";
             // 
@@ -210,7 +212,7 @@
             lblTitel.ForeColor = Color.Black;
             lblTitel.Location = new Point(10, 10);
             lblTitel.Name = "lblTitel";
-            lblTitel.Size = new Size(69, 17);
+            lblTitel.Size = new Size(89, 23);
             lblTitel.TabIndex = 18;
             lblTitel.Text = "Podd titel";
             lblTitel.Click += lblTitel_Click;
@@ -222,7 +224,7 @@
             lblBeskrivning.ForeColor = Color.Black;
             lblBeskrivning.Location = new Point(10, 190);
             lblBeskrivning.Name = "lblBeskrivning";
-            lblBeskrivning.Size = new Size(73, 15);
+            lblBeskrivning.Size = new Size(91, 20);
             lblBeskrivning.TabIndex = 19;
             lblBeskrivning.Text = "Beskrivning";
             // 
@@ -254,7 +256,7 @@
             txtAvsnittTitel.Margin = new Padding(3, 2, 3, 2);
             txtAvsnittTitel.Name = "txtAvsnittTitel";
             txtAvsnittTitel.ReadOnly = true;
-            txtAvsnittTitel.Size = new Size(510, 29);
+            txtAvsnittTitel.Size = new Size(510, 34);
             txtAvsnittTitel.TabIndex = 22;
             // 
             // lblAvsnittTitel
@@ -277,7 +279,7 @@
             txtKategori.Location = new Point(10, 90);
             txtKategori.Margin = new Padding(3, 2, 3, 2);
             txtKategori.Name = "txtKategori";
-            txtKategori.Size = new Size(510, 29);
+            txtKategori.Size = new Size(510, 34);
             txtKategori.TabIndex = 24;
             // 
             // lblAktuellkategori
@@ -287,7 +289,7 @@
             lblAktuellkategori.ForeColor = Color.Black;
             lblAktuellkategori.Location = new Point(10, 70);
             lblAktuellkategori.Name = "lblAktuellkategori";
-            lblAktuellkategori.Size = new Size(55, 15);
+            lblAktuellkategori.Size = new Size(69, 20);
             lblAktuellkategori.TabIndex = 25;
             lblAktuellkategori.Text = "Kategori";
             // 
@@ -298,7 +300,7 @@
             cmbKategori.FormattingEnabled = true;
             cmbKategori.Location = new Point(3, 516);
             cmbKategori.Name = "cmbKategori";
-            cmbKategori.Size = new Size(173, 23);
+            cmbKategori.Size = new Size(173, 28);
             cmbKategori.TabIndex = 26;
             // 
             // btnAndraKategori
@@ -326,7 +328,7 @@
             lblNyKategori.ForeColor = Color.White;
             lblNyKategori.Location = new Point(3, 496);
             lblNyKategori.Name = "lblNyKategori";
-            lblNyKategori.Size = new Size(84, 17);
+            lblNyKategori.Size = new Size(110, 23);
             lblNyKategori.TabIndex = 28;
             lblNyKategori.Text = "Ny kategori:";
             lblNyKategori.Click += lblNyKategori_Click;
@@ -362,7 +364,7 @@
             lblRss.ForeColor = Color.White;
             lblRss.Location = new Point(3, 657);
             lblRss.Name = "lblRss";
-            lblRss.Size = new Size(98, 17);
+            lblRss.Size = new Size(126, 23);
             lblRss.TabIndex = 29;
             lblRss.Text = "Klistra in länk:";
             // 
@@ -400,7 +402,7 @@
             lblPodcast.ForeColor = Color.FromArgb(0, 125, 250);
             lblPodcast.Location = new Point(66, 115);
             lblPodcast.Name = "lblPodcast";
-            lblPodcast.Size = new Size(64, 17);
+            lblPodcast.Size = new Size(81, 23);
             lblPodcast.TabIndex = 1;
             lblPodcast.Text = "PodVault";
             lblPodcast.TextAlign = ContentAlignment.TopCenter;
@@ -425,7 +427,7 @@
             txtPubliceringsdatum.Location = new Point(10, 150);
             txtPubliceringsdatum.Name = "txtPubliceringsdatum";
             txtPubliceringsdatum.ReadOnly = true;
-            txtPubliceringsdatum.Size = new Size(510, 29);
+            txtPubliceringsdatum.Size = new Size(510, 34);
             txtPubliceringsdatum.TabIndex = 15;
             // 
             // lblUtgivningsdatum
@@ -435,7 +437,7 @@
             lblUtgivningsdatum.ForeColor = Color.Black;
             lblUtgivningsdatum.Location = new Point(10, 130);
             lblUtgivningsdatum.Name = "lblUtgivningsdatum";
-            lblUtgivningsdatum.Size = new Size(103, 15);
+            lblUtgivningsdatum.Size = new Size(131, 20);
             lblUtgivningsdatum.TabIndex = 20;
             lblUtgivningsdatum.Text = "Utgivningsdatum";
             // 
@@ -450,7 +452,7 @@
             lstAvsnitt.Location = new Point(10, 100);
             lstAvsnitt.Margin = new Padding(2);
             lstAvsnitt.Name = "lstAvsnitt";
-            lstAvsnitt.Size = new Size(360, 569);
+            lstAvsnitt.Size = new Size(360, 562);
             lstAvsnitt.TabIndex = 1;
             lstAvsnitt.SelectedIndexChanged += lstAvsnitt_SelectedIndexChanged;
             // 
@@ -460,7 +462,7 @@
             lblMinaPoddar.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblMinaPoddar.Location = new Point(10, 10);
             lblMinaPoddar.Name = "lblMinaPoddar";
-            lblMinaPoddar.Size = new Size(127, 25);
+            lblMinaPoddar.Size = new Size(161, 32);
             lblMinaPoddar.TabIndex = 30;
             lblMinaPoddar.Text = "Mina Poddar";
             // 
@@ -468,6 +470,7 @@
             // 
             panelPoddLista.BackColor = Color.White;
             panelPoddLista.BorderStyle = BorderStyle.FixedSingle;
+            panelPoddLista.Controls.Add(pbPoddBild);
             panelPoddLista.Controls.Add(lblPoddListaSeparator);
             panelPoddLista.Controls.Add(lstPoddar);
             panelPoddLista.Controls.Add(lblMinaPoddar);
@@ -503,16 +506,6 @@
             panelAvsnittLista.TabIndex = 32;
             panelAvsnittLista.Paint += panelAvsnittLista_Paint;
             // 
-            // lblAvsnittRubrik
-            // 
-            lblAvsnittRubrik.AutoSize = true;
-            lblAvsnittRubrik.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
-            lblAvsnittRubrik.Location = new Point(10, 70);
-            lblAvsnittRubrik.Name = "lblAvsnittRubrik";
-            lblAvsnittRubrik.Size = new Size(52, 17);
-            lblAvsnittRubrik.TabIndex = 19;
-            lblAvsnittRubrik.Text = "Avsnitt";
-            // 
             // lblAvsnittSeparator
             // 
             lblAvsnittSeparator.BackColor = Color.LightGray;
@@ -520,6 +513,16 @@
             lblAvsnittSeparator.Name = "lblAvsnittSeparator";
             lblAvsnittSeparator.Size = new Size(360, 1);
             lblAvsnittSeparator.TabIndex = 20;
+            // 
+            // lblAvsnittRubrik
+            // 
+            lblAvsnittRubrik.AutoSize = true;
+            lblAvsnittRubrik.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
+            lblAvsnittRubrik.Location = new Point(10, 70);
+            lblAvsnittRubrik.Name = "lblAvsnittRubrik";
+            lblAvsnittRubrik.Size = new Size(67, 23);
+            lblAvsnittRubrik.TabIndex = 19;
+            lblAvsnittRubrik.Text = "Avsnitt";
             // 
             // panelAvsnittDetaljer
             // 
@@ -539,9 +542,18 @@
             panelAvsnittDetaljer.Size = new Size(530, 700);
             panelAvsnittDetaljer.TabIndex = 21;
             // 
+            // pbPoddBild
+            // 
+            pbPoddBild.Location = new Point(10, 420);
+            pbPoddBild.Name = "pbPoddBild";
+            pbPoddBild.Size = new Size(240, 216);
+            pbPoddBild.TabIndex = 32;
+            pbPoddBild.TabStop = false;
+            pbPoddBild.Click += pictureBox2_Click;
+            // 
             // Mainform
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
             ClientSize = new Size(1434, 811);
@@ -567,6 +579,7 @@
             panelAvsnittLista.PerformLayout();
             panelAvsnittDetaljer.ResumeLayout(false);
             panelAvsnittDetaljer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbPoddBild).EndInit();
             ResumeLayout(false);
         }
 
@@ -607,5 +620,6 @@
         private Label lblAvsnittSeparator;
         private Label lblAvsnittRubrik;
         private Panel panelAvsnittDetaljer;
+        private PictureBox pbPoddBild;
     }
 }

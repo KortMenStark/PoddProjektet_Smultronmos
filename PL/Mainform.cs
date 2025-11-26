@@ -37,6 +37,7 @@ namespace PL
             InitializeComponent();
             enRssService = new RssService();
             enPoddService = new PoddService(new PoddRepository(new MongoDbContext()));
+            pbPoddBild.Visible = false;
 
             // Hanterar kategori-relaterade databasoperationer
             enKategoriService = new KategoriService(
@@ -45,6 +46,7 @@ namespace PL
 
             // Ladda alla kategorier direkt när formuläret startar
             _ = LaddaKategorierAsync();
+
         }
 
         private void GaTillRSSLage()
@@ -304,12 +306,29 @@ namespace PL
             {
                 lstAvsnitt.Items.Add(item.Title.Text);
             }
+
+            var bildUrl = feed.ImageUrl?.ToString();
+
+            if (!string.IsNullOrWhiteSpace(bildUrl))
+            {
+                // Det finns en bild-url → visa och ladda bilden
+                pbPoddBild.Visible = true;
+                pbPoddBild.SizeMode = PictureBoxSizeMode.Zoom;
+                pbPoddBild.LoadAsync(bildUrl);
+            }
+            else
+            {
+                // Ingen bild → göm rutan
+                pbPoddBild.Visible = false;
+                pbPoddBild.Image = null;
+            }
+
         }
 
         private void label1_Click(object sender, EventArgs e)
-        {
+                {
 
-        }
+                }
 
         private void txtNyKategori_TextChanged(object sender, EventArgs e)
         {
@@ -453,6 +472,11 @@ namespace PL
         }
 
         private void lblTitel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
         {
 
         }
