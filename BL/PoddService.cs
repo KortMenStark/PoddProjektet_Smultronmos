@@ -40,29 +40,41 @@ namespace BL
             await poddRepository.TaBortPodd(poddId);
         }
 
+        //Här skapas ett Poddflöde från ett SyndicationFeed.
         public Poddflode SkapaPoddflode(SyndicationFeed ettFeed)
         {
+            // Skapa ett nytt Poddflode-objekt som ska fyllas med info från RSS.
             var poddflode = new Poddflode();
 
+
+            //Hämtar titel, beskrivning och bild-URL från RSS-feeden.
+            //Om någon av dessa saknas i RSS-feeden, sätts en standardtext eller tom sträng.
             poddflode.Titel = ettFeed.Title.Text ?? "Det finns ingen titel.";
             poddflode.Beskrivning = ettFeed.Description?.Text ?? "Det finns ingen beskrivning.";
             poddflode.BildUrl = ettFeed.ImageUrl?.ToString() ?? "";
 
             foreach (var item in ettFeed.Items)
             {
+                // Skapar ett nytt Avsnitt-objekt för varje avsnitt i RSS-feeden.
                 var avsnitt = new Avsnitt
                 {
                     Titel = item.Title.Text ?? "Det finns ingen titel.",
                     Sammanfattning = item.Summary?.Text ?? "Det finns ingen sammanfattning.",
                     PubliceringsDatum = item.PublishDate.DateTime
                 };
+
+                // Lägger till avsnittet i Poddflödet.
                 poddflode.AvsnittLista.Add(avsnitt);
             }
+
+            // Returnerar det ifyllda Poddflödet.
             return poddflode;
         }
 
         public async Task SparaPodd(Poddflode ettFlode, string rssUrl, string kategoriId)
         {
+
+            //Här skapas ett nytt Podd-objekt med information från Poddflödet och andra parametrar.
             var nyPodd = new Podd
             {
                 Titel = ettFlode.Titel,
@@ -71,18 +83,22 @@ namespace BL
                 KategoriId = kategoriId
             };
 
+            //Anropar repository-metoden för att spara den nya podden i databasen.
             await poddRepository.LagraPodd(nyPodd);
         }
 
         public async Task<bool> SparaPoddOmNyAsync(Poddflode ettFlode, string rssUrl, string kategoriId)
         {
+            //Kontrollerar om en podd med samma RSS-URL redan finns i databasen.
             bool poddFinns = await poddRepository.HittaPoddMedUrlAsync(rssUrl);
             if (poddFinns)
             {
+                //Om podden redan finns, returneras false.
                 return false;
             }
             else
             {
+                //Om podden inte finns, sparas den och true returneras.
                 await SparaPodd(ettFlode, rssUrl, kategoriId);
                 return true;
             }

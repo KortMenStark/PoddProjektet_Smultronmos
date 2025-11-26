@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repository
 {
+    //Ärver från IAvsnittRepository för att implementera dess metoder.
     public class AvsnittRepository : IAvsnittRepository
     {
         //Skapar en referens till avsnittkollektionen i MongoDB-databasen.
@@ -35,6 +36,9 @@ namespace DAL.Repository
             var filter = Builders<Avsnitt>.Filter.Eq(a => a.Id, avsnittId);
             return await avsnittKollektion.Find(filter).FirstOrDefaultAsync();
         }
+
+        //Transaktioner används för att säkerställa att alla operationer inom transaktionen
+        //antingen lyckas eller misslyckas tillsammans.
         public async Task LagraAvsnitt(Avsnitt nyttAvsnitt)
         {
             using var session = await context.MongoKlient.StartSessionAsync();

@@ -9,6 +9,7 @@ namespace DAL.Interfaces
 {
     public interface IKategoriRepository
     {
+        //Metoder för CRUD-operationer på Kategori-objekt.
         Task<List<Kategori>> HamtaAlla();
         Task<Kategori> HamtaEnKategori(string kategoriId);
         Task LagraNyKategori(Kategori nyKategori);

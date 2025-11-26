@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repository
 {
+    //Ärver från IKategoriRepository för att implementera dess metoder.
     public class KategoriRepository : IKategoriRepository
     {
         //Skapar en referens till kategorikollektionen i MongoDB-databasen.
@@ -37,6 +38,8 @@ namespace DAL.Repository
             return await kategoriKollektion.Find(filter).FirstOrDefaultAsync();
         }
 
+        //Transaktioner används för att säkerställa att alla operationer inom transaktionen
+        //antingen lyckas eller misslyckas tillsammans.
         public async Task LagraNyKategori(Kategori nyKategori)
         {
             using var session = await context.MongoKlient.StartSessionAsync();

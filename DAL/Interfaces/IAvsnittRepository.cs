@@ -9,6 +9,7 @@ namespace DAL.Interfaces
 {
     public interface IAvsnittRepository
     {
+        //Metoder för CRUD-operationer på Avsnitt-objekt.
         Task<List<Avsnitt>> HamtaAlla();
         Task<Avsnitt> HamtaEttAvsnitt(string avsnittId);
         Task LagraAvsnitt(Avsnitt nyttAvsnitt);

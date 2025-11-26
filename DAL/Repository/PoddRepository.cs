@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repository
 {
+    //Ärver från IPoddRepository för att implementera dess metoder.
     public class PoddRepository : IPoddRepository
     {
         //Skapar en referens till poddkollektionen i MongoDB-databasen.
