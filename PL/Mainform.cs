@@ -50,8 +50,7 @@ namespace PL
             new KategoriRepository(new MongoDbContext()),
               new PoddRepository(new MongoDbContext()));
 
-            // Ladda alla kategorier direkt när formuläret startar
-            _ = LaddaKategorierAsync();
+            
 
         }
 
@@ -382,8 +381,9 @@ namespace PL
             cmbKategori.Visible = false;
             lblNyKategori.Visible = false;
 
-            // 1. Ladda alla sparade poddar från databasen
+            // 1. Ladda alla sparade poddar & kategorier från databasen
             await LaddaPoddarAsync();
+            await LaddaKategorierAsync();
 
             // 2. Om det finns poddar – välj första
             if (lstPoddar.Items.Count > 0)
