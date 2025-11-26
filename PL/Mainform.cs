@@ -436,5 +436,25 @@ namespace PL
             //senastHamtdRssUrl = null;
             btnSparaPodd.Enabled = false;
         }
+
+        private void lblNyKategori_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelLeft_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelAvsnittLista_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lblTitel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
