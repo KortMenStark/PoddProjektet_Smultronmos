@@ -5,6 +5,7 @@ using Models_new;
 using PL.Validering;
 using System.ServiceModel.Syndication;
 using System.Linq;
+using System.Drawing.Drawing2D;
 using static System.Net.WebRequestMethods;
 
 namespace PL
@@ -12,10 +13,10 @@ namespace PL
 {
     public partial class Mainform : Form
     {
-        //Detta implementerar gränssnittet f�r IRssService
+        //Detta implementerar gränssnittet för IRssService
         private readonly IRssService enRssService;
 
-        //H�ller reda p� det hämtade RSS-flödet och lagrar det i hamtatfeed = feed;
+        //H�ller reda pÅ det hämtade RSS-flödet och lagrar det i hamtatfeed = feed;
         private SyndicationFeed? hamtatfeed;
 
         //Detta hanterar poddrelaterade operationer.
@@ -49,7 +50,7 @@ namespace PL
             // Hanterar kategori-relaterade databasoperationer
             enKategoriService = new KategoriService(
             new KategoriRepository(new MongoDbContext()),
-              new PoddRepository(new MongoDbContext()));
+            new PoddRepository(new MongoDbContext()));
         }
 
         private void NollstallPoddBild()
@@ -396,7 +397,7 @@ namespace PL
             // 1. Ladda alla sparade poddar & kategorier från databasen
             await LaddaKategorierAsync();
             await LaddaPoddarAsync();
-            
+
 
             // 2. Om det finns poddar – välj första
             if (lstPoddar.Items.Count > 0)
@@ -611,6 +612,65 @@ namespace PL
                     _ignoreKategoriEvents = false;
                 }
             }
+        }
+
+        // skapar ett streck för listboxen lstAvsnitt
+        private void lstAvsnitt_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0) return;
+
+            // Bakgrund vid markering
+            e.DrawBackground();
+
+            // Hämta texten
+            string text = lstAvsnitt.Items[e.Index].ToString();
+
+            // Rita texten
+            TextRenderer.DrawText(
+                e.Graphics,
+                text,
+                e.Font,
+                e.Bounds,
+                Color.Black,
+                TextFormatFlags.Left | TextFormatFlags.VerticalCenter
+            );
+
+            // Rita linje under item
+            using (Pen p = new Pen(Color.Black, 1))
+            {
+                e.Graphics.DrawLine(p, e.Bounds.Left, e.Bounds.Bottom - 1, e.Bounds.Right, e.Bounds.Bottom - 1);
+            }
+
+            e.DrawFocusRectangle();
+        }
+        // skapar ett streck för listboxen lstPoddar
+        private void lstPoddar_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0) return;
+
+            // Bakgrund vid markering
+            e.DrawBackground();
+
+            // Hämta texten
+            string text = lstPoddar.Items[e.Index].ToString();
+
+            // Rita texten
+            TextRenderer.DrawText(
+                e.Graphics,
+                text,
+                e.Font,
+                e.Bounds,
+                Color.Black,
+                TextFormatFlags.Left | TextFormatFlags.VerticalCenter
+            );
+
+            // Rita linje under item
+            using (Pen p = new Pen(Color.Black, 1))
+            {
+                e.Graphics.DrawLine(p, e.Bounds.Left, e.Bounds.Bottom - 1, e.Bounds.Right, e.Bounds.Bottom - 1);
+            }
+
+            e.DrawFocusRectangle();
         }
     }
 }
