@@ -95,9 +95,9 @@ namespace PL.Validering
                 return false;
             }
 
-            if (namn.Length > 20)
+            if (namn.Length > 30)
             {
-                fel = "Kategorinamn får max vara 20 tecken.";
+                fel = "Kategorinamn får max vara 30 tecken.";
                 return false;
             }
 

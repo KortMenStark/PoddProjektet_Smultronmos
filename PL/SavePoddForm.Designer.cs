@@ -103,8 +103,10 @@
             // 
             // SavePoddForm
             // 
+            AcceptButton = btnSpara;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            CancelButton = btnAvbryt;
             ClientSize = new Size(304, 211);
             Controls.Add(btnNyKategori);
             Controls.Add(lblKategori);
@@ -120,7 +122,7 @@
             Name = "SavePoddForm";
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Spara Podd";
+            Text = "Spara podd";
             ResumeLayout(false);
             PerformLayout();
         }

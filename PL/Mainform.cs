@@ -3,6 +3,7 @@ using DAL;
 using DAL.Repository;
 using Models_new;
 using PL.Validering;
+using System.Drawing;
 using System.ServiceModel.Syndication;
 using System.Linq;
 using System.Drawing.Drawing2D;
@@ -270,7 +271,12 @@ namespace PL
         {
             lstPoddar.Items.Clear();
 
-            foreach (var podd in poddar)
+            // Sortera poddarna alfabetiskt på Titel
+            var sorterade = poddar
+                .OrderBy(p => p.Titel, StringComparer.CurrentCultureIgnoreCase)
+                .ToList();
+
+            foreach (var podd in sorterade)
             {
                 lstPoddar.Items.Add(podd);
             }
@@ -453,17 +459,11 @@ namespace PL
             }
         }
 
-        private void btnHanteraKategorier_Click(object sender, EventArgs e)
+        private void btnOptions_Click(object sender, EventArgs e)
         {
-            var dlg = new KategoriForm(enKategoriService);
+            // Visa menyn när man klickar på knappen
+            contextMenuStripPoddOptions.Show(btnOptions, new Point(btnOptions.Width, 0));
 
-            dlg.KategorierAndrades += async () =>
-            {
-                await LaddaKategorierAsync();
-                await LaddaPoddarAsync();   // <— FIXEN
-            };
-
-            dlg.ShowDialog();
         }
 
         private void cmbPoddKategori_SelectedIndexChanged(object sender, EventArgs e)
@@ -632,6 +632,62 @@ namespace PL
             }
 
             e.DrawFocusRectangle();
+        }
+
+        private async void mnuBytNamn_Click(object sender, EventArgs e)
+        {
+            if (lstPoddar.SelectedItem is not Podd valdPodd)
+            {
+                MessageBox.Show("Välj en podd först.");
+                return;
+            }
+
+            using (var dlg = new EditPodNameForm(valdPodd.Titel))
+            {
+                if (dlg.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                string nyttNamn = dlg.NyttNamn;
+
+                if (string.Equals(nyttNamn, valdPodd.Titel, StringComparison.Ordinal))
+                    return;
+
+                valdPodd.Titel = nyttNamn;
+                await enPoddService.UppdateraPodd(valdPodd);
+
+                await LaddaPoddarAsync();
+
+                var uppdaterad = allaPoddar.FirstOrDefault(p => p.Id == valdPodd.Id);
+                if (uppdaterad != null)
+                    lstPoddar.SelectedItem = uppdaterad;
+
+                MessageBox.Show("Poddens namn har uppdaterats.");
+            }
+        }
+
+        private void mnuAndraKategori_Click(object sender, EventArgs e)
+        {
+            var dlg = new KategoriForm(enKategoriService);
+
+            dlg.KategorierAndrades += async () =>
+            {
+                await LaddaKategorierAsync();
+                await LaddaPoddarAsync();
+            };
+
+            dlg.ShowDialog(this);   // öppna som modal dialog
+        }
+
+        private void btnAvsluta_Click(object sender, EventArgs e)
+        {
+            var fråga = MessageBox.Show(
+        "Vill du avsluta Podvault?",
+        "Avsluta",
+        MessageBoxButtons.YesNo,
+        MessageBoxIcon.Question);
+
+            if (fråga == DialogResult.Yes)
+                Application.Exit();
         }
     }
 }

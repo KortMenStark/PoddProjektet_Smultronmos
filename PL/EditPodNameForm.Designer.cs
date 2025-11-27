@@ -1,6 +1,6 @@
 ﻿namespace PL
 {
-    partial class EditKategoriForm
+    partial class EditPodNameForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,34 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditKategoriForm));
-            lblTitel = new Label();
-            txtNamn = new TextBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditPodNameForm));
             btnSpara = new Button();
             btnAvbryt = new Button();
+            txtNyttNamn = new TextBox();
+            label1 = new Label();
             SuspendLayout();
-            // 
-            // lblTitel
-            // 
-            lblTitel.Location = new Point(12, 18);
-            lblTitel.Name = "lblTitel";
-            lblTitel.Size = new Size(146, 20);
-            lblTitel.TabIndex = 0;
-            lblTitel.Text = "Ange nytt kategorinamn:";
-            // 
-            // txtNamn
-            // 
-            txtNamn.Location = new Point(12, 50);
-            txtNamn.Name = "txtNamn";
-            txtNamn.Size = new Size(280, 23);
-            txtNamn.TabIndex = 1;
             // 
             // btnSpara
             // 
             btnSpara.Location = new Point(12, 100);
             btnSpara.Name = "btnSpara";
             btnSpara.Size = new Size(100, 30);
-            btnSpara.TabIndex = 2;
+            btnSpara.TabIndex = 0;
             btnSpara.Text = "Spara";
             btnSpara.UseVisualStyleBackColor = true;
             btnSpara.Click += btnSpara_Click;
@@ -65,39 +50,55 @@
             btnAvbryt.Location = new Point(192, 100);
             btnAvbryt.Name = "btnAvbryt";
             btnAvbryt.Size = new Size(100, 30);
-            btnAvbryt.TabIndex = 3;
+            btnAvbryt.TabIndex = 1;
             btnAvbryt.Text = "Avbryt";
             btnAvbryt.UseVisualStyleBackColor = true;
             btnAvbryt.Click += btnAvbryt_Click;
             // 
-            // EditKategoriForm
+            // txtNyttNamn
+            // 
+            txtNyttNamn.Location = new Point(12, 50);
+            txtNyttNamn.Name = "txtNyttNamn";
+            txtNyttNamn.Size = new Size(280, 23);
+            txtNyttNamn.TabIndex = 2;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(12, 18);
+            label1.Name = "label1";
+            label1.Size = new Size(158, 15);
+            label1.TabIndex = 3;
+            label1.Text = "Ange nytt namn för podden:";
+            // 
+            // EditPodNameForm
             // 
             AcceptButton = btnSpara;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = btnAvbryt;
             ClientSize = new Size(304, 161);
+            Controls.Add(label1);
+            Controls.Add(txtNyttNamn);
             Controls.Add(btnAvbryt);
             Controls.Add(btnSpara);
-            Controls.Add(txtNamn);
-            Controls.Add(lblTitel);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "EditKategoriForm";
+            Name = "EditPodNameForm";
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Redigera kategorinamn";
+            Text = "Bytt namn på podd";
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Label lblTitel;
-        private TextBox txtNamn;
         private Button btnSpara;
         private Button btnAvbryt;
+        private TextBox txtNyttNamn;
+        private Label label1;
     }
 }

@@ -94,5 +94,11 @@ namespace PL
                 KategorierAndrades?.Invoke();
             }
         }
+
+        private void btnAvbryt_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
     }
 }

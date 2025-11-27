@@ -64,9 +64,9 @@ namespace PL
             }
 
             // (valfritt) enkel längdkontroll
-            if (namn.Length < 2 || namn.Length > 20)
+            if (namn.Length < 2 || namn.Length > 40)
             {
-                MessageBox.Show("Poddnamnet måste vara mellan 2-20 tecken.", "Ogiltigt namn",
+                MessageBox.Show("Poddnamnet måste vara mellan 2-40 tecken.", "Ogiltigt namn",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
