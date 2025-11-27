@@ -31,6 +31,7 @@
             lstKategorier = new ListBox();
             btnRedigera = new Button();
             btnTaBort = new Button();
+            btnNyKategori = new Button();
             SuspendLayout();
             // 
             // lstKategorier
@@ -38,14 +39,14 @@
             lstKategorier.FormattingEnabled = true;
             lstKategorier.Location = new Point(20, 20);
             lstKategorier.Name = "lstKategorier";
-            lstKategorier.Size = new Size(200, 244);
+            lstKategorier.Size = new Size(150, 244);
             lstKategorier.TabIndex = 0;
             // 
             // btnRedigera
             // 
-            btnRedigera.Location = new Point(20, 290);
+            btnRedigera.Location = new Point(176, 198);
             btnRedigera.Name = "btnRedigera";
-            btnRedigera.Size = new Size(120, 30);
+            btnRedigera.Size = new Size(104, 30);
             btnRedigera.TabIndex = 3;
             btnRedigera.Text = "Redigera namn";
             btnRedigera.UseVisualStyleBackColor = true;
@@ -53,19 +54,30 @@
             // 
             // btnTaBort
             // 
-            btnTaBort.Location = new Point(160, 290);
+            btnTaBort.Location = new Point(176, 234);
             btnTaBort.Name = "btnTaBort";
-            btnTaBort.Size = new Size(120, 30);
+            btnTaBort.Size = new Size(104, 30);
             btnTaBort.TabIndex = 4;
             btnTaBort.Text = "Ta bort kategori";
             btnTaBort.UseVisualStyleBackColor = true;
             btnTaBort.Click += btnTaBort_Click;
+            // 
+            // btnNyKategori
+            // 
+            btnNyKategori.Location = new Point(176, 162);
+            btnNyKategori.Name = "btnNyKategori";
+            btnNyKategori.Size = new Size(104, 30);
+            btnNyKategori.TabIndex = 5;
+            btnNyKategori.Text = "Lägg till";
+            btnNyKategori.UseVisualStyleBackColor = true;
+            btnNyKategori.Click += btnNyKategori_Click;
             // 
             // KategoriForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(304, 341);
+            Controls.Add(btnNyKategori);
             Controls.Add(btnTaBort);
             Controls.Add(btnRedigera);
             Controls.Add(lstKategorier);
@@ -73,6 +85,7 @@
             Name = "KategoriForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "KategoriForm";
+            Load += KategoriForm_Load;
             ResumeLayout(false);
         }
 
@@ -81,5 +94,6 @@
         private ListBox lstKategorier;
         private Button btnRedigera;
         private Button btnTaBort;
+        private Button btnNyKategori;
     }
 }

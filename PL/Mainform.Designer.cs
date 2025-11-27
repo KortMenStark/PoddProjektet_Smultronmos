@@ -256,6 +256,7 @@
             lblAktuellkategori.Size = new Size(55, 15);
             lblAktuellkategori.TabIndex = 25;
             lblAktuellkategori.Text = "Kategori";
+            lblAktuellkategori.Click += lblAktuellkategori_Click;
             // 
             // cmbKategori
             // 

@@ -76,5 +76,23 @@ namespace PL
             }
 
         }
+
+        private void KategoriForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void btnNyKategori_Click(object sender, EventArgs e)
+        {
+            var dlg = new EditKategoriForm(_kategoriService);
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                await LaddaKategorierAsync();
+
+                // Informera Mainform att kategorierna har ändrats
+                KategorierAndrades?.Invoke();
+            }
+        }
     }
 }
