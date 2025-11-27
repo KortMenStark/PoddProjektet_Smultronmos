@@ -11,8 +11,6 @@ using BL;
 using Models_new;
 using PL.Validering;
 
-using PL.ValideringMapp;
-
 namespace PL
 {
     public partial class EditKategoriForm : Form
@@ -49,25 +47,28 @@ namespace PL
         {
             string namn = txtNamn.Text.Trim();
 
-            // 1. Enkel UI-kontroll (helt OK enligt uppgiften)
-            if (string.IsNullOrEmpty(namn))
-            {
-                MessageBox.Show("Ange ett kategorinamn.");
-                return;
-            }
-
             try
             {
-                // 2. FORMELL VALIDERING – ska ske i PL (presentationslagret)
-                // Detta använder valideringsklass i PL.Validering
-                var kategori = new Kategori { Namn = namn };
-                KategoriValidering.Validera(kategori);
+                // 1. Hämta alla kategorier för unikhetskontroll
+                var befintligaKategorier = await _kategoriService.HamtaAllaKategorier();
+
+                // 2. FORMELL VALIDERING – sker i PL via Validering-klassen
+                if (!Validering.Validering.KontrolleraKategoriNamn(
+                        namn,
+                        befintligaKategorier,
+                        out string fel,
+                        _kategori))   // _kategori = null vid ny, annars den som redigeras
+                {
+                    MessageBox.Show(fel, "Ogiltig kategori", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
                 // 3. Försök spara – BL skickar vidare till DAL som använder transaktioner
                 if (_kategori == null)
                 {
                     // Ny kategori
-                    await _kategoriService.LagraNyKategori(kategori);
+                    var nyKategori = new Kategori { Namn = namn };
+                    await _kategoriService.LagraNyKategori(nyKategori);
                 }
                 else
                 {
@@ -76,14 +77,18 @@ namespace PL
                     await _kategoriService.UppdateraKategori(_kategori);
                 }
 
-                // 4. ALLT HAR LYCKATS 
+                // 4. ALLT HAR LYCKATS
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
             {
                 // UI rollback – visa fel, gör INGA ändringar
-                MessageBox.Show(ex.Message, "Fel vid sparande", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    ex.Message,
+                    "Fel vid sparande",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
             }
         }
 

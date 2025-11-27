@@ -35,7 +35,6 @@
             lstPoddar = new ListBox();
             btnLaddaPoddar = new Button();
             txtTitel = new TextBox();
-            txtBeskrivning = new TextBox();
             cbmFilterKategori = new ComboBox();
             lblKategori = new Label();
             lblBeskrivning = new Label();
@@ -65,7 +64,7 @@
             lblAvsnittSeparator = new Label();
             lblAvsnittRubrik = new Label();
             panelAvsnittDetaljer = new Panel();
-            txtBeskrivningRBox = new RichTextBox();
+            txtBeskrivning = new RichTextBox();
             label1 = new Label();
             panelMinaPoddar.SuspendLayout();
             panelLogo.SuspendLayout();
@@ -177,20 +176,6 @@
             txtTitel.ReadOnly = true;
             txtTitel.Size = new Size(450, 55);
             txtTitel.TabIndex = 13;
-            // 
-            // txtBeskrivning
-            // 
-            txtBeskrivning.BackColor = Color.WhiteSmoke;
-            txtBeskrivning.BorderStyle = BorderStyle.FixedSingle;
-            txtBeskrivning.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtBeskrivning.ForeColor = Color.Black;
-            txtBeskrivning.Location = new Point(10, 65);
-            txtBeskrivning.Multiline = true;
-            txtBeskrivning.Name = "txtBeskrivning";
-            txtBeskrivning.ReadOnly = true;
-            txtBeskrivning.ScrollBars = ScrollBars.Vertical;
-            txtBeskrivning.Size = new Size(428, 231);
-            txtBeskrivning.TabIndex = 14;
             // 
             // cbmFilterKategori
             // 
@@ -562,29 +547,30 @@
             // 
             panelAvsnittDetaljer.BackColor = Color.White;
             panelAvsnittDetaljer.BorderStyle = BorderStyle.Fixed3D;
-            panelAvsnittDetaljer.Controls.Add(txtBeskrivningRBox);
+            panelAvsnittDetaljer.Controls.Add(txtBeskrivning);
             panelAvsnittDetaljer.Controls.Add(label1);
             panelAvsnittDetaljer.Controls.Add(txtPubliceringsdatum);
             panelAvsnittDetaljer.Controls.Add(lblBeskrivning);
             panelAvsnittDetaljer.Controls.Add(lblUtgivningsdatum);
-            panelAvsnittDetaljer.Controls.Add(txtBeskrivning);
             panelAvsnittDetaljer.Location = new Point(903, 84);
             panelAvsnittDetaljer.Name = "panelAvsnittDetaljer";
             panelAvsnittDetaljer.Size = new Size(450, 800);
             panelAvsnittDetaljer.TabIndex = 21;
             // 
-            // txtBeskrivningRBox
+            // txtBeskrivning
             // 
-            txtBeskrivningRBox.BorderStyle = BorderStyle.FixedSingle;
-            txtBeskrivningRBox.DetectUrls = false;
-            txtBeskrivningRBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtBeskrivningRBox.Location = new Point(10, 302);
-            txtBeskrivningRBox.Name = "txtBeskrivningRBox";
-            txtBeskrivningRBox.ReadOnly = true;
-            txtBeskrivningRBox.ScrollBars = RichTextBoxScrollBars.Vertical;
-            txtBeskrivningRBox.Size = new Size(428, 411);
-            txtBeskrivningRBox.TabIndex = 33;
-            txtBeskrivningRBox.Text = "";
+            txtBeskrivning.BackColor = Color.WhiteSmoke;
+            txtBeskrivning.BorderStyle = BorderStyle.FixedSingle;
+            txtBeskrivning.DetectUrls = false;
+            txtBeskrivning.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtBeskrivning.ForeColor = Color.FromArgb(30, 30, 30);
+            txtBeskrivning.Location = new Point(10, 73);
+            txtBeskrivning.Name = "txtBeskrivning";
+            txtBeskrivning.ReadOnly = true;
+            txtBeskrivning.ScrollBars = RichTextBoxScrollBars.Vertical;
+            txtBeskrivning.Size = new Size(420, 640);
+            txtBeskrivning.TabIndex = 33;
+            txtBeskrivning.Text = "";
             // 
             // label1
             // 
@@ -637,7 +623,6 @@
         private ListBox lstPoddar;
         private Button btnLaddaPoddar;
         private TextBox txtTitel;
-        private TextBox txtBeskrivning;
         private ComboBox cbmFilterKategori;
         private Label lblKategori;
         private Label lblBeskrivning;
@@ -668,6 +653,6 @@
         private ComboBox cmbPoddKategori;
         private Button btnSkapaNyKategori;
         private Button btnSparaNyKategori;
-        private RichTextBox txtBeskrivningRBox;
+        private RichTextBox txtBeskrivning;
     }
 }
