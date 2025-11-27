@@ -247,10 +247,10 @@
             txtAvsnittTitel.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtAvsnittTitel.ForeColor = Color.Black;
             txtAvsnittTitel.Location = new Point(914, 28);
-            txtAvsnittTitel.Margin = new Padding(3, 2, 3, 2);
+            txtAvsnittTitel.Multiline = true;
             txtAvsnittTitel.Name = "txtAvsnittTitel";
             txtAvsnittTitel.ReadOnly = true;
-            txtAvsnittTitel.Size = new Size(467, 28);
+            txtAvsnittTitel.Size = new Size(467, 32);
             txtAvsnittTitel.TabIndex = 22;
             // 
             // lblAktuellkategori
