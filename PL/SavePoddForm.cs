@@ -54,35 +54,76 @@ namespace PL
 
         private async void btnSpara_Click(object sender, EventArgs e)
         {
-            //Skapa poddflödet från RSS
+            string namn = txtNamn.Text.Trim();
+
+            // 1. Validera poddnamn (inte tomt)
+            if (!Validering.Validering.KontrolleraTomText(namn, "Poddnamn", out string fel))
+            {
+                MessageBox.Show(fel, "Ogiltigt namn", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // (valfritt) enkel längdkontroll
+            if (namn.Length < 2 || namn.Length > 20)
+            {
+                MessageBox.Show("Poddnamnet måste vara mellan 2-20 tecken.", "Ogiltigt namn",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2. Validera att vi faktiskt har ett feed
+            if (!Validering.Validering.KontrolleraAttFlodeFinns(_feed, out fel))
+            {
+                MessageBox.Show(fel, "Ogiltigt flöde", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 3. Validera RSS-url (ska egentligen redan vara kollad i MainForm, men detta är extra defensivt)
+            if (!Validering.Validering.KontrolleraRssUrl(_rssUrl, out fel))
+            {
+                MessageBox.Show(fel, "Ogiltig RSS-länk", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            // === Om vi kommer hit är all validering OK ===
+
+            // Skapa poddflödet från RSS
             var flode = _poddService.SkapaPoddflode(_feed);
 
-            //Sätt användarens valda namn (från textboxen)
-            flode.Titel = txtNamn.Text;
+            // Sätt användarens valda namn (från textboxen)
+            flode.Titel = namn;
 
-            //Hantera kategori – användaren kan välja Ingen kategori
+            // Hantera kategori – användaren kan välja "Ingen kategori"
             string kategoriId = null;
-
             if (cmbKategori.SelectedItem is Kategori kat)
             {
                 kategoriId = kat.Id;
             }
 
-            //Försök spara podden via PoddService
-            bool sparad = await _poddService.SparaPoddOmNyAsync(flode, _rssUrl, kategoriId);
+            try
+            {
+                // Försök spara podden via PoddService
+                bool sparad = await _poddService.SparaPoddOmNyAsync(flode, _rssUrl, kategoriId);
 
-            //Återkoppling till användaren
-            if (sparad)
-            {
-                MessageBox.Show("Podden har sparats!");
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                if (sparad)
+                {
+                    MessageBox.Show("Podden har sparats!");
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Podden finns redan i databasen.");
+                    this.DialogResult = DialogResult.Cancel;
+                    this.Close();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Podden finns redan i databasen.");
-                this.DialogResult = DialogResult.Cancel;
-                this.Close();
+                MessageBox.Show(
+                    ex.Message,
+                    "Fel vid sparande",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
             }
         }
 

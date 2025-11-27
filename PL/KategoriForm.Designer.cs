@@ -77,14 +77,17 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(304, 341);
+            ClientSize = new Size(304, 281);
             Controls.Add(btnNyKategori);
             Controls.Add(btnTaBort);
             Controls.Add(btnRedigera);
             Controls.Add(lstKategorier);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "KategoriForm";
+            ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "KategoriForm";
             Load += KategoriForm_Load;

@@ -42,20 +42,20 @@
             // 
             txtNamn.Location = new Point(20, 45);
             txtNamn.Name = "txtNamn";
-            txtNamn.Size = new Size(100, 23);
+            txtNamn.Size = new Size(272, 23);
             txtNamn.TabIndex = 0;
             // 
             // cmbKategori
             // 
             cmbKategori.FormattingEnabled = true;
-            cmbKategori.Location = new Point(20, 105);
+            cmbKategori.Location = new Point(20, 106);
             cmbKategori.Name = "cmbKategori";
-            cmbKategori.Size = new Size(200, 23);
+            cmbKategori.Size = new Size(170, 23);
             cmbKategori.TabIndex = 1;
             // 
             // btnSpara
             // 
-            btnSpara.Location = new Point(190, 155);
+            btnSpara.Location = new Point(20, 169);
             btnSpara.Name = "btnSpara";
             btnSpara.Size = new Size(85, 30);
             btnSpara.TabIndex = 2;
@@ -65,7 +65,7 @@
             // 
             // btnAvbryt
             // 
-            btnAvbryt.Location = new Point(285, 155);
+            btnAvbryt.Location = new Point(207, 169);
             btnAvbryt.Name = "btnAvbryt";
             btnAvbryt.Size = new Size(85, 30);
             btnAvbryt.TabIndex = 3;
@@ -93,9 +93,9 @@
             // 
             // btnNyKategori
             // 
-            btnNyKategori.Location = new Point(230, 105);
+            btnNyKategori.Location = new Point(207, 105);
             btnNyKategori.Name = "btnNyKategori";
-            btnNyKategori.Size = new Size(100, 23);
+            btnNyKategori.Size = new Size(85, 23);
             btnNyKategori.TabIndex = 6;
             btnNyKategori.Text = "Ny kategori";
             btnNyKategori.UseVisualStyleBackColor = true;
@@ -105,7 +105,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(384, 221);
+            ClientSize = new Size(304, 211);
             Controls.Add(btnNyKategori);
             Controls.Add(lblKategori);
             Controls.Add(lblNamn);
@@ -118,6 +118,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "SavePoddForm";
+            ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "Spara Podd";
             ResumeLayout(false);

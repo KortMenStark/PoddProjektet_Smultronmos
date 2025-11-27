@@ -37,22 +37,22 @@
             // 
             // lblTitel
             // 
-            lblTitel.Location = new Point(20, 20);
+            lblTitel.Location = new Point(12, 18);
             lblTitel.Name = "lblTitel";
-            lblTitel.Size = new Size(200, 20);
+            lblTitel.Size = new Size(146, 20);
             lblTitel.TabIndex = 0;
             lblTitel.Text = "Nytt Kategorinamn";
             // 
             // txtNamn
             // 
-            txtNamn.Location = new Point(20, 50);
+            txtNamn.Location = new Point(12, 50);
             txtNamn.Name = "txtNamn";
-            txtNamn.Size = new Size(240, 23);
+            txtNamn.Size = new Size(280, 23);
             txtNamn.TabIndex = 1;
             // 
             // btnSpara
             // 
-            btnSpara.Location = new Point(20, 100);
+            btnSpara.Location = new Point(12, 100);
             btnSpara.Name = "btnSpara";
             btnSpara.Size = new Size(100, 30);
             btnSpara.TabIndex = 2;
@@ -62,7 +62,7 @@
             // 
             // btnAvbryt
             // 
-            btnAvbryt.Location = new Point(160, 100);
+            btnAvbryt.Location = new Point(192, 100);
             btnAvbryt.Name = "btnAvbryt";
             btnAvbryt.Size = new Size(100, 30);
             btnAvbryt.TabIndex = 3;
@@ -74,15 +74,17 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(284, 161);
+            ClientSize = new Size(304, 161);
             Controls.Add(btnAvbryt);
             Controls.Add(btnSpara);
             Controls.Add(txtNamn);
             Controls.Add(lblTitel);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "EditKategoriForm";
+            ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "EditKategoriForm";
             ResumeLayout(false);
