@@ -108,11 +108,6 @@ namespace PL
         private async Task LaddaKategorierAsync()
         {
             allaKategorier = await enKategoriService.HamtaAllaKategorier();
-
-            cmbKategori.DataSource = null;
-            cmbKategori.DisplayMember = "Namn";
-            cmbKategori.ValueMember = "Id";
-            cmbKategori.DataSource = allaKategorier;
         }
         private async Task LaddaPoddarAsync()
         {
@@ -153,8 +148,6 @@ namespace PL
                 txtAvsnittTitel.Text = "";
                 txtPubliceringsdatum.Text = "";
                 txtBeskrivning.Text = "";
-                // 5. Tillåt sparning
-                btnSparaPodd.Enabled = true;
 
                 VisaPoddBild(feed);
 
@@ -273,11 +266,6 @@ namespace PL
                 }
             }
         }
-        private async void btnLaddaPoddar_ClickAsync(object sender, EventArgs e)
-        {
-            await LaddaPoddarAsync();
-        }
-
         private void VisaPoddar(IEnumerable<Podd> poddar)
         {
             lstPoddar.Items.Clear();
@@ -390,9 +378,6 @@ namespace PL
         {
             btnSparaPodd.Visible = false;
             btnAvprenumerera.Visible = false;
-            btnAndraKategori.Visible = false;
-            cmbKategori.Visible = false;
-            lblNyKategori.Visible = false;
 
             // 1. Ladda alla sparade poddar & kategorier från databasen
             await LaddaKategorierAsync();
@@ -462,8 +447,7 @@ namespace PL
                 if (result == DialogResult.Yes)
                 {
                     await enPoddService.TaBortPodd(valdPodd.Id);
-                    btnLaddaPoddar.PerformClick();
-
+                    await LaddaPoddarAsync();
                 }
 
             }
@@ -480,29 +464,6 @@ namespace PL
             };
 
             dlg.ShowDialog();
-        }
-
-        private async void btnAndraKategori_Click(object sender, EventArgs e)
-        {
-            if (lstPoddar.SelectedItem is not Podd valdPodd)
-            {
-                MessageBox.Show("Välj en podd först.");
-                return;
-            }
-
-            if (cmbKategori.SelectedItem is not Kategori valdKategori)
-            {
-                MessageBox.Show("Välj en kategori.");
-                return;
-            }
-
-            // Sätt ny kategori
-            valdPodd.KategoriId = valdKategori.Id;
-
-            // Spara i databasen
-            await enPoddService.UppdateraPodd(valdPodd);
-
-            MessageBox.Show("Kategorin ändrades.");
         }
 
         private void cmbPoddKategori_SelectedIndexChanged(object sender, EventArgs e)
