@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditKategoriForm));
             lblTitel = new Label();
             txtNamn = new TextBox();
             btnSpara = new Button();
@@ -78,6 +79,7 @@
             Controls.Add(btnSpara);
             Controls.Add(txtNamn);
             Controls.Add(lblTitel);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "EditKategoriForm";

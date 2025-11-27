@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(KategoriForm));
             lstKategorier = new ListBox();
             btnRedigera = new Button();
             btnTaBort = new Button();
@@ -82,6 +83,7 @@
             Controls.Add(btnRedigera);
             Controls.Add(lstKategorier);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "KategoriForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "KategoriForm";

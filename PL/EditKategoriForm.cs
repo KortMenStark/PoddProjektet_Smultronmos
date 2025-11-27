@@ -11,6 +11,8 @@ using BL;
 using Models_new;
 using PL.Validering;
 
+using PL.ValideringMapp;
+
 namespace PL
 {
     public partial class EditKategoriForm : Form

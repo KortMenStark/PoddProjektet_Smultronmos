@@ -101,7 +101,6 @@
             txtRssUrl.Name = "txtRssUrl";
             txtRssUrl.Size = new Size(173, 29);
             txtRssUrl.TabIndex = 3;
-            txtRssUrl.TextChanged += txtRssUrl_TextChanged;
             // 
             // btnSparaPodd
             // 
@@ -256,7 +255,6 @@
             lblAktuellkategori.Size = new Size(55, 15);
             lblAktuellkategori.TabIndex = 25;
             lblAktuellkategori.Text = "Kategori";
-            lblAktuellkategori.Click += lblAktuellkategori_Click;
             // 
             // cmbKategori
             // 
@@ -323,7 +321,6 @@
             panelMinaPoddar.Name = "panelMinaPoddar";
             panelMinaPoddar.Size = new Size(300, 811);
             panelMinaPoddar.TabIndex = 29;
-            panelMinaPoddar.Paint += panelLeft_Paint;
             // 
             // lblRss
             // 
@@ -443,7 +440,6 @@
             pbPoddBild.Size = new Size(240, 216);
             pbPoddBild.TabIndex = 32;
             pbPoddBild.TabStop = false;
-            pbPoddBild.Click += pictureBox2_Click;
             // 
             // panelAvsnittLista
             // 
@@ -462,7 +458,6 @@
             panelAvsnittLista.Name = "panelAvsnittLista";
             panelAvsnittLista.Size = new Size(437, 700);
             panelAvsnittLista.TabIndex = 32;
-            panelAvsnittLista.Paint += panelAvsnittLista_Paint;
             // 
             // btnLaggTillNyKategori
             // 
@@ -526,7 +521,6 @@
             panelAvsnittDetaljer.Name = "panelAvsnittDetaljer";
             panelAvsnittDetaljer.Size = new Size(487, 700);
             panelAvsnittDetaljer.TabIndex = 21;
-            panelAvsnittDetaljer.Paint += panelAvsnittDetaljer_Paint;
             // 
             // label1
             // 

@@ -2,6 +2,7 @@ using BL;
 using DAL;
 using DAL.Repository;
 using Models_new;
+using PL.Validering;
 using System.ServiceModel.Syndication;
 using System.Linq;
 using static System.Net.WebRequestMethods;
@@ -49,9 +50,6 @@ namespace PL
             enKategoriService = new KategoriService(
             new KategoriRepository(new MongoDbContext()),
               new PoddRepository(new MongoDbContext()));
-
-
-
         }
 
         private void NollstallPoddBild()
@@ -59,7 +57,6 @@ namespace PL
             pbPoddBild.Visible = false;
             pbPoddBild.Image = null;
         }
-
         private void VisaPoddBild(SyndicationFeed? feed)
         {
             NollstallPoddBild();
@@ -82,7 +79,6 @@ namespace PL
                 NollstallPoddBild();
             }
         }
-
         private void GaTillRSSLage()
         {
             btnSparaPodd.Visible = true;
@@ -94,7 +90,6 @@ namespace PL
             lblAvsnittSeparator.Visible = false;
 
         }
-
         private void GaTillSparadPoddLage()
         {
             btnSparaPodd.Visible = false;
@@ -117,28 +112,23 @@ namespace PL
             cmbKategori.DisplayMember = "Namn";
             cmbKategori.ValueMember = "Id";
             cmbKategori.DataSource = allaKategorier;
-
-
         }
-
         private async Task LaddaPoddarAsync()
         {
             allaPoddar = await enPoddService.HamtaAllaPoddar();
             VisaPoddar(allaPoddar);
             FyllFilterKategorier();
         }
-
         private async void btnHamtaRss_ClickAsync(object sender, EventArgs e)
         {
             var url = txtRssUrl.Text.Trim();
 
-            // 1. Tom URL? Stoppa.
-            if (string.IsNullOrWhiteSpace(url))
+            // 1. Validera RSS-url via valideringsklassen
+            if (!Validering.Validering.KontrolleraRssUrl(url, out string felmeddelande))
             {
-                MessageBox.Show("Vänligen ange en Rss länk");
+                MessageBox.Show(felmeddelande);
                 return;
             }
-
             try
             {
                 // 2. Hämta flödet
@@ -179,7 +169,6 @@ namespace PL
                 MessageBox.Show(ettFel.Message);
             }
         }
-
         private void lstAvsnitt_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lstAvsnitt.SelectedIndex < 0)
@@ -207,7 +196,6 @@ namespace PL
 
             txtBeskrivning.Text = renSammanfattning;
         }
-
         private string TaBortHtml(string htmlText)
         {
             if (string.IsNullOrWhiteSpace(htmlText))
@@ -227,31 +215,26 @@ namespace PL
         {
             var aktuellUrl = txtRssUrl.Text.Trim();
 
-
-            // 1: Kolla att URL inte är tom
-            if (string.IsNullOrWhiteSpace(aktuellUrl))
+            // 1: Validera RSS-länken (tom + format)
+            if (!Validering.Validering.KontrolleraRssUrl(aktuellUrl, out string fel))
             {
-                MessageBox.Show("RSS-länken får inte vara tom. Ange en länk och hämta flödet först.");
+                MessageBox.Show(fel);
                 return;
             }
-
 
             // 2: Kolla att vi faktiskt har ett hämtat flöde
-            if (hamtatfeed == null)
+            if (!Validering.Validering.KontrolleraAttFlodeFinns(hamtatfeed, out fel))
             {
-                MessageBox.Show("Inget RSS-flöde att spara. Hämta först.");
+                MessageBox.Show(fel);
                 return;
             }
-
 
             // 3: Kolla att URL:en inte ändrats efter hämtning
-            if (!string.Equals(aktuellUrl, senastHamtdRssUrl, StringComparison.OrdinalIgnoreCase))
+            if (!Validering.Validering.KontrolleraAttRssInteAndrats(aktuellUrl, senastHamtdRssUrl, out fel))
             {
-                MessageBox.Show("RSS-länken har ändrats sedan flödet hämtades. Hämta flödet igen innan du sparar podden.");
+                MessageBox.Show(fel);
                 return;
             }
-
-
             // 4: Öppna dialogen för att sätta namn/kategori
             var dlg = new SavePoddForm(
             hamtatfeed,
@@ -289,7 +272,6 @@ namespace PL
                 }
             }
         }
-
         private async void btnLaddaPoddar_ClickAsync(object sender, EventArgs e)
         {
             await LaddaPoddarAsync();
@@ -304,7 +286,6 @@ namespace PL
                 lstPoddar.Items.Add(podd);
             }
         }
-
         private void FyllFilterKategorier()
         {
             if (allaPoddar == null || allaPoddar.Count == 0)
@@ -341,7 +322,6 @@ namespace PL
             // koppla på event igen
             cbmFilterKategori.SelectedIndexChanged += cbmFilterKategori_SelectedIndexChanged;
         }
-
         private void FyllPoddKategoriDropdown()
         {
             if (cmbPoddKategori == null)
@@ -356,7 +336,6 @@ namespace PL
             }
             cmbPoddKategori.DisplayMember = "Namn";
         }
-
         private async void lstPoddar_SelectedIndexChangedAsync(object sender, EventArgs e)
         {
             if (lstPoddar.SelectedItem == null)
@@ -405,19 +384,7 @@ namespace PL
             {
                 lstAvsnitt.SelectedIndex = 0;   // Triggar lstAvsnitt_SelectedIndexChanged
             }
-
         }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtNyKategori_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private async void Mainform_Load(object sender, EventArgs e)
         {
             btnSparaPodd.Visible = false;
@@ -437,7 +404,6 @@ namespace PL
                 lstPoddar.SelectedIndex = 0;   // Triggar lstPoddar_SelectedIndexChangedAsync
             }
         }
-
         private void cbmFilterKategori_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -476,9 +442,6 @@ namespace PL
                 VisaPoddar(filtrerade);
             }
         }
-
-
-
         private async void btnAvprenumerera_ClickAsync(object sender, EventArgs e)
         {
             {
@@ -539,48 +502,6 @@ namespace PL
             await enPoddService.UppdateraPodd(valdPodd);
 
             MessageBox.Show("Kategorin ändrades.");
-        }
-
-        private void txtRssUrl_TextChanged(object sender, EventArgs e)
-        {
-            //hamtatfeed = null;
-            //senastHamtdRssUrl = null;
-            btnSparaPodd.Enabled = false;
-        }
-
-        private void lblNyKategori_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panelLeft_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panelAvsnittLista_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void lblTitel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panelPoddLista_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panelAvsnittDetaljer_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         private void cmbPoddKategori_SelectedIndexChanged(object sender, EventArgs e)
@@ -690,11 +611,6 @@ namespace PL
                     _ignoreKategoriEvents = false;
                 }
             }
-        }
-
-        private void lblAktuellkategori_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

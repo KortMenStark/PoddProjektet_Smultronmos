@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SavePoddForm));
             txtNamn = new TextBox();
             cmbKategori = new ComboBox();
             btnSpara = new Button();
@@ -113,6 +114,7 @@
             Controls.Add(cmbKategori);
             Controls.Add(txtNamn);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "SavePoddForm";
