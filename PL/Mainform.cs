@@ -157,7 +157,11 @@ namespace PL
                 {
                     lstAvsnitt.Items.Add(item.Title.Text);
                 }
-
+                // Inget avsnitt väljs och listan rensas från tidigare valt avsnitt
+                lstAvsnitt.ClearSelected();
+                txtAvsnittTitel.Text = "";
+                txtPubliceringsdatum.Text = "";
+                txtBeskrivning.Text = "";
                 // 5. Tillåt sparning
                 btnSparaPodd.Enabled = true;
 
