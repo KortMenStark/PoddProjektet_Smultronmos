@@ -78,6 +78,7 @@
             // btnHamtaRss
             // 
             btnHamtaRss.BackColor = Color.White;
+            btnHamtaRss.Cursor = Cursors.Hand;
             btnHamtaRss.FlatAppearance.BorderSize = 0;
             btnHamtaRss.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnHamtaRss.ForeColor = SystemColors.ControlText;
@@ -104,6 +105,7 @@
             // btnSparaPodd
             // 
             btnSparaPodd.BackColor = Color.White;
+            btnSparaPodd.Cursor = Cursors.Hand;
             btnSparaPodd.FlatAppearance.BorderSize = 0;
             btnSparaPodd.FlatAppearance.MouseOverBackColor = Color.FromArgb(52, 53, 65);
             btnSparaPodd.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -188,6 +190,7 @@
             // btnAvprenumerera
             // 
             btnAvprenumerera.BackColor = Color.Transparent;
+            btnAvprenumerera.Cursor = Cursors.Hand;
             btnAvprenumerera.FlatAppearance.BorderSize = 0;
             btnAvprenumerera.FlatAppearance.MouseOverBackColor = Color.FromArgb(52, 53, 65);
             btnAvprenumerera.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -273,6 +276,7 @@
             // btnOptions
             // 
             btnOptions.BackColor = Color.Transparent;
+            btnOptions.Cursor = Cursors.Hand;
             btnOptions.FlatAppearance.BorderSize = 0;
             btnOptions.FlatAppearance.MouseDownBackColor = Color.White;
             btnOptions.FlatAppearance.MouseOverBackColor = Color.FromArgb(52, 53, 65);
@@ -394,6 +398,7 @@
             // 
             // btnLaggTillNyKategori
             // 
+            btnLaggTillNyKategori.Cursor = Cursors.Hand;
             btnLaggTillNyKategori.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnLaggTillNyKategori.Location = new Point(280, 345);
             btnLaggTillNyKategori.Name = "btnLaggTillNyKategori";
@@ -406,6 +411,7 @@
             // btnSparaPoddKategori
             // 
             btnSparaPoddKategori.BackColor = Color.Transparent;
+            btnSparaPoddKategori.Cursor = Cursors.Hand;
             btnSparaPoddKategori.FlatAppearance.BorderSize = 0;
             btnSparaPoddKategori.FlatStyle = FlatStyle.Flat;
             btnSparaPoddKategori.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
