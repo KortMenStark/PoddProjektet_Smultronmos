@@ -678,16 +678,22 @@ namespace PL
             dlg.ShowDialog(this);   // öppna som modal dialog
         }
 
-        private void btnAvsluta_Click(object sender, EventArgs e)
-        {
-            var fråga = MessageBox.Show(
-        "Vill du avsluta Podvault?",
-        "Avsluta",
-        MessageBoxButtons.YesNo,
-        MessageBoxIcon.Question);
+        private void Mainform_FormClosing(object sender, FormClosingEventArgs e)
+        {// Om stängningen kommer från användaren (dvs klick på X)
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                var dialog = MessageBox.Show(
+                    "Vill du avsluta Podvault?",
+                    "Bekräfta avslut",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
-            if (fråga == DialogResult.Yes)
-                Application.Exit();
+                if (dialog == DialogResult.No)
+                {
+                    e.Cancel = true;   // Avbryt stängningen
+                }
+            }
+
         }
     }
 }

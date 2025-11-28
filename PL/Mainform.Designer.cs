@@ -48,7 +48,6 @@
             panelLogo = new Panel();
             lblPodcast = new Label();
             pBoxLogo = new PictureBox();
-            btnAvsluta = new Button();
             txtPubliceringsdatum = new TextBox();
             lblUtgivningsdatum = new Label();
             lstAvsnitt = new ListBox();
@@ -61,10 +60,11 @@
             lblAvsnittRubrik = new Label();
             panelAvsnittDetaljer = new Panel();
             txtBeskrivning = new RichTextBox();
-            label1 = new Label();
+            lblBeskrivningSeperator = new Label();
             contextMenuStripPoddOptions = new ContextMenuStrip(components);
             mnuByttNamn = new ToolStripMenuItem();
             mnuAndraKategori = new ToolStripMenuItem();
+            panelScroll = new Panel();
             panelMinaPoddar.SuspendLayout();
             panelLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pBoxLogo).BeginInit();
@@ -72,6 +72,7 @@
             panelAvsnittLista.SuspendLayout();
             panelAvsnittDetaljer.SuspendLayout();
             contextMenuStripPoddOptions.SuspendLayout();
+            panelScroll.SuspendLayout();
             SuspendLayout();
             // 
             // btnHamtaRss
@@ -83,7 +84,7 @@
             btnHamtaRss.Image = Properties.Resources.search_16;
             btnHamtaRss.Location = new Point(310, 255);
             btnHamtaRss.Name = "btnHamtaRss";
-            btnHamtaRss.Size = new Size(25, 25);
+            btnHamtaRss.Size = new Size(29, 29);
             btnHamtaRss.TabIndex = 0;
             btnHamtaRss.UseVisualStyleBackColor = true;
             btnHamtaRss.Click += btnHamtaRss_ClickAsync;
@@ -92,12 +93,12 @@
             // 
             txtRssUrl.BackColor = Color.White;
             txtRssUrl.Cursor = Cursors.IBeam;
-            txtRssUrl.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtRssUrl.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtRssUrl.ForeColor = Color.Black;
             txtRssUrl.Location = new Point(12, 255);
             txtRssUrl.Margin = new Padding(2);
             txtRssUrl.Name = "txtRssUrl";
-            txtRssUrl.Size = new Size(293, 25);
+            txtRssUrl.Size = new Size(293, 29);
             txtRssUrl.TabIndex = 3;
             // 
             // btnSparaPodd
@@ -142,8 +143,8 @@
             txtTitel.BackColor = Color.WhiteSmoke;
             txtTitel.BorderStyle = BorderStyle.None;
             txtTitel.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtTitel.ForeColor = Color.Black;
-            txtTitel.Location = new Point(396, 14);
+            txtTitel.ForeColor = SystemColors.ControlText;
+            txtTitel.Location = new Point(-7, 48);
             txtTitel.Multiline = true;
             txtTitel.Name = "txtTitel";
             txtTitel.ReadOnly = true;
@@ -152,10 +153,12 @@
             // 
             // cbmFilterKategori
             // 
+            cbmFilterKategori.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cbmFilterKategori.ForeColor = SystemColors.ControlText;
             cbmFilterKategori.FormattingEnabled = true;
             cbmFilterKategori.Location = new Point(11, 341);
             cbmFilterKategori.Name = "cbmFilterKategori";
-            cbmFilterKategori.Size = new Size(323, 25);
+            cbmFilterKategori.Size = new Size(323, 29);
             cbmFilterKategori.TabIndex = 16;
             cbmFilterKategori.SelectedIndexChanged += cbmFilterKategori_SelectedIndexChanged;
             // 
@@ -163,22 +166,22 @@
             // 
             lblKategori.AutoSize = true;
             lblKategori.BackColor = Color.Transparent;
-            lblKategori.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
+            lblKategori.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold);
             lblKategori.ForeColor = Color.White;
-            lblKategori.Location = new Point(11, 315);
+            lblKategori.Location = new Point(11, 313);
             lblKategori.Name = "lblKategori";
-            lblKategori.Size = new Size(106, 17);
+            lblKategori.Size = new Size(155, 25);
             lblKategori.TabIndex = 17;
             lblKategori.Text = "Mina kategorier";
             // 
             // lblBeskrivning
             // 
             lblBeskrivning.AutoSize = true;
-            lblBeskrivning.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblBeskrivning.ForeColor = Color.Black;
-            lblBeskrivning.Location = new Point(10, 16);
+            lblBeskrivning.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblBeskrivning.ForeColor = SystemColors.ControlText;
+            lblBeskrivning.Location = new Point(10, 119);
             lblBeskrivning.Name = "lblBeskrivning";
-            lblBeskrivning.Size = new Size(117, 25);
+            lblBeskrivning.Size = new Size(100, 21);
             lblBeskrivning.TabIndex = 19;
             lblBeskrivning.Text = "Beskrivning";
             // 
@@ -191,7 +194,7 @@
             btnAvprenumerera.ForeColor = SystemColors.ControlText;
             btnAvprenumerera.Image = Properties.Resources.Unsub_24;
             btnAvprenumerera.ImageAlign = ContentAlignment.MiddleRight;
-            btnAvprenumerera.Location = new Point(10, 736);
+            btnAvprenumerera.Location = new Point(10, 804);
             btnAvprenumerera.Name = "btnAvprenumerera";
             btnAvprenumerera.Padding = new Padding(10, 5, 10, 5);
             btnAvprenumerera.Size = new Size(156, 38);
@@ -203,12 +206,11 @@
             // 
             // txtAvsnittTitel
             // 
-            txtAvsnittTitel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtAvsnittTitel.BackColor = Color.WhiteSmoke;
+            txtAvsnittTitel.BackColor = Color.White;
             txtAvsnittTitel.BorderStyle = BorderStyle.None;
             txtAvsnittTitel.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtAvsnittTitel.ForeColor = Color.Black;
-            txtAvsnittTitel.Location = new Point(903, 14);
+            txtAvsnittTitel.ForeColor = SystemColors.ControlText;
+            txtAvsnittTitel.Location = new Point(-2, 20);
             txtAvsnittTitel.Multiline = true;
             txtAvsnittTitel.Name = "txtAvsnittTitel";
             txtAvsnittTitel.ReadOnly = true;
@@ -218,11 +220,11 @@
             // lblAktuellkategori
             // 
             lblAktuellkategori.AutoSize = true;
-            lblAktuellkategori.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblAktuellkategori.ForeColor = Color.Black;
-            lblAktuellkategori.Location = new Point(10, 301);
+            lblAktuellkategori.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblAktuellkategori.ForeColor = SystemColors.ControlText;
+            lblAktuellkategori.Location = new Point(10, 287);
             lblAktuellkategori.Name = "lblAktuellkategori";
-            lblAktuellkategori.Size = new Size(55, 15);
+            lblAktuellkategori.Size = new Size(75, 21);
             lblAktuellkategori.TabIndex = 25;
             lblAktuellkategori.Text = "Kategori";
             // 
@@ -249,11 +251,11 @@
             // 
             lblRss.AutoSize = true;
             lblRss.BackColor = Color.Transparent;
-            lblRss.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
+            lblRss.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold);
             lblRss.ForeColor = Color.White;
-            lblRss.Location = new Point(12, 227);
+            lblRss.Location = new Point(12, 228);
             lblRss.Name = "lblRss";
-            lblRss.Size = new Size(70, 17);
+            lblRss.Size = new Size(104, 25);
             lblRss.TabIndex = 29;
             lblRss.Text = "Sök podd:";
             // 
@@ -289,7 +291,6 @@
             // 
             panelLogo.BackColor = Color.FromArgb(66, 111, 175);
             panelLogo.Controls.Add(lblPodcast);
-            panelLogo.Controls.Add(btnAvsluta);
             panelLogo.Controls.Add(pBoxLogo);
             panelLogo.Dock = DockStyle.Top;
             panelLogo.Location = new Point(0, 0);
@@ -321,31 +322,14 @@
             pBoxLogo.TabIndex = 0;
             pBoxLogo.TabStop = false;
             // 
-            // btnAvsluta
-            // 
-            btnAvsluta.BackColor = Color.Transparent;
-            btnAvsluta.FlatAppearance.BorderSize = 0;
-            btnAvsluta.FlatAppearance.MouseDownBackColor = Color.White;
-            btnAvsluta.FlatAppearance.MouseOverBackColor = Color.FromArgb(52, 53, 65);
-            btnAvsluta.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
-            btnAvsluta.ForeColor = Color.White;
-            btnAvsluta.Image = Properties.Resources.close_24;
-            btnAvsluta.Location = new Point(11, 14);
-            btnAvsluta.Name = "btnAvsluta";
-            btnAvsluta.Padding = new Padding(10, 5, 10, 5);
-            btnAvsluta.Size = new Size(25, 25);
-            btnAvsluta.TabIndex = 31;
-            btnAvsluta.UseVisualStyleBackColor = false;
-            btnAvsluta.Click += btnAvsluta_Click;
-            // 
             // txtPubliceringsdatum
             // 
             txtPubliceringsdatum.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtPubliceringsdatum.BackColor = Color.White;
             txtPubliceringsdatum.BorderStyle = BorderStyle.None;
             txtPubliceringsdatum.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtPubliceringsdatum.ForeColor = Color.Black;
-            txtPubliceringsdatum.Location = new Point(10, 745);
+            txtPubliceringsdatum.ForeColor = SystemColors.ControlText;
+            txtPubliceringsdatum.Location = new Point(10, 820);
             txtPubliceringsdatum.Name = "txtPubliceringsdatum";
             txtPubliceringsdatum.ReadOnly = true;
             txtPubliceringsdatum.Size = new Size(428, 22);
@@ -354,11 +338,11 @@
             // lblUtgivningsdatum
             // 
             lblUtgivningsdatum.AutoSize = true;
-            lblUtgivningsdatum.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblUtgivningsdatum.ForeColor = Color.Black;
-            lblUtgivningsdatum.Location = new Point(10, 724);
+            lblUtgivningsdatum.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblUtgivningsdatum.ForeColor = SystemColors.ControlText;
+            lblUtgivningsdatum.Location = new Point(10, 793);
             lblUtgivningsdatum.Name = "lblUtgivningsdatum";
-            lblUtgivningsdatum.Size = new Size(103, 15);
+            lblUtgivningsdatum.Size = new Size(144, 21);
             lblUtgivningsdatum.TabIndex = 20;
             lblUtgivningsdatum.Text = "Utgivningsdatum";
             // 
@@ -395,6 +379,7 @@
             panelAvsnittLista.Controls.Add(btnLaggTillNyKategori);
             panelAvsnittLista.Controls.Add(btnSparaPoddKategori);
             panelAvsnittLista.Controls.Add(btnSparaPodd);
+            panelAvsnittLista.Controls.Add(txtTitel);
             panelAvsnittLista.Controls.Add(cmbPoddKategori);
             panelAvsnittLista.Controls.Add(pbPoddBild);
             panelAvsnittLista.Controls.Add(btnAvprenumerera);
@@ -402,16 +387,17 @@
             panelAvsnittLista.Controls.Add(lblAktuellkategori);
             panelAvsnittLista.Controls.Add(lblAvsnittRubrik);
             panelAvsnittLista.Controls.Add(lstAvsnitt);
-            panelAvsnittLista.Location = new Point(396, 84);
+            panelAvsnittLista.Location = new Point(396, 14);
             panelAvsnittLista.Name = "panelAvsnittLista";
-            panelAvsnittLista.Size = new Size(450, 800);
+            panelAvsnittLista.Size = new Size(450, 870);
             panelAvsnittLista.TabIndex = 32;
             // 
             // btnLaggTillNyKategori
             // 
-            btnLaggTillNyKategori.Location = new Point(300, 322);
+            btnLaggTillNyKategori.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLaggTillNyKategori.Location = new Point(280, 310);
             btnLaggTillNyKategori.Name = "btnLaggTillNyKategori";
-            btnLaggTillNyKategori.Size = new Size(125, 26);
+            btnLaggTillNyKategori.Size = new Size(145, 29);
             btnLaggTillNyKategori.TabIndex = 35;
             btnLaggTillNyKategori.Text = "Skapa ny kategori";
             btnLaggTillNyKategori.UseVisualStyleBackColor = true;
@@ -419,21 +405,25 @@
             // 
             // btnSparaPoddKategori
             // 
-            btnSparaPoddKategori.Location = new Point(174, 322);
+            btnSparaPoddKategori.FlatStyle = FlatStyle.Flat;
+            btnSparaPoddKategori.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnSparaPoddKategori.Image = Properties.Resources.diskette_24;
+            btnSparaPoddKategori.Location = new Point(226, 311);
             btnSparaPoddKategori.Name = "btnSparaPoddKategori";
-            btnSparaPoddKategori.Size = new Size(125, 26);
+            btnSparaPoddKategori.Size = new Size(29, 29);
             btnSparaPoddKategori.TabIndex = 34;
-            btnSparaPoddKategori.Text = "Spara ny Kategori";
             btnSparaPoddKategori.UseVisualStyleBackColor = true;
             btnSparaPoddKategori.Click += btnSparaPoddKategori_Click;
             // 
             // cmbPoddKategori
             // 
             cmbPoddKategori.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbPoddKategori.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cmbPoddKategori.ForeColor = SystemColors.ControlText;
             cmbPoddKategori.FormattingEnabled = true;
-            cmbPoddKategori.Location = new Point(10, 322);
+            cmbPoddKategori.Location = new Point(10, 311);
             cmbPoddKategori.Name = "cmbPoddKategori";
-            cmbPoddKategori.Size = new Size(158, 25);
+            cmbPoddKategori.Size = new Size(210, 29);
             cmbPoddKategori.TabIndex = 33;
             cmbPoddKategori.SelectedIndexChanged += cmbPoddKategori_SelectedIndexChanged;
             // 
@@ -448,10 +438,10 @@
             // lblAvsnittRubrik
             // 
             lblAvsnittRubrik.AutoSize = true;
-            lblAvsnittRubrik.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
-            lblAvsnittRubrik.Location = new Point(10, 369);
+            lblAvsnittRubrik.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblAvsnittRubrik.Location = new Point(10, 365);
             lblAvsnittRubrik.Name = "lblAvsnittRubrik";
-            lblAvsnittRubrik.Size = new Size(52, 17);
+            lblAvsnittRubrik.Size = new Size(64, 21);
             lblAvsnittRubrik.TabIndex = 19;
             lblAvsnittRubrik.Text = "Avsnitt";
             // 
@@ -460,13 +450,14 @@
             panelAvsnittDetaljer.BackColor = Color.White;
             panelAvsnittDetaljer.BorderStyle = BorderStyle.Fixed3D;
             panelAvsnittDetaljer.Controls.Add(txtBeskrivning);
-            panelAvsnittDetaljer.Controls.Add(label1);
+            panelAvsnittDetaljer.Controls.Add(lblBeskrivningSeperator);
             panelAvsnittDetaljer.Controls.Add(txtPubliceringsdatum);
+            panelAvsnittDetaljer.Controls.Add(txtAvsnittTitel);
             panelAvsnittDetaljer.Controls.Add(lblBeskrivning);
             panelAvsnittDetaljer.Controls.Add(lblUtgivningsdatum);
-            panelAvsnittDetaljer.Location = new Point(903, 84);
+            panelAvsnittDetaljer.Location = new Point(903, 14);
             panelAvsnittDetaljer.Name = "panelAvsnittDetaljer";
-            panelAvsnittDetaljer.Size = new Size(450, 800);
+            panelAvsnittDetaljer.Size = new Size(450, 870);
             panelAvsnittDetaljer.TabIndex = 21;
             // 
             // txtBeskrivning
@@ -476,21 +467,21 @@
             txtBeskrivning.DetectUrls = false;
             txtBeskrivning.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtBeskrivning.ForeColor = Color.FromArgb(30, 30, 30);
-            txtBeskrivning.Location = new Point(10, 73);
+            txtBeskrivning.Location = new Point(10, 169);
             txtBeskrivning.Name = "txtBeskrivning";
             txtBeskrivning.ReadOnly = true;
             txtBeskrivning.ScrollBars = RichTextBoxScrollBars.Vertical;
-            txtBeskrivning.Size = new Size(420, 640);
+            txtBeskrivning.Size = new Size(420, 605);
             txtBeskrivning.TabIndex = 33;
             txtBeskrivning.Text = "";
             // 
-            // label1
+            // lblBeskrivningSeperator
             // 
-            label1.BackColor = Color.LightGray;
-            label1.Location = new Point(10, 48);
-            label1.Name = "label1";
-            label1.Size = new Size(420, 1);
-            label1.TabIndex = 33;
+            lblBeskrivningSeperator.BackColor = Color.LightGray;
+            lblBeskrivningSeperator.Location = new Point(10, 150);
+            lblBeskrivningSeperator.Name = "lblBeskrivningSeperator";
+            lblBeskrivningSeperator.Size = new Size(420, 1);
+            lblBeskrivningSeperator.TabIndex = 33;
             // 
             // contextMenuStripPoddOptions
             // 
@@ -499,7 +490,7 @@
             contextMenuStripPoddOptions.Items.AddRange(new ToolStripItem[] { mnuByttNamn, mnuAndraKategori });
             contextMenuStripPoddOptions.Name = "contextMenuStripPoddOptions";
             contextMenuStripPoddOptions.RenderMode = ToolStripRenderMode.System;
-            contextMenuStripPoddOptions.Size = new Size(246, 56);
+            contextMenuStripPoddOptions.Size = new Size(225, 56);
             // 
             // mnuByttNamn
             // 
@@ -507,8 +498,8 @@
             mnuByttNamn.ForeColor = Color.White;
             mnuByttNamn.Image = Properties.Resources.edit_16;
             mnuByttNamn.Name = "mnuByttNamn";
-            mnuByttNamn.Size = new Size(245, 26);
-            mnuByttNamn.Text = "Bytt namn på vald podd";
+            mnuByttNamn.Size = new Size(224, 26);
+            mnuByttNamn.Text = "Byt namn på podden";
             mnuByttNamn.Click += mnuBytNamn_Click;
             // 
             // mnuAndraKategori
@@ -517,9 +508,21 @@
             mnuAndraKategori.ForeColor = Color.White;
             mnuAndraKategori.Image = Properties.Resources.folder_16;
             mnuAndraKategori.Name = "mnuAndraKategori";
-            mnuAndraKategori.Size = new Size(245, 26);
-            mnuAndraKategori.Text = "Hantera Kategori";
+            mnuAndraKategori.Size = new Size(224, 26);
+            mnuAndraKategori.Text = "Hantera kategorier";
             mnuAndraKategori.Click += mnuAndraKategori_Click;
+            // 
+            // panelScroll
+            // 
+            panelScroll.AutoScroll = true;
+            panelScroll.Controls.Add(panelMinaPoddar);
+            panelScroll.Controls.Add(panelAvsnittLista);
+            panelScroll.Controls.Add(panelAvsnittDetaljer);
+            panelScroll.Dock = DockStyle.Fill;
+            panelScroll.Location = new Point(0, 0);
+            panelScroll.Name = "panelScroll";
+            panelScroll.Size = new Size(1434, 911);
+            panelScroll.TabIndex = 33;
             // 
             // Mainform
             // 
@@ -527,22 +530,15 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
             ClientSize = new Size(1434, 911);
-            ControlBox = false;
-            Controls.Add(txtAvsnittTitel);
-            Controls.Add(panelAvsnittDetaljer);
-            Controls.Add(panelAvsnittLista);
-            Controls.Add(panelMinaPoddar);
-            Controls.Add(txtTitel);
+            Controls.Add(panelScroll);
             Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ForeColor = SystemColors.ControlText;
-            FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(2);
-            MaximizeBox = false;
-            MinimizeBox = false;
             Name = "Mainform";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "PodVault";
+            FormClosing += Mainform_FormClosing;
             Load += Mainform_Load;
             panelMinaPoddar.ResumeLayout(false);
             panelMinaPoddar.PerformLayout();
@@ -555,8 +551,8 @@
             panelAvsnittDetaljer.ResumeLayout(false);
             panelAvsnittDetaljer.PerformLayout();
             contextMenuStripPoddOptions.ResumeLayout(false);
+            panelScroll.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -587,7 +583,7 @@
         private Label lblAvsnittRubrik;
         private Panel panelAvsnittDetaljer;
         private PictureBox pbPoddBild;
-        private Label label1;
+        private Label lblBeskrivningSeperator;
         private Button btnLaggTillNyKategori;
         private Button btnSparaPoddKategori;
         private ComboBox cmbPoddKategori;
@@ -595,6 +591,6 @@
         private ContextMenuStrip contextMenuStripPoddOptions;
         private ToolStripMenuItem mnuByttNamn;
         private ToolStripMenuItem mnuAndraKategori;
-        private Button btnAvsluta;
+        private Panel panelScroll;
     }
 }
