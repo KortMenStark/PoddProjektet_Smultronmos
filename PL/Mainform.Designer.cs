@@ -155,6 +155,7 @@
             // 
             // cbmFilterKategori
             // 
+            cbmFilterKategori.Cursor = Cursors.Hand;
             cbmFilterKategori.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cbmFilterKategori.ForeColor = SystemColors.ControlText;
             cbmFilterKategori.FormattingEnabled = true;
@@ -425,6 +426,7 @@
             // 
             // cmbPoddKategori
             // 
+            cmbPoddKategori.Cursor = Cursors.Hand;
             cmbPoddKategori.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbPoddKategori.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cmbPoddKategori.ForeColor = SystemColors.ControlText;
