@@ -2,7 +2,12 @@ using BL;
 using DAL;
 using DAL.Repository;
 using Models_new;
+using PL.Validering;
+using System.Drawing;
 using System.ServiceModel.Syndication;
+using System.Linq;
+using System.Drawing.Drawing2D;
+using static System.Net.WebRequestMethods;
 
 namespace PL
 
@@ -39,22 +44,14 @@ namespace PL
         public Mainform()
         {
             InitializeComponent();
-
-            // Grundläge för vad som syns i UI när appen startar
-            btnSparaPodd.Visible = false;
-            btnAvprenumerera.Visible = false;
-            lblAktuellkategori.Visible = false;
-            cmbPoddKategori.Visible = false;
-            btnSparaPoddKategori.Visible = false;
-            btnLaggTillNyKategori.Visible = false;
-            lblAvsnittSeparator.Visible = false;
-            pbPoddBild.Visible = false;
-
             enRssService = new RssService();
             enPoddService = new PoddService(new PoddRepository(new MongoDbContext()));
+            pbPoddBild.Visible = false;
+
+            // Hanterar kategori-relaterade databasoperationer
             enKategoriService = new KategoriService(
-                new KategoriRepository(new MongoDbContext()),
-                new PoddRepository(new MongoDbContext()));
+            new KategoriRepository(new MongoDbContext()),
+            new PoddRepository(new MongoDbContext()));
         }
 
         private void NollstallPoddBild()
@@ -123,7 +120,7 @@ namespace PL
         {
             var url = txtRssUrl.Text.Trim();
 
-            // 1. Validera RSS-url via valideringsklassen
+            // Validera RSS-url via valideringsklassen
             if (!Validering.Validering.KontrolleraRssUrl(url, out string felmeddelande))
             {
                 MessageBox.Show(felmeddelande);
@@ -131,14 +128,14 @@ namespace PL
             }
             try
             {
-                // 2. Hämta flödet
+                // Hämta flödet
                 var feed = await enRssService.HamtaFlodeAsync(url);
 
-                // 3. Spara RSS-flödet och URL:en som användes
+                // Spara RSS-flödet och URL:en som användes
                 hamtatfeed = feed;
                 senastHamtdRssUrl = url;
 
-                // 4. Uppdatera GUI (EXAKT som din gamla version)
+                // Uppdatera GUI
                 GaTillRSSLage();
                 txtTitel.Text = feed.Title.Text;
 
@@ -155,7 +152,7 @@ namespace PL
 
                 VisaPoddBild(feed);
 
-                // MessageBox.Show("RSS-flödet hämtades utan problem."); //Ett pop-up för att bekräfta lyckad hämtning
+                // MessageBox.Show("RSS-flödet hämtades utan problem"). Ett pop-up för att bekräfta lyckad hämtning
             }
             catch (Exception ettFel)
             {
@@ -181,14 +178,14 @@ namespace PL
 
             string renSammanfattning;
 
-            // Om det INTE finns någon summary: använd din egen text
+            // Om det INTE finns någon summary, varning
             if (valtAvsnitt.Summary == null || string.IsNullOrWhiteSpace(valtAvsnitt.Summary.Text))
             {
                 renSammanfattning = "Ingen sammanfattning tillgänglig för detta avsnitt.";
             }
             else
             {
-                // Finns summary: ta bort HTML
+                // Finns summary, ta bort HTML
                 renSammanfattning = TaBortHtml(valtAvsnitt.Summary.Text);
             }
 
@@ -213,27 +210,27 @@ namespace PL
         {
             var aktuellUrl = txtRssUrl.Text.Trim();
 
-            // 1: Validera RSS-länken (tom + format)
+            // Validera RSS-länken (tom + format)
             if (!Validering.Validering.KontrolleraRssUrl(aktuellUrl, out string fel))
             {
                 MessageBox.Show(fel);
                 return;
             }
 
-            // 2: Kolla att vi faktiskt har ett hämtat flöde
+            // Kolla att vi faktiskt har ett hämtat flöde
             if (!Validering.Validering.KontrolleraAttFlodeFinns(hamtatfeed, out fel))
             {
                 MessageBox.Show(fel);
                 return;
             }
 
-            // 3: Kolla att URL:en inte ändrats efter hämtning
+            //  Kolla att URL:en inte ändrats efter hämtning
             if (!Validering.Validering.KontrolleraAttRssInteAndrats(aktuellUrl, senastHamtdRssUrl, out fel))
             {
                 MessageBox.Show(fel);
                 return;
             }
-            // 4: Öppna dialogen för att sätta namn/kategori
+            // Öppna dialogen för att sätta namn/kategori
             var dlg = new SavePoddForm(
             hamtatfeed,
             allaKategorier,
@@ -242,24 +239,24 @@ namespace PL
             enKategoriService);
 
 
-            // 5: Visa dialogen och vänta på resultatet
+            // Visa dialogen och vänta på resultatet
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 // Här vet vi att podden har sparats (SavePoddForm sätter OK bara om sparad == true)
 
 
-                // 5.1 Ladda om alla poddar från databasen
+                // Ladda om alla poddar från databasen
                 await LaddaPoddarAsync();
 
 
-                // 5.2 Försök hitta den podd som har samma RSS-url som vi nyss sparade
+                // Försök hitta den podd som har samma RSS-url som vi nyss sparade
                 var nyPodd = allaPoddar
                 .FirstOrDefault(p => string.Equals(p.RssUrl, aktuellUrl, StringComparison.OrdinalIgnoreCase));
 
 
                 if (nyPodd != null)
                 {
-                    // 5.3 Välj podden i listan (triggar lstPoddar_SelectedIndexChangedAsync)
+                    // Välj podden i listan (triggar lstPoddar_SelectedIndexChangedAsync)
                     lstPoddar.SelectedItem = nyPodd;
                 }
                 else
@@ -385,11 +382,15 @@ namespace PL
         }
         private async void Mainform_Load(object sender, EventArgs e)
         {
-            // 1. Ladda alla sparade poddar & kategorier från databasen
+            btnSparaPodd.Visible = false;
+            btnAvprenumerera.Visible = false;
+
+            // Ladda alla sparade poddar & kategorier från databasen
             await LaddaKategorierAsync();
             await LaddaPoddarAsync();
 
-            // 2. Om det finns poddar – välj första
+
+            // Om det finns poddar – välj första
             if (lstPoddar.Items.Count > 0)
             {
                 lstPoddar.SelectedIndex = 0;   // Triggar lstPoddar_SelectedIndexChangedAsync
@@ -398,7 +399,7 @@ namespace PL
         private void cbmFilterKategori_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            // Om vi inte har några poddar laddade: gör inget
+            // Om vi inte har några poddar laddade, gör inget
             if (allaPoddar == null || allaPoddar.Count == 0)
                 return;
 
@@ -422,8 +423,7 @@ namespace PL
                 return;
             }
 
-            // Om det är ett Kategori-objekt -> filtrera på dess Id
-            // Kategori-objekt -> filtrera på dess Id
+            // Om det är ett Kategori-objekt, filtrera på Id
             if (valt is Kategori kat)
             {
                 var filtrerade = allaPoddar
@@ -435,43 +435,26 @@ namespace PL
         }
         private async void btnAvprenumerera_ClickAsync(object sender, EventArgs e)
         {
-            var valdPodd = lstPoddar.SelectedItem as Podd;
-
-            // Om ingen podd är vald, gör ingenting
-            if (valdPodd == null)
-                return;
-
-            var result = MessageBox.Show(
-                $"Vill du ta bort '{valdPodd.Titel}'?",
-                "Bekräfta",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning
-            );
-
-            if (result == DialogResult.Yes)
             {
-                await enPoddService.TaBortPodd(valdPodd.Id);
-                await LaddaPoddarAsync();
+                var valdPodd = lstPoddar.SelectedItem as Podd;
 
-                if (lstPoddar.Items.Count > 0)
-                {
-                    // Välj första kvarvarande podd
-                    lstPoddar.SelectedIndex = 0;
-                }
-                else
-                {
-                    // döljer kategori + avsnitt-relaterat
-                    GaTillRSSLage();   
-                    NollstallPoddBild();
+                // Om ingen podd är vald, gör ingenting
+                if (valdPodd == null)
+                    return;
 
-                    txtTitel.Clear();
-                    txtAvsnittTitel.Clear();
-                    txtPubliceringsdatum.Clear();
-                    txtBeskrivning.Clear();
-                    lstAvsnitt.Items.Clear();
-                    hamtatfeed = null;
-                    senastHamtdRssUrl = null;
+                var result = MessageBox.Show(
+                    $"Vill du ta bort '{valdPodd.Titel}'?",
+                    "Bekräfta",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    await enPoddService.TaBortPodd(valdPodd.Id);
+                    await LaddaPoddarAsync();
                 }
+
             }
         }
 
@@ -484,13 +467,13 @@ namespace PL
 
         private void cmbPoddKategori_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // 0. Ignorera event när vi uppdaterar dropdownen programmässigt
+            // Ignorera event när vi uppdaterar dropdownen programmässigt
             if (_ignoreKategoriEvents)
                 return;
-            // 1. Ingen podd vald → gör ingenting (men pilla inte på knappen)
+            // Ingen podd vald, gör ingenting (men pilla inte på knappen)!!! ;)
             if (lstPoddar.SelectedItem is not Podd valdPodd)
                 return;
-            // 2. Ta reda på vilken kategori-id som motsvarar valet i dropdownen
+            // Ta reda på vilken kategori id som motsvarar valet i dropdownen
             string? valdKategoriId = null;
             if (cmbPoddKategori.SelectedItem is Kategori kat)
             {
@@ -505,13 +488,13 @@ namespace PL
             if (string.Equals(valdKategoriId, _valdPoddUrsprungligKategoriId,
             StringComparison.OrdinalIgnoreCase))
             {
-                // Ingen skillnad → ingen anledning att visa spara-knappen
+                // Ingen skillnad, ingen anledning att visa spara-knappen
                 btnSparaPoddKategori.Visible = false;
             }
             else
             {
 
-                // Användaren har gjort en verklig förändring → visa spara-knappen
+                // Användaren har gjort en verklig förändring, visa spara-knappen
                 btnSparaPoddKategori.Visible = true;
             }
         }
@@ -523,7 +506,7 @@ namespace PL
                 MessageBox.Show("Välj en podd först.");
                 return;
             }
-            // Hämta vald kategori-id från dropdownen
+            // Hämta vald kategori id från dropdownen
             string? nyKategoriId = null;
             if (cmbPoddKategori.SelectedItem is Kategori kat)
             {
@@ -531,10 +514,10 @@ namespace PL
             }
             else
             {
-                // "Ingen kategori" => null i databasen
+                // "Ingen kategori" ger null i databasen
                 nyKategoriId = null;
             }
-            // Om inget faktiskt har ändrats: gör ingenting
+            // Om inget faktiskt har ändrats, gör ingenting
             if (string.Equals(nyKategoriId, _valdPoddUrsprungligKategoriId,
             StringComparison.OrdinalIgnoreCase))
             {
@@ -561,15 +544,15 @@ namespace PL
             var dlg = new EditKategoriForm(enKategoriService);
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                // 1. Vi ska uppdatera dropdownen programmässigt → ignorera events under tiden
+                // Ska uppdatera dropdownen programmässigt, ignorera events under tiden
                 _ignoreKategoriEvents = true;
                 try
                 {
-                    // 2. Ladda om kategorier från databasen
+                    // Ladda om kategorier från databasen
                     await LaddaKategorierAsync();
-                    // 3. Fyll dropdownen i poddvyn på nytt
+                    // Fyll dropdownen i poddvyn på nytt
                     FyllPoddKategoriDropdown();
-                    // 4. Försök välja den senast skapade kategorin
+                    // Försök välja den senast skapade kategorin
                     if (allaKategorier.Any())
                     {
                         var senaste = allaKategorier.Last();
@@ -585,7 +568,7 @@ namespace PL
                 }
                 finally
                 {
-                    // 5. Efter uppdateringen ska events fungera som vanligt igen
+                    // Efter uppdateringen ska events fungera som vanligt igen
                     _ignoreKategoriEvents = false;
                 }
             }
@@ -709,6 +692,11 @@ namespace PL
                     e.Cancel = true;   // Avbryt stängningen
                 }
             }
+
+        }
+
+        private void pBoxLogo_Click(object sender, EventArgs e)
+        {
 
         }
     }
