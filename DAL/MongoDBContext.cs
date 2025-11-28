@@ -8,7 +8,6 @@ namespace DAL
         //Skapar kollektioner för Podd, Kategori och Avsnitt.
         public IMongoCollection<Podd> PoddKollektion { get; }
         public IMongoCollection<Kategori> KategoriKollektion { get; }
-        public IMongoCollection<Avsnitt> AvsnittKollektion { get; }
 
         public MongoClient MongoKlient { get; }
 
@@ -21,7 +20,6 @@ namespace DAL
 
             PoddKollektion = database.GetCollection<Podd>("Poddar");
             KategoriKollektion = database.GetCollection<Kategori>("Kategorier");
-            AvsnittKollektion = database.GetCollection<Avsnitt>("Avsnitt");
         }
     }
 }
