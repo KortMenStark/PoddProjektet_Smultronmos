@@ -2,12 +2,7 @@ using BL;
 using DAL;
 using DAL.Repository;
 using Models_new;
-using PL.Validering;
-using System.Drawing;
 using System.ServiceModel.Syndication;
-using System.Linq;
-using System.Drawing.Drawing2D;
-using static System.Net.WebRequestMethods;
 
 namespace PL
 
@@ -440,26 +435,43 @@ namespace PL
         }
         private async void btnAvprenumerera_ClickAsync(object sender, EventArgs e)
         {
+            var valdPodd = lstPoddar.SelectedItem as Podd;
+
+            // Om ingen podd är vald, gör ingenting
+            if (valdPodd == null)
+                return;
+
+            var result = MessageBox.Show(
+                $"Vill du ta bort '{valdPodd.Titel}'?",
+                "Bekräfta",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (result == DialogResult.Yes)
             {
-                var valdPodd = lstPoddar.SelectedItem as Podd;
+                await enPoddService.TaBortPodd(valdPodd.Id);
+                await LaddaPoddarAsync();
 
-                // Om ingen podd är vald, gör ingenting
-                if (valdPodd == null)
-                    return;
-
-                var result = MessageBox.Show(
-                    $"Vill du ta bort '{valdPodd.Titel}'?",
-                    "Bekräfta",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Warning
-                );
-
-                if (result == DialogResult.Yes)
+                if (lstPoddar.Items.Count > 0)
                 {
-                    await enPoddService.TaBortPodd(valdPodd.Id);
-                    await LaddaPoddarAsync();
+                    // Välj första kvarvarande podd
+                    lstPoddar.SelectedIndex = 0;
                 }
+                else
+                {
+                    // döljer kategori + avsnitt-relaterat
+                    GaTillRSSLage();   
+                    NollstallPoddBild();
 
+                    txtTitel.Clear();
+                    txtAvsnittTitel.Clear();
+                    txtPubliceringsdatum.Clear();
+                    txtBeskrivning.Clear();
+                    lstAvsnitt.Items.Clear();
+                    hamtatfeed = null;
+                    senastHamtdRssUrl = null;
+                }
             }
         }
 

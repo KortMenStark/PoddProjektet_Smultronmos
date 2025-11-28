@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.ServiceModel.Syndication;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using BL;
+﻿using BL;
 using Models_new;
-using PL.Validering;
+using System.ServiceModel.Syndication;
 
 namespace PL
 {

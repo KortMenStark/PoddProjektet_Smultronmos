@@ -1,13 +1,6 @@
 ﻿using DAL.Interfaces;
 using Models_new;
-using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel.Syndication;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace BL
 {
@@ -51,21 +44,6 @@ namespace BL
             //Om någon av dessa saknas i RSS-feeden, sätts en standardtext eller tom sträng.
             poddflode.Titel = ettFeed.Title.Text ?? "Det finns ingen titel.";
             poddflode.Beskrivning = ettFeed.Description?.Text ?? "Det finns ingen beskrivning.";
-            poddflode.BildUrl = ettFeed.ImageUrl?.ToString() ?? "";
-
-            foreach (var item in ettFeed.Items)
-            {
-                // Skapar ett nytt Avsnitt-objekt för varje avsnitt i RSS-feeden.
-                var avsnitt = new Avsnitt
-                {
-                    Titel = item.Title.Text ?? "Det finns ingen titel.",
-                    Sammanfattning = item.Summary?.Text ?? "Det finns ingen sammanfattning.",
-                    PubliceringsDatum = item.PublishDate.DateTime
-                };
-
-                // Lägger till avsnittet i Poddflödet.
-                poddflode.AvsnittLista.Add(avsnitt);
-            }
 
             // Returnerar det ifyllda Poddflödet.
             return poddflode;

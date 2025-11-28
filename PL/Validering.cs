@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Models_new;
 using System.ServiceModel.Syndication;
-using System.Text;
-using System.Threading.Tasks;
-using Models_new;
 
 namespace PL.Validering
 {

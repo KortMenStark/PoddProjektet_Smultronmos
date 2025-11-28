@@ -1,11 +1,6 @@
 ﻿using DAL.Interfaces;
 using Models_new;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Repository
 {
@@ -23,13 +18,6 @@ namespace DAL.Repository
         {
             this.context = context;
             kategoriKollektion = context.KategoriKollektion;
-        }
-
-        public async Task<List<Kategori>> HamtaAlla()
-        {
-            var filter = Builders<Kategori>.Filter.Empty;
-            var kategorier = await kategoriKollektion.Find(filter).ToListAsync();
-            return kategorier;
         }
 
         public async Task<Kategori> HamtaEnKategori(string kategoriId)

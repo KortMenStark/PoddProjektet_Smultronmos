@@ -60,7 +60,7 @@
             lblAvsnittRubrik = new Label();
             panelAvsnittDetaljer = new Panel();
             txtBeskrivning = new RichTextBox();
-            lblBeskrivningSeperator = new Label();
+            lblBeskrivningSeparator = new Label();
             contextMenuStripPoddOptions = new ContextMenuStrip(components);
             mnuByttNamn = new ToolStripMenuItem();
             mnuAndraKategori = new ToolStripMenuItem();
@@ -452,7 +452,7 @@
             panelAvsnittDetaljer.BackColor = Color.White;
             panelAvsnittDetaljer.BorderStyle = BorderStyle.Fixed3D;
             panelAvsnittDetaljer.Controls.Add(txtBeskrivning);
-            panelAvsnittDetaljer.Controls.Add(lblBeskrivningSeperator);
+            panelAvsnittDetaljer.Controls.Add(lblBeskrivningSeparator);
             panelAvsnittDetaljer.Controls.Add(txtPubliceringsdatum);
             panelAvsnittDetaljer.Controls.Add(txtAvsnittTitel);
             panelAvsnittDetaljer.Controls.Add(lblBeskrivning);
@@ -477,13 +477,13 @@
             txtBeskrivning.TabIndex = 33;
             txtBeskrivning.Text = "";
             // 
-            // lblBeskrivningSeperator
+            // lblBeskrivningSeparator
             // 
-            lblBeskrivningSeperator.BackColor = Color.LightGray;
-            lblBeskrivningSeperator.Location = new Point(10, 104);
-            lblBeskrivningSeperator.Name = "lblBeskrivningSeperator";
-            lblBeskrivningSeperator.Size = new Size(420, 1);
-            lblBeskrivningSeperator.TabIndex = 33;
+            lblBeskrivningSeparator.BackColor = Color.LightGray;
+            lblBeskrivningSeparator.Location = new Point(10, 104);
+            lblBeskrivningSeparator.Name = "lblBeskrivningSeparator";
+            lblBeskrivningSeparator.Size = new Size(420, 1);
+            lblBeskrivningSeparator.TabIndex = 33;
             // 
             // contextMenuStripPoddOptions
             // 
@@ -585,7 +585,7 @@
         private Label lblAvsnittRubrik;
         private Panel panelAvsnittDetaljer;
         private PictureBox pbPoddBild;
-        private Label lblBeskrivningSeperator;
+        private Label lblBeskrivningSeparator;
         private Button btnLaggTillNyKategori;
         private Button btnSparaPoddKategori;
         private ComboBox cmbPoddKategori;
