@@ -109,7 +109,7 @@
             btnSparaPodd.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSparaPodd.ForeColor = SystemColors.ControlText;
             btnSparaPodd.Image = Properties.Resources.diskette_save_24;
-            btnSparaPodd.Location = new Point(300, 736);
+            btnSparaPodd.Location = new Point(300, 804);
             btnSparaPodd.Margin = new Padding(2);
             btnSparaPodd.Name = "btnSparaPodd";
             btnSparaPodd.Padding = new Padding(10, 5, 10, 5);
@@ -140,15 +140,15 @@
             // txtTitel
             // 
             txtTitel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtTitel.BackColor = Color.WhiteSmoke;
+            txtTitel.BackColor = Color.White;
             txtTitel.BorderStyle = BorderStyle.None;
             txtTitel.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtTitel.ForeColor = SystemColors.ControlText;
-            txtTitel.Location = new Point(-7, 48);
+            txtTitel.Location = new Point(3, 9);
             txtTitel.Multiline = true;
             txtTitel.Name = "txtTitel";
             txtTitel.ReadOnly = true;
-            txtTitel.Size = new Size(450, 55);
+            txtTitel.Size = new Size(440, 55);
             txtTitel.TabIndex = 13;
             // 
             // cbmFilterKategori
@@ -179,7 +179,7 @@
             lblBeskrivning.AutoSize = true;
             lblBeskrivning.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblBeskrivning.ForeColor = SystemColors.ControlText;
-            lblBeskrivning.Location = new Point(10, 119);
+            lblBeskrivning.Location = new Point(10, 70);
             lblBeskrivning.Name = "lblBeskrivning";
             lblBeskrivning.Size = new Size(100, 21);
             lblBeskrivning.TabIndex = 19;
@@ -210,11 +210,11 @@
             txtAvsnittTitel.BorderStyle = BorderStyle.None;
             txtAvsnittTitel.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtAvsnittTitel.ForeColor = SystemColors.ControlText;
-            txtAvsnittTitel.Location = new Point(-2, 20);
+            txtAvsnittTitel.Location = new Point(3, 9);
             txtAvsnittTitel.Multiline = true;
             txtAvsnittTitel.Name = "txtAvsnittTitel";
             txtAvsnittTitel.ReadOnly = true;
-            txtAvsnittTitel.Size = new Size(450, 55);
+            txtAvsnittTitel.Size = new Size(440, 55);
             txtAvsnittTitel.TabIndex = 22;
             // 
             // lblAktuellkategori
@@ -222,7 +222,7 @@
             lblAktuellkategori.AutoSize = true;
             lblAktuellkategori.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblAktuellkategori.ForeColor = SystemColors.ControlText;
-            lblAktuellkategori.Location = new Point(10, 287);
+            lblAktuellkategori.Location = new Point(15, 318);
             lblAktuellkategori.Name = "lblAktuellkategori";
             lblAktuellkategori.Size = new Size(75, 21);
             lblAktuellkategori.TabIndex = 25;
@@ -356,17 +356,17 @@
             lstAvsnitt.FormattingEnabled = true;
             lstAvsnitt.HorizontalScrollbar = true;
             lstAvsnitt.ItemHeight = 30;
-            lstAvsnitt.Location = new Point(10, 388);
+            lstAvsnitt.Location = new Point(10, 428);
             lstAvsnitt.Margin = new Padding(2);
             lstAvsnitt.Name = "lstAvsnitt";
-            lstAvsnitt.Size = new Size(415, 332);
+            lstAvsnitt.Size = new Size(415, 362);
             lstAvsnitt.TabIndex = 1;
             lstAvsnitt.DrawItem += lstAvsnitt_DrawItem;
             lstAvsnitt.SelectedIndexChanged += lstAvsnitt_SelectedIndexChanged;
             // 
             // pbPoddBild
             // 
-            pbPoddBild.Location = new Point(98, 35);
+            pbPoddBild.Location = new Point(98, 70);
             pbPoddBild.Name = "pbPoddBild";
             pbPoddBild.Size = new Size(240, 245);
             pbPoddBild.TabIndex = 32;
@@ -395,7 +395,7 @@
             // btnLaggTillNyKategori
             // 
             btnLaggTillNyKategori.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnLaggTillNyKategori.Location = new Point(280, 310);
+            btnLaggTillNyKategori.Location = new Point(280, 345);
             btnLaggTillNyKategori.Name = "btnLaggTillNyKategori";
             btnLaggTillNyKategori.Size = new Size(145, 29);
             btnLaggTillNyKategori.TabIndex = 35;
@@ -405,14 +405,16 @@
             // 
             // btnSparaPoddKategori
             // 
+            btnSparaPoddKategori.BackColor = Color.Transparent;
+            btnSparaPoddKategori.FlatAppearance.BorderSize = 0;
             btnSparaPoddKategori.FlatStyle = FlatStyle.Flat;
             btnSparaPoddKategori.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSparaPoddKategori.Image = Properties.Resources.diskette_24;
-            btnSparaPoddKategori.Location = new Point(226, 311);
+            btnSparaPoddKategori.Location = new Point(231, 346);
             btnSparaPoddKategori.Name = "btnSparaPoddKategori";
             btnSparaPoddKategori.Size = new Size(29, 29);
             btnSparaPoddKategori.TabIndex = 34;
-            btnSparaPoddKategori.UseVisualStyleBackColor = true;
+            btnSparaPoddKategori.UseVisualStyleBackColor = false;
             btnSparaPoddKategori.Click += btnSparaPoddKategori_Click;
             // 
             // cmbPoddKategori
@@ -421,7 +423,7 @@
             cmbPoddKategori.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cmbPoddKategori.ForeColor = SystemColors.ControlText;
             cmbPoddKategori.FormattingEnabled = true;
-            cmbPoddKategori.Location = new Point(10, 311);
+            cmbPoddKategori.Location = new Point(15, 346);
             cmbPoddKategori.Name = "cmbPoddKategori";
             cmbPoddKategori.Size = new Size(210, 29);
             cmbPoddKategori.TabIndex = 33;
@@ -430,7 +432,7 @@
             // lblAvsnittSeparator
             // 
             lblAvsnittSeparator.BackColor = Color.LightGray;
-            lblAvsnittSeparator.Location = new Point(10, 357);
+            lblAvsnittSeparator.Location = new Point(15, 389);
             lblAvsnittSeparator.Name = "lblAvsnittSeparator";
             lblAvsnittSeparator.Size = new Size(410, 1);
             lblAvsnittSeparator.TabIndex = 20;
@@ -439,7 +441,7 @@
             // 
             lblAvsnittRubrik.AutoSize = true;
             lblAvsnittRubrik.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblAvsnittRubrik.Location = new Point(10, 365);
+            lblAvsnittRubrik.Location = new Point(10, 393);
             lblAvsnittRubrik.Name = "lblAvsnittRubrik";
             lblAvsnittRubrik.Size = new Size(64, 21);
             lblAvsnittRubrik.TabIndex = 19;
@@ -467,18 +469,18 @@
             txtBeskrivning.DetectUrls = false;
             txtBeskrivning.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtBeskrivning.ForeColor = Color.FromArgb(30, 30, 30);
-            txtBeskrivning.Location = new Point(10, 169);
+            txtBeskrivning.Location = new Point(10, 123);
             txtBeskrivning.Name = "txtBeskrivning";
             txtBeskrivning.ReadOnly = true;
             txtBeskrivning.ScrollBars = RichTextBoxScrollBars.Vertical;
-            txtBeskrivning.Size = new Size(420, 605);
+            txtBeskrivning.Size = new Size(420, 651);
             txtBeskrivning.TabIndex = 33;
             txtBeskrivning.Text = "";
             // 
             // lblBeskrivningSeperator
             // 
             lblBeskrivningSeperator.BackColor = Color.LightGray;
-            lblBeskrivningSeperator.Location = new Point(10, 150);
+            lblBeskrivningSeperator.Location = new Point(10, 104);
             lblBeskrivningSeperator.Name = "lblBeskrivningSeperator";
             lblBeskrivningSeperator.Size = new Size(420, 1);
             lblBeskrivningSeperator.TabIndex = 33;

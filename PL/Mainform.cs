@@ -44,14 +44,22 @@ namespace PL
         public Mainform()
         {
             InitializeComponent();
-            enRssService = new RssService();
-            enPoddService = new PoddService(new PoddRepository(new MongoDbContext()));
+
+            // Grundläge för vad som syns i UI när appen startar
+            btnSparaPodd.Visible = false;
+            btnAvprenumerera.Visible = false;
+            lblAktuellkategori.Visible = false;
+            cmbPoddKategori.Visible = false;
+            btnSparaPoddKategori.Visible = false;
+            btnLaggTillNyKategori.Visible = false;
+            lblAvsnittSeparator.Visible = false;
             pbPoddBild.Visible = false;
 
-            // Hanterar kategori-relaterade databasoperationer
+            enRssService = new RssService();
+            enPoddService = new PoddService(new PoddRepository(new MongoDbContext()));
             enKategoriService = new KategoriService(
-            new KategoriRepository(new MongoDbContext()),
-            new PoddRepository(new MongoDbContext()));
+                new KategoriRepository(new MongoDbContext()),
+                new PoddRepository(new MongoDbContext()));
         }
 
         private void NollstallPoddBild()
@@ -382,13 +390,9 @@ namespace PL
         }
         private async void Mainform_Load(object sender, EventArgs e)
         {
-            btnSparaPodd.Visible = false;
-            btnAvprenumerera.Visible = false;
-
             // 1. Ladda alla sparade poddar & kategorier från databasen
             await LaddaKategorierAsync();
             await LaddaPoddarAsync();
-
 
             // 2. Om det finns poddar – välj första
             if (lstPoddar.Items.Count > 0)
