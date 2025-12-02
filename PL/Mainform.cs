@@ -50,11 +50,13 @@ namespace PL
             lblAvsnittSeparator.Visible = false;
             pbPoddBild.Visible = false;
 
+            var context = new MongoDbContext();
+
             enRssService = new RssService();
-            enPoddService = new PoddService(new PoddRepository(new MongoDbContext()));
+            enPoddService = new PoddService(new PoddRepository(context));
             enKategoriService = new KategoriService(
-                new KategoriRepository(new MongoDbContext()),
-                new PoddRepository(new MongoDbContext()));
+            new KategoriRepository(context),
+            new PoddRepository(context));
         }
 
         private void NollstallPoddBild()
@@ -247,6 +249,7 @@ namespace PL
             {
                 // Här vet vi att podden har sparats (SavePoddForm sätter OK bara om sparad == true)
 
+                await LaddaKategorierAsync();
 
                 // 5.1 Ladda om alla poddar från databasen
                 await LaddaPoddarAsync();
@@ -286,29 +289,21 @@ namespace PL
         }
         private void FyllFilterKategorier()
         {
-            if (allaPoddar == null || allaPoddar.Count == 0)
+            // Om vi inte har några kategorier: gör inget
+            if (allaKategorier == null || allaKategorier.Count == 0)
                 return;
 
-            // vilka kategori-Id:n används av poddarna?
-            var användaKategoriIds = allaPoddar
-                .Select(p => p.KategoriId)
-                .Where(id => !string.IsNullOrWhiteSpace(id))
-                .Distinct()
-                .ToList();
-
-            // ta fram de Kategori-objekt som matchar
-            var kategorierSomHarPoddar = allaKategorier
-                .Where(k => användaKategoriIds.Contains(k.Id))
-                .OrderBy(k => k.Namn)
-                .ToList();
-
-            // koppla bort event tillfälligt så vi inte triggar filtrering mitt i uppdateringen
             cbmFilterKategori.SelectedIndexChanged -= cbmFilterKategori_SelectedIndexChanged;
 
             cbmFilterKategori.Items.Clear();
             cbmFilterKategori.Items.Add("Alla kategorier"); // special-värde
 
-            foreach (var kat in kategorierSomHarPoddar)
+            // 🔹 Använd ALLA kategorier, sorterade på namn
+            var kategorierAttVisa = allaKategorier
+                .OrderBy(k => k.Namn)
+                .ToList();
+
+            foreach (var kat in kategorierAttVisa)
             {
                 cbmFilterKategori.Items.Add(kat);
             }
@@ -317,7 +312,6 @@ namespace PL
             cbmFilterKategori.ValueMember = "Id";
             cbmFilterKategori.SelectedIndex = 0;
 
-            // koppla på event igen
             cbmFilterKategori.SelectedIndexChanged += cbmFilterKategori_SelectedIndexChanged;
         }
         private void FyllPoddKategoriDropdown()
@@ -561,7 +555,7 @@ namespace PL
             var dlg = new EditKategoriForm(enKategoriService);
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                // 1. Vi ska uppdatera dropdownen programmässigt → ignorera events under tiden
+                // 1. Vi ska uppdatera dropdownen programmässigt & ignorera events under tiden
                 _ignoreKategoriEvents = true;
                 try
                 {
