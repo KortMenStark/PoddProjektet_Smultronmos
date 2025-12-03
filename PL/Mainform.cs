@@ -140,7 +140,7 @@ namespace PL
                 hamtatfeed = feed;
                 senastHamtdRssUrl = url;
 
-                // 4. Uppdatera GUI (EXAKT som din gamla version)
+                // 4. Uppdatera GUI
                 GaTillRSSLage();
                 txtTitel.Text = feed.Title.Text;
 
